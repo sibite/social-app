@@ -5,7 +5,7 @@
     "source.fixAll.eslint": true
   },
   "eslint.format.enable": true,
-  "typescript.format.enable": false,
+  "typescript.format.enable": true,
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   }

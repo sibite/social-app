@@ -26,11 +26,9 @@ function useInputControl({
     isTouched,
     showInvalidity,
     errorMessage,
-    props: {
-      value,
-      touchHandler,
-      changeHandler,
-    },
+    value,
+    touchHandler,
+    changeHandler,
   };
 }
 
