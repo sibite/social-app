@@ -13,7 +13,6 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
 import useDateInput from '../hooks/useDateInput';
 import useInputControl from '../hooks/useInputControl';
 import createBirthDateValidator from '../shared/validators/birth-date-validator';
