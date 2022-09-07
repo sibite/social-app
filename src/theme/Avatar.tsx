@@ -13,6 +13,10 @@ const Avatar: ComponentStyleConfig = {
         width: md,
         height: md,
       },
+      label: {
+        lineHeight: 1,
+        fontSize: 16,
+      },
     },
   },
   defaultProps: {

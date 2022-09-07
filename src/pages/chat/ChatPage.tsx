@@ -1,5 +1,6 @@
 import { Grid, GridItem, useColorModeValue } from '@chakra-ui/react';
 import ContactsHeader from './ContactsHeader';
+import Contacts from './Contacts';
 import LayoutBlock from './LayoutBlock';
 import MessagesHeader from './MessagesHeader';
 
@@ -23,7 +24,9 @@ const ChatPage: React.FC = () => {
         </LayoutBlock>
       </GridItem>
       <GridItem area="contacts">
-        <LayoutBlock>Contacts</LayoutBlock>
+        <LayoutBlock>
+          <Contacts />
+        </LayoutBlock>
       </GridItem>
       <GridItem area="messages-header">
         <LayoutBlock>
