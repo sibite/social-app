@@ -12,7 +12,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
-import useInputControl from '../hooks/useInputControl';
+import useInputControl from '../../hooks/useInputControl';
 
 const SignUpPage: React.FC = () => {
   const email = useInputControl({

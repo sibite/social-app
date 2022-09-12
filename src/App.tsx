@@ -1,8 +1,8 @@
 import { ChakraProvider } from '@chakra-ui/react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import ChatPage from './pages/chat/ChatPage';
-import LogInPage from './pages/LogInPage';
-import SignUpPage from './pages/SignUpPage';
+import LogInPage from './pages/log-in/LogInPage';
+import SignUpPage from './pages/sign-up/SignUpPage';
 import theme from './theme';
 
 const App = () => (
