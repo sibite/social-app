@@ -4,7 +4,7 @@ import Contacts from './Contacts';
 import LayoutBlock from './LayoutBlock';
 import MessagesHeader from './MessagesHeader';
 import UserDetails from './UserDetails';
-import Messages from './Messages/Messages';
+import Messages from './messages/Messages';
 
 const ChatPage: React.FC = () => {
   const bgColor = useColorModeValue('gray.200', 'gray.800');

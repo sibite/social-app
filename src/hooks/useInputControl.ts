@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
 export interface InputOptions {
-  initialValue: string;
-  validator: (value: string) => boolean;
-  errorMessage: string;
+  initialValue?: string;
+  validator?: (value: string) => boolean;
+  errorMessage?: string;
 }
 
 function useInputControl({

@@ -12,7 +12,9 @@ import {
   Text,
   useColorModeValue,
   VStack,
+  Link,
 } from '@chakra-ui/react';
+import { Link as RouterLink } from 'react-router-dom';
 import useDateInput from '../hooks/useDateInput';
 import useInputControl from '../hooks/useInputControl';
 import createBirthDateValidator from '../shared/validators/birth-date-validator';
@@ -68,7 +70,6 @@ const SignUpPage: React.FC = () => {
       repeatPassword,
     ];
     inputs.forEach((input) => input.touchHandler());
-    const formIsValid = inputs.every((input) => !input.isInvalid);
   };
 
   const bg1 = useColorModeValue('gray.100', 'black');
@@ -201,6 +202,12 @@ const SignUpPage: React.FC = () => {
           </GridItem>
         </SimpleGrid>
         <Text my={0}>By clicking Sign Up you agree to our terms</Text>
+        <Text my={0}>
+          <span>Already have an account? </span>
+          <Link as={RouterLink} to="/login" color="blue.400">
+            Log in
+          </Link>
+        </Text>
         <Button as="button" type="submit" w="100%">
           Sign up
         </Button>
