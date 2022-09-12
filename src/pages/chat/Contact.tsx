@@ -20,6 +20,7 @@ const Contacts: React.FC<Props> = ({
   onSelect = () => null,
 }) => {
   const bgColor = useColorModeValue('gray.100', 'gray.900');
+  const activeColor = useColorModeValue('gray.200', 'gray.800');
 
   const style = {
     alignItems: 'center',
@@ -29,6 +30,10 @@ const Contacts: React.FC<Props> = ({
     '&:hover': {
       bgColor,
     },
+    '&:active': {
+      bgColor: activeColor,
+    },
+    transition: 'all 200ms',
   };
 
   const headingStyle = {

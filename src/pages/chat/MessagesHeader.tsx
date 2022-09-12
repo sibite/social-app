@@ -1,6 +1,10 @@
 import { Avatar, Flex, Heading } from '@chakra-ui/react';
 
-const ContactsHeader: React.FC = () => {
+interface Props {
+  name?: string;
+}
+
+const ContactsHeader: React.FC<Props> = ({ name = 'User' }) => {
   const style = {
     w: 'full',
     h: 'full',
@@ -9,9 +13,9 @@ const ContactsHeader: React.FC = () => {
 
   return (
     <Flex alignItems="center" sx={style} gap={4}>
-      <Avatar size="md" name="Stephen Hawking" />
+      <Avatar size="md" name={name} />
       <Heading as="h1" size="md">
-        Stephen Hawking
+        {name}
       </Heading>
     </Flex>
   );

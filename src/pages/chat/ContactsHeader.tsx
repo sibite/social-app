@@ -6,6 +6,7 @@ const ContactsHeader: React.FC = () => {
     w: 'full',
     h: 'full',
     px: 3,
+    overflow: 'hidden',
   };
 
   return (
