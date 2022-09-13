@@ -191,7 +191,7 @@ const SignUpPage: React.FC = () => {
           <Text my={0}>By clicking Sign Up you agree to our terms</Text>
           <Text my={0}>
             <span>Already have an account? </span>
-            <Link as={RouterLink} to="/login" color="blue.400">
+            <Link as={RouterLink} to="/login">
               Log in
             </Link>
           </Text>

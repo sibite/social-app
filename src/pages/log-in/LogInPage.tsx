@@ -71,7 +71,7 @@ const SignUpPage: React.FC = () => {
         </VStack>
         <Text my={0}>
           <span>Don&apos;t have an account? </span>
-          <Link as={RouterLink} to="/sign-up" color="blue.400">
+          <Link as={RouterLink} to="/sign-up">
             Create one
           </Link>
         </Text>
