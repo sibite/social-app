@@ -16,6 +16,7 @@ import {
   Button,
   Flex,
 } from '@chakra-ui/react';
+import Feed from '../../components/feed/Feed';
 import useBackgroundColor from '../../hooks/useBackgroundColor';
 
 const ProfilePage: React.FC = () => {
@@ -36,7 +37,7 @@ const ProfilePage: React.FC = () => {
           <Container maxWidth="container.lg">
             <Box width="100%">
               <AspectRatio width="100%" ratio={3}>
-                <Box width="100%" bg={bg.color100} borderBottomRadius="md" />
+                <Box width="100%" bg={bg.color100} borderBottomRadius="lg" />
               </AspectRatio>
               <Center width="100%" height="50px" position="relative">
                 <Avatar
@@ -53,7 +54,7 @@ const ProfilePage: React.FC = () => {
                   My own informative description with details about me
                 </Text>
                 <Flex width="100%" justify="space-between">
-                  <TabList mt={2} sx={{ '& > *': { padding: '10px 30px' } }}>
+                  <TabList mt={2}>
                     <Tab>Feed</Tab>
                     <Tab>Photos</Tab>
                   </TabList>
@@ -68,7 +69,7 @@ const ProfilePage: React.FC = () => {
         <Container maxWidth="container.lg">
           <TabPanels>
             <TabPanel>
-              <h2>Feed</h2>
+              <Feed />
             </TabPanel>
             <TabPanel>
               <h2>Photos</h2>
