@@ -1,9 +1,11 @@
 import { ColorModeScript, theme } from '@chakra-ui/react';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import store from './store';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -11,8 +13,10 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-      <App />
+      <Provider store={store}>
+        <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+        <App />
+      </Provider>
     </BrowserRouter>
   </React.StrictMode>
 );

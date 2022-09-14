@@ -18,8 +18,11 @@ import {
 } from '@chakra-ui/react';
 import Feed from '../../components/feed/Feed';
 import useBackgroundColor from '../../hooks/useBackgroundColor';
+import { useAppSelector } from '../../store/hooks';
 
 const ProfilePage: React.FC = () => {
+  const profile = useAppSelector((state) => state.profile);
+
   const bg = useBackgroundColor();
 
   const avatarStyle = {
@@ -41,17 +44,18 @@ const ProfilePage: React.FC = () => {
               </AspectRatio>
               <Center width="100%" height="50px" position="relative">
                 <Avatar
+                  src={profile.avatarSrc}
                   size={['xl', '2xl', '3xl']}
-                  name="User"
+                  name={profile.name}
                   sx={avatarStyle}
                 />
               </Center>
               <VStack spacing={4} pt={6}>
                 <Heading as="h1" size="lg">
-                  User Name
+                  {profile.name}
                 </Heading>
                 <Text maxWidth="400px" opacity={0.8} px={4} textAlign="center">
-                  My own informative description with details about me
+                  {profile.content}
                 </Text>
                 <Flex width="100%" justify="space-between">
                   <TabList mt={2}>
@@ -68,8 +72,8 @@ const ProfilePage: React.FC = () => {
         </Box>
         <Container maxWidth="container.lg">
           <TabPanels>
-            <TabPanel>
-              <Feed />
+            <TabPanel py={10}>
+              <Feed posts={profile.feed} />
             </TabPanel>
             <TabPanel>
               <h2>Photos</h2>

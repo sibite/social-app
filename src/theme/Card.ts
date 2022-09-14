@@ -6,10 +6,11 @@ const Card: StyleConfig = {
     flexDirection: 'column',
     background: colorMode === 'light' ? 'gray.50' : 'gray.800',
     alignItems: 'stretch',
+    overflow: 'hidden',
   }),
   variants: {
     rounded: {
-      borderRadius: 'md',
+      borderRadius: 'lg',
       boxShadow: 'md',
     },
   },
