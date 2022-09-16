@@ -4,10 +4,11 @@ import Button from './theme/Button';
 import Card from './theme/Card';
 import colors from './theme/colors';
 import Link from './theme/Link';
+import Tooltip from './theme/Tooltip';
 
 const config: ThemeConfig = {
   initialColorMode: 'light',
-  useSystemColorMode: false,
+  useSystemColorMode: true,
 };
 
 const theme = extendTheme({
@@ -18,6 +19,7 @@ const theme = extendTheme({
     Button,
     Link,
     Card,
+    Tooltip,
   },
 });
 
