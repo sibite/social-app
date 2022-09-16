@@ -11,7 +11,14 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
+import {
+  AnnotationIcon,
+  DotsVerticalIcon,
+  HeartIcon,
+  ShareIcon,
+} from '@heroicons/react/outline';
 import Card from '../chakra-ui/Card';
+import HeroIcon from '../chakra-ui/HeroIcon';
 import CommentsSection from './CommentsSection';
 
 interface Props {
@@ -47,7 +54,7 @@ const FeedCard: React.FC<Props> = ({
         </VStack>
         <IconButton
           aria-label="Options"
-          icon={<HamburgerIcon />}
+          icon={<HeroIcon as={DotsVerticalIcon} />}
           variant="ghost"
         />
       </Flex>
@@ -57,7 +64,7 @@ const FeedCard: React.FC<Props> = ({
     <Grid templateRows="1fr" templateColumns="repeat(3, 1fr)">
       <Button
         variant="ghost"
-        leftIcon={<StarIcon />}
+        leftIcon={<HeroIcon as={HeartIcon} />}
         rightIcon={
           likes ? (
             <Badge variant="subtle" colorScheme="blue">
@@ -70,7 +77,7 @@ const FeedCard: React.FC<Props> = ({
       </Button>
       <Button
         variant="ghost"
-        leftIcon={<ChatIcon />}
+        leftIcon={<HeroIcon as={AnnotationIcon} />}
         rightIcon={
           comments.length ? (
             <Badge variant="subtle" colorScheme="blue">
@@ -81,7 +88,7 @@ const FeedCard: React.FC<Props> = ({
       >
         Comments
       </Button>
-      <Button variant="ghost" leftIcon={<LinkIcon />}>
+      <Button variant="ghost" leftIcon={<HeroIcon as={ShareIcon} />}>
         Share
       </Button>
     </Grid>

@@ -1,21 +1,23 @@
-import { ChatIcon } from '@chakra-ui/icons';
 import {
   AspectRatio,
   Avatar,
   Box,
-  Container,
-  Center,
-  VStack,
-  Heading,
-  Text,
-  TabList,
-  Tab,
-  TabPanels,
-  TabPanel,
-  Tabs,
   Button,
+  Center,
+  Container,
   Flex,
+  Heading,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  Text,
+  useColorModeValue,
+  VStack,
 } from '@chakra-ui/react';
+import { ChatAltIcon } from '@heroicons/react/outline';
+import HeroIcon from '../../components/chakra-ui/HeroIcon';
 import Feed from '../../components/feed/Feed';
 import NavBar from '../../components/nav-bar/NavBar';
 import useBackgroundColor from '../../hooks/useBackgroundColor';
@@ -25,6 +27,10 @@ const ProfilePage: React.FC = () => {
   const profile = useAppSelector((state) => state.profile);
 
   const bg = useBackgroundColor();
+
+  const bg1 = useColorModeValue('gray.100', 'black');
+  const bgCard = useColorModeValue('white', 'gray.900');
+  const bgNode = useColorModeValue('gray.100', 'gray.800');
 
   const avatarStyle = {
     position: 'absolute',
@@ -37,9 +43,9 @@ const ProfilePage: React.FC = () => {
   return (
     <>
       <NavBar />
-      <Box width="100%" minHeight="100vh" bg={bg.color0}>
+      <Box width="100%" minHeight="100vh" bg={bg1}>
         <Tabs>
-          <Box width="100%" bg={bg.color50}>
+          <Box width="100%" bg={bgCard}>
             <Container maxWidth="container.lg">
               <Box width="100%">
                 <AspectRatio width="100%" ratio={3}>
@@ -70,7 +76,7 @@ const ProfilePage: React.FC = () => {
                       <Tab>Feed</Tab>
                       <Tab>Photos</Tab>
                     </TabList>
-                    <Button leftIcon={<ChatIcon />} mx={2}>
+                    <Button leftIcon={<HeroIcon as={ChatAltIcon} />} mx={2}>
                       Chat
                     </Button>
                   </Flex>

@@ -4,18 +4,21 @@ const Card: StyleConfig = {
   baseStyle: ({ colorMode }) => ({
     display: 'flex',
     flexDirection: 'column',
-    background: colorMode === 'light' ? 'gray.50' : 'gray.800',
+    background: colorMode === 'light' ? 'white' : 'gray.800',
     alignItems: 'stretch',
     overflow: 'hidden',
   }),
   variants: {
-    rounded: {
+    shaded: {
       borderRadius: 'lg',
       boxShadow: 'md',
     },
+    flat: {
+      borderRadius: 'lg',
+    },
   },
   defaultProps: {
-    variant: 'rounded',
+    variant: 'shaded',
   },
 };
 

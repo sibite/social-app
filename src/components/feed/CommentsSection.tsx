@@ -1,4 +1,4 @@
-import { VStack } from '@chakra-ui/react';
+import { useColorModeValue, VStack } from '@chakra-ui/react';
 import useBackgroundColor from '../../hooks/useBackgroundColor';
 import formatDate from '../../shared/formatDate';
 import { Comment as CommentType } from '../../store/profile';
@@ -9,7 +9,7 @@ interface Props {
 }
 
 const CommentsSection: React.FC<Props> = ({ comments }) => {
-  const bg = useBackgroundColor();
+  const bg = useColorModeValue('white', 'gray.800');
 
   const CommentsJSX = comments.map((comment) => (
     <Comment
@@ -26,7 +26,7 @@ const CommentsSection: React.FC<Props> = ({ comments }) => {
       align="flex-start"
       p={4}
       spacing={5}
-      bgColor={bg.color100}
+      bgColor={bg}
       maxHeight="60vh"
       overflowY="auto"
     >

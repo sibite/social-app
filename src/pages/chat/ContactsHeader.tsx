@@ -1,5 +1,6 @@
-import { SettingsIcon } from '@chakra-ui/icons';
 import { Flex, Heading, IconButton } from '@chakra-ui/react';
+import { CogIcon } from '@heroicons/react/outline';
+import HeroIcon from '../../components/chakra-ui/HeroIcon';
 
 const ContactsHeader: React.FC = () => {
   const style = {
@@ -14,7 +15,11 @@ const ContactsHeader: React.FC = () => {
       <Heading as="h1" size="md">
         Contacts
       </Heading>
-      <IconButton ml="auto" aria-label="Settings" icon={<SettingsIcon />} />
+      <IconButton
+        ml="auto"
+        aria-label="Settings"
+        icon={<HeroIcon as={CogIcon} />}
+      />
     </Flex>
   );
 };

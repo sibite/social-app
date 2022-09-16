@@ -7,7 +7,7 @@ interface Props {
 }
 
 const Message: React.FC<Props> = ({ direction, name = 'User', children }) => {
-  const bgColor = useColorModeValue('gray.100', 'gray.900');
+  const bgColor = useColorModeValue('gray.100', 'gray.800');
 
   const isDirectionTo = direction === 'to';
 

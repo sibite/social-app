@@ -1,5 +1,11 @@
-import { Avatar, Flex, Heading, HStack, Text } from '@chakra-ui/react';
-import useBackgroundColor from '../../hooks/useBackgroundColor';
+import {
+  Avatar,
+  Flex,
+  Heading,
+  HStack,
+  Text,
+  useColorModeValue,
+} from '@chakra-ui/react';
 import Card from '../chakra-ui/Card';
 
 interface Props {
@@ -15,12 +21,12 @@ const Comment: React.FC<Props> = ({
   dateString,
   children,
 }) => {
-  const cardColor = useBackgroundColor().color200;
+  const nodeColor = useColorModeValue('gray.100', 'gray.700');
 
   return (
     <Flex gap={2}>
       <Avatar name={name} src={avatarSrc} />
-      <Card bgColor={cardColor} py={2} px={3}>
+      <Card bgColor={nodeColor} py={2} px={3} variant="flat">
         <HStack>
           <Heading as="span" size="xs">
             {name}

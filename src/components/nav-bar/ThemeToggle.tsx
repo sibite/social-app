@@ -17,8 +17,9 @@ const ThemeToggle: React.FC = () => {
   const [colorModeId, setColorModeId] = useState(initialColorModeId);
 
   const toggleColorMode = () => {
-    const nextColorMode = colorModes[(colorModeId + 1) % 3];
-    setColorModeId(colorModeId + 1);
+    const nextId = (colorModeId + 1) % 3;
+    const nextColorMode = colorModes[nextId];
+    setColorModeId(nextId);
     setColorMode(nextColorMode);
   };
 
@@ -26,8 +27,9 @@ const ThemeToggle: React.FC = () => {
     <Tooltip label="Toggle color mode" aria-label="A tooltip">
       <IconButton
         onClick={toggleColorMode}
+        variant="ghost"
         aria-label="Toggle color mode"
-        icon={<HeroIcon as={icons[(colorModeId + 1) % 3]} />}
+        icon={<HeroIcon as={icons[colorModeId]} />}
       />
     </Tooltip>
   );
