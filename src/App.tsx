@@ -9,7 +9,7 @@ import theme from './theme';
 const App = () => (
   <ChakraProvider theme={theme}>
     <Routes>
-      <Route path="*" element={<Navigate to="sign-up" />} />
+      <Route path="*" element={<Navigate to="profile" />} />
       <Route path="sign-up" element={<SignUpPage />} />
       <Route path="login" element={<LogInPage />} />
       <Route path="messages" element={<ChatPage />} />

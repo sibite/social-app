@@ -18,7 +18,7 @@ import ThemeToggle from './ThemeToggle';
 
 interface Props {}
 
-const NavBar: React.FC<Props> = () => {
+const NavBarAccount: React.FC<Props> = () => {
   const { avatarSrc, name } = useAppSelector((state) => state.profile);
 
   return (
@@ -64,4 +64,4 @@ const NavBar: React.FC<Props> = () => {
   );
 };
 
-export default NavBar;
+export default NavBarAccount;

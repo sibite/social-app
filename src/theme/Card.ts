@@ -16,6 +16,9 @@ const Card: StyleConfig = {
     flat: {
       borderRadius: 'lg',
     },
+    unstyled: {
+      display: 'block',
+    },
   },
   defaultProps: {
     variant: 'shaded',

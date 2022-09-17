@@ -49,7 +49,16 @@ const initialState: ProfileState = {
       ],
     },
   ],
-  photos: [],
+  photos: [
+    'https://picsum.photos/200',
+    'https://picsum.photos/300',
+    'https://picsum.photos/310',
+    'https://picsum.photos/230',
+    'https://picsum.photos/500',
+    'https://picsum.photos/480',
+    'https://picsum.photos/390',
+    'https://picsum.photos/600',
+  ],
 };
 
 export const profileSlice = createSlice({

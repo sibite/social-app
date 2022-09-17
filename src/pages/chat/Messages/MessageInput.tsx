@@ -1,7 +1,7 @@
 import { HStack, IconButton } from '@chakra-ui/react';
 import { ChevronDoubleRightIcon } from '@heroicons/react/outline';
 import HeroIcon from '../../../components/chakra-ui/HeroIcon';
-import AutoResizedTextArea from '../../../shared/components/AutoResizedTextArea';
+import AutoResizedTextArea from '../../../components/misc/AutoResizedTextArea';
 
 interface Props {}
 

@@ -1,10 +1,11 @@
 import { Container, VStack } from '@chakra-ui/react';
 import formatDate from '../../shared/formatDate';
-import { Post } from '../../store/profile';
-import FeedCard from './FeedCard';
+import { Post as PostType } from '../../store/profile';
+import Card from '../chakra-ui/Card';
+import Post from './Post';
 
 interface Props {
-  posts: Post[];
+  posts: PostType[];
 }
 
 const Feed: React.FC<Props> = ({ posts }) => {
@@ -13,17 +14,19 @@ const Feed: React.FC<Props> = ({ posts }) => {
     key += 1;
 
     return (
-      <FeedCard
-        key={key}
-        dateString={formatDate(post.date)}
-        name={post.name}
-        comments={post.comments}
-        likes={post.likes}
-        avatarSrc={post.avatarSrc}
-        photoSrc={post.photoSrc}
-      >
-        {post.content}
-      </FeedCard>
+      <Card>
+        <Post
+          key={key}
+          dateString={formatDate(post.date)}
+          name={post.name}
+          comments={post.comments}
+          likes={post.likes}
+          avatarSrc={post.avatarSrc}
+          photoSrc={post.photoSrc}
+        >
+          {post.content}
+        </Post>
+      </Card>
     );
   });
 
