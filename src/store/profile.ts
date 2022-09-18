@@ -32,8 +32,7 @@ const initialState: ProfileState = {
       date: dayjs().subtract(100, 'hour'),
       name: 'Mike Mew',
       content: 'Look at this beautiful view!',
-      photoSrc:
-        'https://static01.nyt.com/images/2022/08/12/travel/15Paris-trees2/merlin_207982533_fe11e4be-760d-4959-a156-8db02e7ce5e5-videoSixteenByNine3000.jpg',
+      photoSrc: '../beautiful-blue-view-sky.jpg',
       likes: 135,
       comments: [
         {

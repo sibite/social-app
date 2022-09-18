@@ -4,23 +4,19 @@ import {
   Tooltip,
   useColorMode,
 } from '@chakra-ui/react';
-import { MoonIcon, SparklesIcon, SunIcon } from '@heroicons/react/outline';
-import { useState } from 'react';
+import { MoonIcon, SunIcon } from '@heroicons/react/outline';
 import HeroIcon from '../chakra-ui/HeroIcon';
 
-const colorModes: ColorModeWithSystem[] = ['system', 'dark', 'light'];
-const icons = [SparklesIcon, MoonIcon, SunIcon];
+const colorModes: ColorModeWithSystem[] = ['dark', 'light'];
+const icons = [MoonIcon, SunIcon];
 
 const ThemeToggle: React.FC = () => {
   const { colorMode, setColorMode } = useColorMode();
-  const initialColorModeId = colorModes.indexOf(colorMode);
-  const [colorModeId, setColorModeId] = useState(initialColorModeId);
+  const colorModeId = colorModes.indexOf(colorMode);
 
   const toggleColorMode = () => {
-    const nextId = (colorModeId + 1) % 3;
-    const nextColorMode = colorModes[nextId];
-    setColorModeId(nextId);
-    setColorMode(nextColorMode);
+    const nextId = (colorModeId + 1) % 2;
+    setColorMode(colorModes[nextId]);
   };
 
   return (
@@ -29,7 +25,7 @@ const ThemeToggle: React.FC = () => {
         onClick={toggleColorMode}
         variant="ghost"
         aria-label="Toggle color mode"
-        icon={<HeroIcon as={icons[colorModeId]} />}
+        icon={<HeroIcon as={icons[(colorModeId + 1) % 2]} />}
       />
     </Tooltip>
   );

@@ -25,7 +25,7 @@ const NavButton: React.FC<Props> = ({ icon, route, children }) => {
       leftIcon={
         <HeroIcon
           as={icon}
-          ml="-3px"
+          inButton
           color={isActive ? activeColor : 'initial'}
         />
       }

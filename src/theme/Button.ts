@@ -18,6 +18,21 @@ const Button: StyleConfig = {
           },
         };
       }
+      if (colorScheme === 'plainGray') {
+        const bg = colorMode === 'light' ? 'gray.100' : 'gray.700';
+        return {
+          bg,
+          _hover: {
+            bg: colorMode === 'light' ? 'gray.200' : 'gray.600',
+            _disabled: {
+              bg,
+            },
+          },
+          _active: {
+            bg: colorMode === 'light' ? 'gray.300' : 'gray.500',
+          },
+        };
+      }
       if (colorScheme === 'translucent') {
         const bg = colorMode === 'light' ? 'blackAlpha.600' : 'whiteAlpha.600';
         return {
