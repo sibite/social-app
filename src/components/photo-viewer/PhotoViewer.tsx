@@ -41,6 +41,7 @@ const PhotoViewer: React.FC<Props> = ({
     bgColor: 'gray.900',
     maxHeight: 'calc(100% - 40px)',
     mx: 14,
+    pointerEvents: 'auto',
   };
 
   const buttonMargin = 2;
@@ -48,7 +49,7 @@ const PhotoViewer: React.FC<Props> = ({
   return (
     <Portal containerRef={portalRef}>
       <Overlay onClick={closeHandler}>
-        <Center width="100%" height="100%">
+        <Center width="100%" height="100%" pointerEvents="none">
           <Grid sx={style}>{children}</Grid>
         </Center>
         <DarkMode>

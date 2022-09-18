@@ -39,7 +39,7 @@ const Gallery: React.FC<Props> = ({ photos }) => {
   });
 
   return (
-    <SimpleGrid spacing={4} width="100%" columns={5} px={0}>
+    <SimpleGrid spacing={4} width="100%" columns={5} px={0} py={10}>
       {ImagesJSX}
       {isViewerShowed && (
         <PhotoViewer onClose={closePhotoViewer}>
