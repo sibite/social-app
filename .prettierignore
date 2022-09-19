@@ -1,7 +1,7 @@
-#git
+# git
 /.git
 
-#config
+# config
 .prettierrc.json
 
 # dependencies

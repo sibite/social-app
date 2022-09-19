@@ -31,7 +31,7 @@ const Feed: React.FC<Props> = ({ posts }) => {
   });
 
   return (
-    <Container maxWidth="xl" py={10}>
+    <Container maxWidth="xl" py={10} px={0}>
       <VStack spacing={10}>{PostsJSX}</VStack>
     </Container>
   );

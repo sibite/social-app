@@ -40,7 +40,7 @@ const ProfileAvatar: React.FC<Props> = ({
     <Center width="100%" height="50px" position="relative">
       <Avatar
         src={avatarSrc}
-        size={['xl', '2xl', '3xl']}
+        size={['2xl', '2xl', '3xl']}
         name={name}
         sx={avatarStyle}
       >
