@@ -1,154 +1,63 @@
 import {
+  Alert,
+  AlertIcon,
+  AlertTitle,
   Button,
   Flex,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  GridItem,
   Heading,
-  Input,
   Link,
-  Select,
-  SimpleGrid,
   Text,
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react';
-import { Link as RouterLink } from 'react-router-dom';
+import axios from 'axios';
+import { useState } from 'react';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import useDateInput from '../../hooks/useDateInput';
 import useInputControl from '../../hooks/useInputControl';
+import { SignUpBodyType } from '../../shared/types/auth';
 import {
-  dateOfBirthOptions,
+  birthDateOptions,
   emailOptions,
   firstNameOptions,
   lastNameOptions,
   passwordOptions,
   repeatPasswordOptions,
 } from './form-controls';
+import SignUpInputs from './SignUpInputs';
 
 const SignUpPage: React.FC = () => {
+  const navigate = useNavigate();
+
+  const [emailInUse, setEmailInUse] = useState<string | undefined>();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isInternalError, setIsInternalError] = useState(false);
+
   const firstName = useInputControl(firstNameOptions);
   const lastName = useInputControl(lastNameOptions);
-  const email = useInputControl(emailOptions);
-  const dateOfBirth = useDateInput(dateOfBirthOptions);
+  const email = useInputControl(emailOptions(emailInUse));
+  const birthDate = useDateInput(birthDateOptions);
   const password = useInputControl(passwordOptions);
   const repeatPassword = useInputControl(repeatPasswordOptions(password));
 
-  const FirstNameJSX = (
-    <FormControl isInvalid={firstName.showInvalidity}>
-      <FormLabel>First name</FormLabel>
-      <Input
-        type="text"
-        placeholder="Joseph"
-        value={firstName.value}
-        onChange={firstName.changeHandler}
-        onBlur={firstName.touchHandler}
-      />
-      <FormErrorMessage>{firstName.errorMessage}</FormErrorMessage>
-    </FormControl>
-  );
-
-  const LastNameJSX = (
-    <FormControl isInvalid={lastName.showInvalidity}>
-      <FormLabel>Last name</FormLabel>
-      <Input
-        type="text"
-        placeholder="Murphy"
-        value={lastName.value}
-        onChange={lastName.changeHandler}
-        onBlur={lastName.touchHandler}
-      />
-      <FormErrorMessage>{lastName.errorMessage}</FormErrorMessage>
-    </FormControl>
-  );
-
-  const EmailJSX = (
-    <FormControl isInvalid={email.showInvalidity}>
-      <FormLabel>Your e-mail address</FormLabel>
-      <Input
-        type="email"
-        placeholder="employee@company.org"
-        value={email.value}
-        onChange={email.changeHandler}
-        onBlur={email.touchHandler}
-      />
-      <FormErrorMessage>{email.errorMessage}</FormErrorMessage>
-    </FormControl>
-  );
-
-  const DateOfBirthJSX = (
-    <FormControl isInvalid={dateOfBirth.showInvalidity}>
-      <FormLabel>Date of birth</FormLabel>
-      <SimpleGrid columns={4} spacing={5}>
-        <GridItem colSpan={1}>
-          <Select
-            placeholder="DD"
-            onBlur={dateOfBirth.day.touchHandler}
-            onChange={dateOfBirth.day.changeHandler}
-          >
-            {dateOfBirth.day.options.map(([value, label]) => (
-              <option value={value} key={value}>
-                {label}
-              </option>
-            ))}
-          </Select>
-        </GridItem>
-        <GridItem colSpan={2}>
-          <Select
-            placeholder="MMMM"
-            onBlur={dateOfBirth.month.touchHandler}
-            onChange={dateOfBirth.month.changeHandler}
-          >
-            {dateOfBirth.month.options.map(([value, label]) => (
-              <option value={value} key={value}>
-                {label}
-              </option>
-            ))}
-          </Select>
-        </GridItem>
-        <GridItem colSpan={1}>
-          <Select
-            placeholder="YYYY"
-            onBlur={dateOfBirth.year.touchHandler}
-            onChange={dateOfBirth.year.changeHandler}
-          >
-            {dateOfBirth.year.options.map(([value, label]) => (
-              <option value={value} key={value}>
-                {label}
-              </option>
-            ))}
-          </Select>
-        </GridItem>
-      </SimpleGrid>
-      <FormErrorMessage>{dateOfBirth.errorMessage}</FormErrorMessage>
-    </FormControl>
-  );
-
-  const PasswordJSX = (
-    <FormControl isInvalid={password.showInvalidity}>
-      <FormLabel>Password</FormLabel>
-      <Input
-        type="password"
-        value={password.value}
-        onChange={password.changeHandler}
-        onBlur={password.touchHandler}
-      />
-      <FormErrorMessage>{password.errorMessage}</FormErrorMessage>
-    </FormControl>
-  );
-
-  const RepeatPasswordJSX = (
-    <FormControl isInvalid={repeatPassword.showInvalidity}>
-      <FormLabel>Repeat password</FormLabel>
-      <Input
-        type="password"
-        value={repeatPassword.value}
-        onChange={repeatPassword.changeHandler}
-        onBlur={repeatPassword.touchHandler}
-      />
-      <FormErrorMessage>{repeatPassword.errorMessage}</FormErrorMessage>
-    </FormControl>
-  );
+  const sendSignUpReq = async (data: SignUpBodyType) => {
+    try {
+      await axios.post('/api/auth/sign-up', data);
+      navigate({ pathname: '/login', search: '?account_created=1' });
+    } catch (error: any) {
+      switch (error.response?.status) {
+        case 409:
+          setEmailInUse(email.value);
+          break;
+        case 500:
+          setIsInternalError(true);
+          break;
+        default:
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
@@ -156,11 +65,25 @@ const SignUpPage: React.FC = () => {
       firstName,
       lastName,
       email,
-      dateOfBirth,
+      birthDate,
       password,
       repeatPassword,
     ];
     inputs.forEach((input) => input.touchHandler());
+
+    const isFormValid = inputs.every((input) => !input.isInvalid);
+    if (!isFormValid) return;
+
+    setIsLoading(true);
+    setIsInternalError(false);
+
+    sendSignUpReq({
+      name: firstName.value,
+      lastName: lastName.value,
+      email: email.value,
+      password: password.value,
+      birthDate: birthDate.value.valueOf(),
+    });
   };
 
   const bg1 = useColorModeValue('gray.100', 'black');
@@ -179,14 +102,21 @@ const SignUpPage: React.FC = () => {
     <Flex direction="row" h={['100vh']} justify="center" background={bg1}>
       <VStack as="form" sx={formStyle} spacing={8} onSubmit={submitHandler}>
         <Heading as="h1">Sign up</Heading>
-        <SimpleGrid columns={4} spacing={5}>
-          <GridItem colSpan={2}>{FirstNameJSX}</GridItem>
-          <GridItem colSpan={2}>{LastNameJSX}</GridItem>
-          <GridItem colSpan={4}>{EmailJSX}</GridItem>
-          <GridItem colSpan={4}>{DateOfBirthJSX}</GridItem>
-          <GridItem colSpan={4}>{PasswordJSX}</GridItem>
-          <GridItem colSpan={4}>{RepeatPasswordJSX}</GridItem>
-        </SimpleGrid>
+        {isInternalError && (
+          <Alert status="error">
+            <AlertIcon />
+            <AlertTitle>Internal server error</AlertTitle>
+          </Alert>
+        )}
+        <SignUpInputs
+          firstName={firstName}
+          lastName={lastName}
+          email={email}
+          emailUsed={emailInUse === email.value}
+          birthDate={birthDate}
+          password={password}
+          repeatPassword={repeatPassword}
+        />
         <VStack spacing={2}>
           <Text my={0}>By clicking Sign Up you agree to our terms</Text>
           <Text my={0}>
@@ -196,7 +126,7 @@ const SignUpPage: React.FC = () => {
             </Link>
           </Text>
         </VStack>
-        <Button as="button" type="submit" w="100%">
+        <Button as="button" type="submit" w="100%" isLoading={isLoading}>
           Sign up
         </Button>
       </VStack>

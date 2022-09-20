@@ -1,4 +1,8 @@
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
   Button,
   Flex,
   FormControl,
@@ -11,12 +15,15 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useSearchParams } from 'react-router-dom';
 import useInputControl from '../../hooks/useInputControl';
 
-const SignUpPage: React.FC = () => {
+const LogInPage: React.FC = () => {
   const email = useInputControl({ initialValue: '' });
   const password = useInputControl({ initialValue: '' });
+  const [searchParams] = useSearchParams();
+
+  const showSignUpAlert = !!searchParams.get('account_created');
 
   const EmailJSX = (
     <FormControl isInvalid={email.showInvalidity}>
@@ -63,6 +70,13 @@ const SignUpPage: React.FC = () => {
     <Flex direction="row" h={['100vh']} justify="center" background={bg1}>
       <VStack as="form" sx={formStyle} spacing={8} onSubmit={submitHandler}>
         <Heading as="h1">Log in</Heading>
+        {showSignUpAlert && (
+          <Alert status="success" variant="subtle">
+            <AlertIcon />
+            <AlertTitle>Account has been created</AlertTitle>
+            <AlertDescription>Please log in</AlertDescription>
+          </Alert>
+        )}
         <VStack spacing={5} width="full">
           <FormControl>
             <FormErrorMessage>Incorrect e-mail or password</FormErrorMessage>
@@ -83,4 +97,4 @@ const SignUpPage: React.FC = () => {
   );
 };
 
-export default SignUpPage;
+export default LogInPage;

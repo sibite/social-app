@@ -11,7 +11,7 @@ const signUp: RequestHandler = (req, res) => {
     validator.isLength(lastName, { min: 2 }),
     validator.isEmail(email),
     validator.isLength(password, { min: 8 }),
-    validator.isNumeric(birthDate),
+    typeof birthDate === 'number',
   ].every((result) => result);
 
   if (!isFormValid) {
@@ -27,6 +27,7 @@ const signUp: RequestHandler = (req, res) => {
 
     if (n > 0) {
       res.status(409).send({ message: 'E-mail is already in use' });
+      return;
     }
 
     const salt = crypto.randomBytes(16).toString('hex');
@@ -47,7 +48,7 @@ const signUp: RequestHandler = (req, res) => {
         res.status(500).send();
         return;
       }
-      res.status(201).json(newUser);
+      res.status(201).json({ message: 'Account created' });
     });
   });
 };

@@ -16,13 +16,13 @@ export const lastNameOptions: InputOptions = {
   errorMessage: 'Last name must be at least 2 letters long',
 };
 
-export const emailOptions: InputOptions = {
+export const emailOptions = (inUse?: string): InputOptions => ({
   initialValue: '',
-  validator: emailValidator,
+  validator: (value) => emailValidator(value) && value !== inUse,
   errorMessage: 'Invalid format of e-mail',
-};
+});
 
-export const dateOfBirthOptions: DateInputOptions = {
+export const birthDateOptions: DateInputOptions = {
   validator: createBirthDateValidator(13),
   errorMessage: 'You must be at least 13 years old in order to use our service',
 };
