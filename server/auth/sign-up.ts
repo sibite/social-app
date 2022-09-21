@@ -39,6 +39,7 @@ const signUp: RequestHandler = (req, res) => {
       name,
       lastName,
       email,
+      birthDate,
       passwordHash,
       salt,
     };

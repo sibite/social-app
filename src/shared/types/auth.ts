@@ -10,3 +10,11 @@ export interface LogInBodyType {
   email: string;
   password: string;
 }
+
+export interface UserType {
+  name: string;
+  lastName: string;
+  email: string;
+  avatarSrc?: string;
+  birthDate?: string;
+}

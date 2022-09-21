@@ -57,6 +57,12 @@
       ]
     },
     "rules": {
+      "no-param-reassign": [
+        "error",
+        {
+          "props": false
+        }
+      ],
       "react/react-in-jsx-scope": "off",
       "react/prop-types": "off",
       "react/function-component-definition": [

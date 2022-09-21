@@ -5,6 +5,6 @@ import signUp from './sign-up';
 const authRouter = express.Router();
 
 authRouter.post('/sign-up', signUp);
-authRouter.get('/log-in', logIn);
+authRouter.post('/log-in', logIn);
 
 export default authRouter;

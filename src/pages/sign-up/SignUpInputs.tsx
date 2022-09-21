@@ -81,6 +81,7 @@ const SignUpInputs: React.FC<Props> = ({
       <SimpleGrid columns={4} spacing={5}>
         <GridItem colSpan={1}>
           <Select
+            id="day"
             placeholder="DD"
             onBlur={birthDate.day.touchHandler}
             onChange={birthDate.day.changeHandler}
@@ -94,6 +95,7 @@ const SignUpInputs: React.FC<Props> = ({
         </GridItem>
         <GridItem colSpan={2}>
           <Select
+            id="month"
             placeholder="MMMM"
             onBlur={birthDate.month.touchHandler}
             onChange={birthDate.month.changeHandler}
@@ -107,6 +109,7 @@ const SignUpInputs: React.FC<Props> = ({
         </GridItem>
         <GridItem colSpan={1}>
           <Select
+            id="year"
             placeholder="YYYY"
             onBlur={birthDate.year.touchHandler}
             onChange={birthDate.year.changeHandler}

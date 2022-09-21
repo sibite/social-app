@@ -15,43 +15,61 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react';
-import { Link as RouterLink, useSearchParams } from 'react-router-dom';
+import axios from 'axios';
+import { useState } from 'react';
+import {
+  Link as RouterLink,
+  useNavigate,
+  useSearchParams,
+} from 'react-router-dom';
 import useInputControl from '../../hooks/useInputControl';
+import { LogInBodyType } from '../../shared/types/auth';
+import { profileActions } from '../../store/auth';
+import { useAppDispatch } from '../../store/hooks';
+import LogInInputs from './LogInInputs';
 
 const LogInPage: React.FC = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const [isError, setIsError] = useState(false);
+  const [isInternalError, setIsInternalError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const email = useInputControl({ initialValue: '' });
   const password = useInputControl({ initialValue: '' });
-  const [searchParams] = useSearchParams();
 
-  const showSignUpAlert = !!searchParams.get('account_created');
+  const showSignUpAlert = searchParams.get('account_created') === '1';
 
-  const EmailJSX = (
-    <FormControl isInvalid={email.showInvalidity}>
-      <FormLabel>Your e-mail address</FormLabel>
-      <Input
-        type="email"
-        placeholder="employee@company.org"
-        value={email.value}
-        onChange={email.changeHandler}
-      />
-    </FormControl>
-  );
-
-  const PasswordJSX = (
-    <FormControl isInvalid={password.showInvalidity}>
-      <FormLabel>Password</FormLabel>
-      <Input
-        type="password"
-        value={password.value}
-        onChange={password.changeHandler}
-      />
-    </FormControl>
-  );
+  const sendLogInReq = async (data: LogInBodyType) => {
+    try {
+      const res = await axios.post('/api/auth/log-in', data);
+      if (!res.data.user && !res.data.token) throw new Error();
+      dispatch(profileActions.logIn(res.data));
+      navigate('/profile/feed');
+    } catch (error: any) {
+      switch (error.response?.status) {
+        case 400:
+          setIsError(true);
+          break;
+        default:
+          setIsInternalError(true);
+          break;
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
-    const inputs = [email, password];
-    inputs.forEach((input) => input.touchHandler());
+
+    setIsLoading(true);
+    setIsError(false);
+    setIsInternalError(false);
+    setSearchParams({ account_created: '0' });
+    sendLogInReq({ email: email.value, password: password.value });
   };
 
   const bg1 = useColorModeValue('gray.100', 'black');
@@ -70,6 +88,12 @@ const LogInPage: React.FC = () => {
     <Flex direction="row" h={['100vh']} justify="center" background={bg1}>
       <VStack as="form" sx={formStyle} spacing={8} onSubmit={submitHandler}>
         <Heading as="h1">Log in</Heading>
+        {isInternalError && (
+          <Alert status="error">
+            <AlertIcon />
+            <AlertTitle>Internal server error</AlertTitle>
+          </Alert>
+        )}
         {showSignUpAlert && (
           <Alert status="success" variant="subtle">
             <AlertIcon />
@@ -77,19 +101,14 @@ const LogInPage: React.FC = () => {
             <AlertDescription>Please log in</AlertDescription>
           </Alert>
         )}
-        <VStack spacing={5} width="full">
-          <FormControl>
-            <FormErrorMessage>Incorrect e-mail or password</FormErrorMessage>
-          </FormControl>
-          {[EmailJSX, PasswordJSX]}
-        </VStack>
+        <LogInInputs email={email} password={password} isError={isError} />
         <Text my={0}>
           <span>Don&apos;t have an account? </span>
           <Link as={RouterLink} to="/sign-up">
             Create one
           </Link>
         </Text>
-        <Button as="button" type="submit" w="100%">
+        <Button as="button" type="submit" w="100%" isLoading={isLoading}>
           Log in
         </Button>
       </VStack>

@@ -7,7 +7,10 @@ import ACCESS_TOKEN_SECRET from '../env';
 const logIn: RequestHandler = (req, res) => {
   const { email, password } = req.body;
 
-  if (!email || !password) res.status(400).send();
+  if (!email || !password) {
+    res.status(400).send();
+    return;
+  }
 
   db.users.findOne({ email }, { salt: 1 }, (error, user) => {
     if (error) {
