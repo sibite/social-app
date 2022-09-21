@@ -1,20 +1,24 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { UserType } from '../shared/types/auth';
 
 interface AuthState {
-  authToken?: string;
-  user?: UserType;
+  token?: string;
+  userId?: string;
 }
 
-const initialState: AuthState = {};
+const initialState: AuthState = {
+  token: localStorage.getItem('social-app.auth-token') ?? undefined,
+  userId: localStorage.getItem('social-app.user-id') ?? undefined,
+};
 
 export const profileSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    logIn(store, action: PayloadAction<{ user: UserType; token: string }>) {
-      store.authToken = action.payload.token;
-      store.user = action.payload.user;
+    logIn(store, action: PayloadAction<{ userId: string; token: string }>) {
+      store.token = action.payload.token;
+      store.userId = action.payload.userId;
+      localStorage.setItem('social-app.auth-token', action.payload.token);
+      localStorage.setItem('social-app.user-id', action.payload.userId);
     },
   },
 });

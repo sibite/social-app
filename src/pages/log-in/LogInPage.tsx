@@ -5,11 +5,7 @@ import {
   AlertTitle,
   Button,
   Flex,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
   Heading,
-  Input,
   Link,
   Text,
   useColorModeValue,
@@ -23,7 +19,7 @@ import {
   useSearchParams,
 } from 'react-router-dom';
 import useInputControl from '../../hooks/useInputControl';
-import { LogInBodyType } from '../../shared/types/auth';
+import { LogInBodyType } from '../../../server/api-types/auth';
 import { profileActions } from '../../store/auth';
 import { useAppDispatch } from '../../store/hooks';
 import LogInInputs from './LogInInputs';
@@ -47,7 +43,7 @@ const LogInPage: React.FC = () => {
       const res = await axios.post('/api/auth/log-in', data);
       if (!res.data.user && !res.data.token) throw new Error();
       dispatch(profileActions.logIn(res.data));
-      navigate('/profile/feed');
+      navigate('/profile/me');
     } catch (error: any) {
       switch (error.response?.status) {
         case 400:

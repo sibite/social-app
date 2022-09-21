@@ -13,11 +13,7 @@ interface Props {
   isEditing?: boolean;
 }
 
-const ProfileAvatar: React.FC<Props> = ({
-  name = 'User',
-  avatarSrc,
-  isEditing,
-}) => {
+const ProfileAvatar: React.FC<Props> = ({ name, avatarSrc, isEditing }) => {
   const borderColor = useColorModeValue('light.200', 'gray.700');
 
   const avatarStyle = {

@@ -22,7 +22,7 @@ const EditableControls = () => {
   } = useEditableControls();
 
   return isEditing ? (
-    <ButtonGroup justifyContent="center" size="sm">
+    <ButtonGroup justifyContent="center" size="sm" mt={1}>
       <IconButton
         icon={<HeroIcon as={CheckIcon} />}
         {...(getSubmitButtonProps() as IconButtonProps)}

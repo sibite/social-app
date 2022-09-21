@@ -12,9 +12,14 @@ export interface LogInBodyType {
 }
 
 export interface UserType {
+  _id: string;
+  fullName: string;
   name: string;
   lastName: string;
   email: string;
   avatarSrc?: string;
-  birthDate?: string;
+  birthDate?: number;
+  description?: string;
 }
+
+export type UserPublicType = Partial<UserType>;

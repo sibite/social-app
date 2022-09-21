@@ -18,7 +18,10 @@ export interface Post extends SocialObject {
   comments: Comment[];
 }
 
-export interface ProfileState extends SocialObject {
+export interface ProfileState {
+  name: string;
+  avatarSrc?: string;
+  description: string;
   feed: Post[];
   photos: any[];
 }
@@ -26,13 +29,13 @@ export interface ProfileState extends SocialObject {
 const initialState: ProfileState = {
   avatarSrc: undefined,
   name: 'Mike Mew',
-  content: 'The best orthodontist in the world',
+  description: 'The best orthodontist in the world',
   feed: [
     {
       date: dayjs().subtract(100, 'hour'),
       name: 'Mike Mew',
       content: 'Look at this beautiful view!',
-      photoSrc: '../beautiful-blue-view-sky.jpg',
+      photoSrc: '/beautiful-blue-view-sky.jpg',
       likes: 135,
       comments: [
         {

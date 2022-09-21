@@ -63,6 +63,14 @@
           "props": false
         }
       ],
+      "no-underscore-dangle": [
+        "error",
+        {
+          "allow": [
+            "_id"
+          ]
+        }
+      ],
       "react/react-in-jsx-scope": "off",
       "react/prop-types": "off",
       "react/function-component-definition": [

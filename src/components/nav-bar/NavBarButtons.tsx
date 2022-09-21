@@ -12,7 +12,7 @@ const NavBarButtons: React.FC<Props> = () => (
     <NavButton icon={ChatAlt2Icon} route="/messages">
       Chats
     </NavButton>
-    <NavButton icon={UserIcon} route="/profile">
+    <NavButton icon={UserIcon} route="/profile/me">
       Me
     </NavButton>
   </Center>

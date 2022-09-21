@@ -5,10 +5,11 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes, useParams } from 'react-router-dom';
 import Feed from '../../components/feed/Feed';
 import PageContainer from '../../components/layout/PageContainer';
 import { useAppSelector } from '../../store/hooks';
+import { useGetProfileQuery } from '../../store/profile-api';
 import Gallery from './Gallery';
 import ProfileAvatar from './ProfileAvatar';
 import ProfileCover from './ProfileCover';
@@ -21,7 +22,17 @@ interface Props {
 
 const ProfilePage: React.FC<Props> = ({ isMine = true }) => {
   const [isEditing, setIsEditing] = useBoolean(false);
-  const profile = useAppSelector((state) => state.profile);
+
+  const storeProfile = useAppSelector((state) => state.profile);
+  const auth = useAppSelector((state) => state.auth);
+
+  let id = useParams().id || 'me';
+  if (id === 'me') {
+    id = auth.userId ?? 'unknown';
+  }
+
+  const { data, error, isLoading } = useGetProfileQuery(id);
+  const profile = data ?? {};
 
   const bg1 = useColorModeValue('gray.100', 'black');
   const bgCard = useColorModeValue('white', 'gray.900');
@@ -33,14 +44,14 @@ const ProfilePage: React.FC<Props> = ({ isMine = true }) => {
           <Box width="100%">
             <ProfileCover isEditing={isEditing} />
             <ProfileAvatar
-              name={profile.name}
+              name={profile.fullName}
               avatarSrc={profile.avatarSrc}
               isEditing={isEditing}
             />
             <VStack spacing={4} pt={6}>
               <ProfileHeading
-                name={profile.name}
-                description={profile.content}
+                name={profile.fullName}
+                description={profile.description}
                 isEditing={isEditing}
               />
               <ProfileTabBar
@@ -56,8 +67,11 @@ const ProfilePage: React.FC<Props> = ({ isMine = true }) => {
       <Container maxWidth="container.lg">
         <Routes>
           <Route path="*" element={<Navigate to="feed" />} />
-          <Route path="feed" element={<Feed posts={profile.feed} />} />
-          <Route path="photos" element={<Gallery photos={profile.photos} />} />
+          <Route path="feed" element={<Feed posts={storeProfile.feed} />} />
+          <Route
+            path="photos"
+            element={<Gallery photos={storeProfile.photos} />}
+          />
         </Routes>
       </Container>
     </PageContainer>

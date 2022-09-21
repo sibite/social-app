@@ -15,7 +15,7 @@ import { useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import useDateInput from '../../hooks/useDateInput';
 import useInputControl from '../../hooks/useInputControl';
-import { SignUpBodyType } from '../../shared/types/auth';
+import { SignUpBodyType } from '../../../server/api-types/auth';
 import {
   birthDateOptions,
   emailOptions,

@@ -13,7 +13,8 @@ const App = () => (
       <Route path="/sign-up" element={<SignUpPage />} />
       <Route path="/login" element={<LogInPage />} />
       <Route path="/messages" element={<ChatPage />} />
-      <Route path="/profile/*" element={<ProfilePage />} />
+      <Route path="/profile/:id/*" element={<ProfilePage />} />
+      <Route path="/profile" element={<Navigate to="me" />} />
     </Routes>
   </ChakraProvider>
 );
