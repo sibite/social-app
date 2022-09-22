@@ -29,16 +29,23 @@ export const accountApi = createApi({
         };
       },
     }),
-    uploadCover: builder.query<void, Blob>({
+    uploadCover: builder.query<any, Blob>({
       query: (file) => {
         const formdata = new FormData();
         formdata.append('cover', file);
         return {
           url: 'cover',
-          method: 'put',
+          method: 'PUT',
           body: formdata,
         };
       },
+    }),
+    patchDetails: builder.query<any, Partial<UserType>>({
+      query: (updatedData) => ({
+        url: '',
+        method: 'PATCH',
+        body: updatedData,
+      }),
     }),
   }),
 });

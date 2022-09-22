@@ -94,6 +94,15 @@ const ProfilePage: React.FC<Props> = ({ isMine = true }) => {
             dispatch(accountApi.endpoints.uploadCover.initiate(editingCover))
           );
         }
+        if (editingDescription) {
+          requests.push(
+            dispatch(
+              accountApi.endpoints.patchDetails.initiate({
+                description: editingDescription,
+              })
+            )
+          );
+        }
         let count = requests.length;
         if (count === 0) resolve();
         requests.forEach((request) => {
