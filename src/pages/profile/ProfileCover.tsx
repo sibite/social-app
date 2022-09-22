@@ -1,57 +1,42 @@
 import {
   AspectRatio,
-  LightMode,
-  IconButton,
   Box,
-  useColorModeValue,
+  IconButton,
   Image,
+  LightMode,
+  useColorModeValue,
   VisuallyHiddenInput,
 } from '@chakra-ui/react';
 import { PencilIcon } from '@heroicons/react/outline';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import HeroIcon from '../../components/chakra-ui/HeroIcon';
-import { accountApi } from '../../store/account-api';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { profileApi } from '../../store/profile-api';
 
 interface Props {
   coverSrc?: string;
   isEditing?: boolean;
+  isUploading?: boolean;
+  onChange?: (avatar: Blob) => any;
 }
 
-const ProfileCover: React.FC<Props> = ({ coverSrc, isEditing = false }) => {
-  const bgColor = useColorModeValue('gray.100', 'gray.800');
-
+const ProfileCover: React.FC<Props> = ({
+  coverSrc,
+  isEditing = false,
+  isUploading = false,
+  onChange,
+}) => {
   const coverInputRef = useRef<HTMLInputElement>(null);
-  const [coverFile, setCoverFile] = useState<Blob | null>();
-  const dispatch = useAppDispatch();
-
-  const myId = useAppSelector(({ auth }) => auth.userId) ?? 'unknown';
 
   const openCoverInput = () => coverInputRef.current?.click();
 
   const coverChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newCoverFile =
       event.currentTarget.files && event.currentTarget.files[0];
-    setCoverFile(newCoverFile);
-    if (newCoverFile) {
-      dispatch(accountApi.endpoints.uploadCover.initiate(newCoverFile)).then(
-        () => {
-          dispatch(
-            accountApi.endpoints.getAccountData.initiate(undefined, {
-              forceRefetch: true,
-            })
-          );
-          dispatch(
-            profileApi.endpoints.getProfile.initiate(myId, {
-              forceRefetch: true,
-            })
-          );
-        }
-      );
-      console.log(newCoverFile);
+    if (newCoverFile && onChange) {
+      onChange(newCoverFile);
     }
   };
+
+  const bgColor = useColorModeValue('gray.100', 'gray.800');
 
   const boxStyle = {
     width: '100%',
@@ -69,7 +54,9 @@ const ProfileCover: React.FC<Props> = ({ coverSrc, isEditing = false }) => {
   return (
     <AspectRatio width="100%" ratio={3}>
       <Box sx={boxStyle}>
-        {coverSrc && <Image src={coverSrc} />}
+        {coverSrc && (
+          <Image src={coverSrc} width="100%" height="100%" objectFit="cover" />
+        )}
         {isEditing && (
           <LightMode>
             <IconButton
@@ -80,6 +67,7 @@ const ProfileCover: React.FC<Props> = ({ coverSrc, isEditing = false }) => {
               size="md"
               sx={buttonStyle}
               onClick={openCoverInput}
+              disabled={isUploading}
             />
             <VisuallyHiddenInput
               type="file"

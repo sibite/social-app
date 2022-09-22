@@ -14,10 +14,10 @@ const putAvatar: RequestHandler = async (req, res) => {
         const minSize = Math.min(meta.width!, meta.height!);
         console.log(minSize);
         return img.extract({
-          width: minSize,
-          height: minSize,
-          top: (meta.height! - minSize) / 2,
-          left: (meta.width! - minSize) / 2,
+          width: Math.floor(minSize),
+          height: Math.floor(minSize),
+          top: Math.floor((meta.height! - minSize) / 2),
+          left: Math.floor((meta.width! - minSize) / 2),
         });
       },
     },

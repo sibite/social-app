@@ -45,9 +45,13 @@ const EditableControls = () => {
 
 interface Props {
   description?: string;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => any;
 }
 
-const ProfileEditableDescription: React.FC<Props> = ({ description }) => (
+const ProfileEditableDescription: React.FC<Props> = ({
+  description,
+  onChange,
+}) => (
   <Editable
     textAlign="center"
     maxWidth="400px"
@@ -56,7 +60,13 @@ const ProfileEditableDescription: React.FC<Props> = ({ description }) => (
     isPreviewFocusable={false}
   >
     <EditablePreview opacity={0.8} mb={2} />
-    <Input as={EditableTextarea} height={100} width={300} maxWidth="100%" />
+    <Input
+      as={EditableTextarea}
+      height={100}
+      width={300}
+      maxWidth="100%"
+      onChange={onChange}
+    />
     <EditableControls />
   </Editable>
 );

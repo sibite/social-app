@@ -5,11 +5,13 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react';
+import { useState } from 'react';
 import { Navigate, Route, Routes, useParams } from 'react-router-dom';
 import Feed from '../../components/feed/Feed';
 import PageContainer from '../../components/layout/PageContainer';
-import { useAppSelector } from '../../store/hooks';
-import { useGetProfileQuery } from '../../store/profile-api';
+import { accountApi } from '../../store/account-api';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { profileApi, useGetProfileQuery } from '../../store/profile-api';
 import Gallery from './Gallery';
 import ProfileAvatar from './ProfileAvatar';
 import ProfileCover from './ProfileCover';
@@ -21,10 +23,18 @@ interface Props {
 }
 
 const ProfilePage: React.FC<Props> = ({ isMine = true }) => {
-  const [isEditing, setIsEditing] = useBoolean(false);
-
   const storeProfile = useAppSelector((state) => state.profile);
   const auth = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+
+  const [isEditing, setIsEditing] = useBoolean(false);
+  const [isUploading, setIsUploading] = useBoolean(false);
+
+  const [editingAvatar, setEditingAvatar] = useState<Blob | null>();
+  const [editingCover, setEditingCover] = useState<Blob | null>();
+  const [editingAvatarUrl, setEditingAvatarUrl] = useState<string | null>();
+  const [editingCoverUrl, setEditingCoverUrl] = useState<string | null>();
+  const [editingDescription, setEditingDescription] = useState<string | null>();
 
   let id = useParams().id || 'me';
   if (id === 'me') {
@@ -34,6 +44,83 @@ const ProfilePage: React.FC<Props> = ({ isMine = true }) => {
   const { data, error, isLoading } = useGetProfileQuery(id);
   const profile = data ?? {};
 
+  const avatarSrc = editingAvatarUrl ?? profile?.avatarSrc;
+  const coverSrc = editingCoverUrl ?? profile?.coverSrc;
+  const description = editingDescription ?? profile?.description;
+
+  const getEditingChangeFn =
+    (setFn: (val: Blob) => any, setUrlFn: (val: string) => any) =>
+    (newAvatar: Blob) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(newAvatar);
+      fileReader.onload = () => setUrlFn(fileReader.result as string);
+      setFn(newAvatar);
+    };
+
+  const avatarChangeHandler = getEditingChangeFn(
+    setEditingAvatar,
+    setEditingAvatarUrl
+  );
+  const coverChangeHandler = getEditingChangeFn(
+    setEditingCover,
+    setEditingCoverUrl
+  );
+  const descriptionChangeHandler = (newDescription: string) => {
+    setEditingDescription(newDescription);
+  };
+
+  const cancelEditing = () => {
+    setEditingAvatar(null);
+    setEditingCover(null);
+    setEditingAvatarUrl(null);
+    setEditingCoverUrl(null);
+    setEditingDescription(null);
+    setIsEditing.off();
+  };
+
+  const saveHandler = async () => {
+    setIsUploading.on();
+
+    try {
+      await new Promise<void>((resolve, reject) => {
+        const requests = [];
+        if (editingAvatar) {
+          requests.push(
+            dispatch(accountApi.endpoints.uploadAvatar.initiate(editingAvatar))
+          );
+        }
+        if (editingCover) {
+          requests.push(
+            dispatch(accountApi.endpoints.uploadCover.initiate(editingCover))
+          );
+        }
+        let count = requests.length;
+        if (count === 0) resolve();
+        requests.forEach((request) => {
+          request.then(() => {
+            count -= 1;
+            if (count === 0) resolve();
+          });
+        });
+      });
+    } catch (err) {
+      setIsUploading.off();
+    }
+
+    dispatch(
+      accountApi.endpoints.getAccountData.initiate(undefined, {
+        forceRefetch: true,
+      })
+    );
+    await dispatch(
+      profileApi.endpoints.getProfile.initiate(id, {
+        forceRefetch: true,
+      })
+    );
+    cancelEditing();
+    setIsUploading.off();
+  };
+
   const bg1 = useColorModeValue('gray.100', 'black');
   const bgCard = useColorModeValue('white', 'gray.900');
 
@@ -42,23 +129,34 @@ const ProfilePage: React.FC<Props> = ({ isMine = true }) => {
       <Box width="100%" bg={bgCard}>
         <Container maxWidth="container.lg">
           <Box width="100%">
-            <ProfileCover coverSrc={profile.coverSrc} isEditing={isEditing} />
+            <ProfileCover
+              coverSrc={coverSrc}
+              isEditing={isEditing}
+              isUploading={isUploading}
+              onChange={coverChangeHandler}
+            />
             <ProfileAvatar
               name={profile.fullName}
-              avatarSrc={profile.avatarSrc}
+              avatarSrc={avatarSrc}
               isEditing={isEditing}
+              isUploading={isUploading}
+              onChange={avatarChangeHandler}
             />
             <VStack spacing={4} pt={6}>
               <ProfileHeading
                 name={profile.fullName}
-                description={profile.description}
+                description={description}
                 isEditing={isEditing}
+                isUploading={isUploading}
+                onChange={descriptionChangeHandler}
               />
               <ProfileTabBar
                 isEditing={isEditing}
+                isUploading={isUploading}
                 isMine={isMine}
                 editOn={setIsEditing.on}
-                editOff={setIsEditing.off}
+                editOff={cancelEditing}
+                onSave={saveHandler}
               />
             </VStack>
           </Box>

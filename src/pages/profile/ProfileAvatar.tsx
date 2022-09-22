@@ -6,68 +6,37 @@ import {
   VisuallyHiddenInput,
 } from '@chakra-ui/react';
 import { PencilIcon } from '@heroicons/react/outline';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import HeroIcon from '../../components/chakra-ui/HeroIcon';
-import { accountApi } from '../../store/account-api';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { profileApi } from '../../store/profile-api';
 
 interface Props {
   name?: string;
   avatarSrc?: string;
   isEditing?: boolean;
+  isUploading?: boolean;
+  onChange?: (avatar: Blob) => any;
 }
 
-const ProfileAvatar: React.FC<Props> = ({ name, avatarSrc, isEditing }) => {
+const ProfileAvatar: React.FC<Props> = ({
+  name,
+  avatarSrc,
+  isEditing,
+  isUploading = false,
+  onChange,
+}) => {
   const avatarInputRef = useRef<HTMLInputElement>(null);
-  const [avatarFile, setAvatarFile] = useState<Blob | null>();
-  const dispatch = useAppDispatch();
-
-  const myId = useAppSelector(({ auth }) => auth.userId) ?? 'unknown';
-
-  const borderColor = useColorModeValue('gray.50', 'gray.700');
 
   const openAvatarInput = () => avatarInputRef.current?.click();
 
   const avatarChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newAvatarFile =
       event.currentTarget.files && event.currentTarget.files[0];
-    setAvatarFile(newAvatarFile);
-    if (newAvatarFile) {
-      dispatch(accountApi.endpoints.uploadAvatar.initiate(newAvatarFile)).then(
-        () => {
-          dispatch(
-            accountApi.endpoints.getAccountData.initiate(undefined, {
-              forceRefetch: true,
-            })
-          );
-          dispatch(
-            profileApi.endpoints.getProfile.initiate(myId, {
-              forceRefetch: true,
-            })
-          );
-        }
-      );
-      console.log(newAvatarFile);
+    if (newAvatarFile && onChange) {
+      onChange(newAvatarFile);
     }
   };
 
-  // let isSuccess: boolean = false;
-
-  // if (avatarFile) {
-  //   isSuccess =
-  //     accountApi.endpoints.uploadAvatar.useQueryState(avatarFile).isSuccess;
-  // }
-
-  // useEffect(() => {
-  //   if (isSuccess) {
-  //     accountApi.util.updateQueryData('getAccountData', undefined, () => {
-  //       const a = 2;
-  //     });
-  //   }
-  // }, [isSuccess]);
-
-  // if (isSuccess) console.log('avatar uploaded');
+  const borderColor = useColorModeValue('gray.50', 'gray.700');
 
   const avatarStyle = {
     position: 'absolute',
@@ -102,6 +71,7 @@ const ProfileAvatar: React.FC<Props> = ({ name, avatarSrc, isEditing }) => {
             size="md"
             sx={buttonStyle}
             onClick={openAvatarInput}
+            disabled={isUploading}
           />,
           <VisuallyHiddenInput
             type="file"

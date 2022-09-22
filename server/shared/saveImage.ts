@@ -52,7 +52,7 @@ const saveImage = async (
     }
 
     const dirPath = `../uploads/${storagePath}`;
-    const filePath = `${dirPath}/${image.md5}_${Date.now()}.jpg`;
+    const filePath = `${dirPath}/${Date.now()}_${image.md5}.jpg`;
     const imageSource = `/api${filePath.slice(2)}`;
 
     ensureDirExists(path.join(__dirname, dirPath));
