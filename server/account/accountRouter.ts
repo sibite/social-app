@@ -1,9 +1,19 @@
 import express from 'express';
-import authenticate from '../shared/authenticate';
+import fileUpload from 'express-fileupload';
+import authenticate from '../auth/authenticate';
+import { FILE_SIZE_LIMIT } from '../env';
+import putAvatar from './avatarPut';
 import me from './me';
 
 const accountRouter = express.Router();
 
+accountRouter.use(
+  fileUpload({
+    limits: { fileSize: FILE_SIZE_LIMIT },
+  })
+);
+
 accountRouter.get('/me', authenticate, me);
+accountRouter.put('/avatar', authenticate, putAvatar);
 
 export default accountRouter;

@@ -13,7 +13,6 @@ import {
 } from '@chakra-ui/react';
 import { CogIcon, LogoutIcon } from '@heroicons/react/outline';
 import { useGetAccountDataQuery } from '../../store/account-api';
-import { useAppSelector } from '../../store/hooks';
 import HeroIcon from '../chakra-ui/HeroIcon';
 import ThemeToggle from './ThemeToggle';
 
@@ -23,8 +22,6 @@ const NavBarAccount: React.FC<Props> = () => {
   const { data, error, isLoading } = useGetAccountDataQuery();
 
   const user = data;
-
-  // const user = useAppSelector((state) => state.auth.user);
 
   const fullName = user?.fullName;
   const avatarSrc = user?.avatarSrc;
