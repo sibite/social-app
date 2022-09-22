@@ -18,6 +18,7 @@ export interface UserType {
   lastName: string;
   email: string;
   avatarSrc?: string;
+  coverSrc?: string;
   birthDate?: number;
   description?: string;
 }

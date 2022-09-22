@@ -1,14 +1,12 @@
 import {
-  Center,
   Avatar,
+  Center,
   IconButton,
   useColorModeValue,
-  FormLabel,
-  Input,
   VisuallyHiddenInput,
 } from '@chakra-ui/react';
 import { PencilIcon } from '@heroicons/react/outline';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import HeroIcon from '../../components/chakra-ui/HeroIcon';
 import { accountApi } from '../../store/account-api';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -36,10 +34,8 @@ const ProfileAvatar: React.FC<Props> = ({ name, avatarSrc, isEditing }) => {
       event.currentTarget.files && event.currentTarget.files[0];
     setAvatarFile(newAvatarFile);
     if (newAvatarFile) {
-      console.log(
-        dispatch(
-          accountApi.endpoints.uploadAvatar.initiate(newAvatarFile)
-        ).then(() => {
+      dispatch(accountApi.endpoints.uploadAvatar.initiate(newAvatarFile)).then(
+        () => {
           dispatch(
             accountApi.endpoints.getAccountData.initiate(undefined, {
               forceRefetch: true,
@@ -50,8 +46,9 @@ const ProfileAvatar: React.FC<Props> = ({ name, avatarSrc, isEditing }) => {
               forceRefetch: true,
             })
           );
-        })
+        }
       );
+      console.log(newAvatarFile);
     }
   };
 
@@ -93,7 +90,7 @@ const ProfileAvatar: React.FC<Props> = ({ name, avatarSrc, isEditing }) => {
       <Avatar
         src={avatarSrc}
         size={['2xl', '2xl', '3xl']}
-        name={name}
+        name={avatarSrc ? undefined : name}
         sx={avatarStyle}
       >
         {isEditing && [

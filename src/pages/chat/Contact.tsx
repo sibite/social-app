@@ -8,14 +8,14 @@ import {
 
 interface Props {
   name?: string;
-  avatar?: string;
+  avatarSrc?: string;
   unread?: boolean;
   onSelect?: Function;
 }
 
 const Contacts: React.FC<Props> = ({
   name = 'User',
-  avatar,
+  avatarSrc,
   unread = false,
   onSelect = () => null,
 }) => {
@@ -50,7 +50,12 @@ const Contacts: React.FC<Props> = ({
 
   return (
     <Flex sx={style} as="button" onClick={clickHandler}>
-      <Avatar size="md" src={avatar} name={name} mr={3} />
+      <Avatar
+        size="md"
+        src={avatarSrc}
+        name={avatarSrc ? undefined : name}
+        mr={3}
+      />
       <Heading as="h2" size="sm" sx={headingStyle}>
         {name}
       </Heading>

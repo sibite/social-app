@@ -42,7 +42,7 @@ const ProfilePage: React.FC<Props> = ({ isMine = true }) => {
       <Box width="100%" bg={bgCard}>
         <Container maxWidth="container.lg">
           <Box width="100%">
-            <ProfileCover isEditing={isEditing} />
+            <ProfileCover coverSrc={profile.coverSrc} isEditing={isEditing} />
             <ProfileAvatar
               name={profile.fullName}
               avatarSrc={profile.avatarSrc}

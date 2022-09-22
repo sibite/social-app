@@ -3,16 +3,22 @@ import { Avatar, Box, HStack, Text, useColorModeValue } from '@chakra-ui/react';
 interface Props {
   direction: 'from' | 'to';
   name?: string;
+  avatarSrc?: string;
   children: React.ReactNode;
 }
 
-const Message: React.FC<Props> = ({ direction, name = 'User', children }) => {
+const Message: React.FC<Props> = ({
+  direction,
+  avatarSrc,
+  name = 'User',
+  children,
+}) => {
   const bgColor = useColorModeValue('gray.100', 'gray.800');
 
   const isDirectionTo = direction === 'to';
 
   let content = [
-    <Avatar size="xs" name={name} />,
+    <Avatar size="xs" name={avatarSrc ? undefined : name} />,
     <Box
       maxW="70%"
       py={1}

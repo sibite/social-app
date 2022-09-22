@@ -7,7 +7,7 @@ const getProfile: RequestHandler = (req, res) => {
 
   db.users.findOne(
     { _id: userId },
-    { name: 1, lastName: 1, avatarSrc: 1, description: 1 },
+    { name: 1, lastName: 1, avatarSrc: 1, coverSrc: 1, description: 1 },
     (err, profile) => {
       if (err) return res.status(500).send();
       if (!profile) return res.status(404).send();

@@ -25,7 +25,7 @@ const Comment: React.FC<Props> = ({
 
   return (
     <Flex gap={2}>
-      <Avatar name={name} src={avatarSrc} />
+      <Avatar name={avatarSrc ? undefined : name} src={avatarSrc} />
       <Card bgColor={nodeColor} py={2} px={3} variant="flat">
         <HStack>
           <Heading as="span" size="xs">

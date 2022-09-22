@@ -24,7 +24,7 @@ const PostHeader: React.FC<Props> = ({
 }) => (
   <VStack spacing={4} p={4} align="stretch">
     <Flex align="center" gap={2}>
-      <Avatar name={name} src={avatarSrc} />
+      <Avatar name={avatarSrc ? undefined : name} src={avatarSrc} />
       <VStack align="flex-start" flexGrow={1} spacing={0}>
         <Heading as="span" size="sm">
           {name}

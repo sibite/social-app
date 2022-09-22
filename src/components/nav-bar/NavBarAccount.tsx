@@ -29,7 +29,11 @@ const NavBarAccount: React.FC<Props> = () => {
   const AccountBarJSX = (
     <Popover>
       <PopoverTrigger>
-        <Avatar as="button" name={fullName} src={avatarSrc} />
+        <Avatar
+          as="button"
+          name={avatarSrc ? undefined : fullName}
+          src={avatarSrc}
+        />
       </PopoverTrigger>
       <PopoverContent mt={3} mr={3}>
         <PopoverArrow />

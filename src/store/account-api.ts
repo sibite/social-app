@@ -29,6 +29,17 @@ export const accountApi = createApi({
         };
       },
     }),
+    uploadCover: builder.query<void, Blob>({
+      query: (file) => {
+        const formdata = new FormData();
+        formdata.append('cover', file);
+        return {
+          url: 'cover',
+          method: 'put',
+          body: formdata,
+        };
+      },
+    }),
   }),
 });
 
