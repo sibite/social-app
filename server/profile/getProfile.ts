@@ -3,7 +3,6 @@ import db from '../database/database';
 
 const getProfile: RequestHandler = (req, res) => {
   const userId = req.params.profileId;
-  console.log(`query profile id: ${userId}`);
 
   db.users.findOne(
     { _id: userId },

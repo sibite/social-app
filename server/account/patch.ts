@@ -13,7 +13,6 @@ const patch: RequestHandler = (req, res) => {
       updatedFields[fieldKey] = req.body[fieldKey];
     });
 
-  console.log(updatedFields);
   db.users.update(
     { _id: req.userId },
     { $set: updatedFields },

@@ -1,4 +1,5 @@
-import { Request, Response } from 'express';
+import { Request } from 'express';
+import { UploadedFile } from 'express-fileupload';
 import path from 'path';
 import sharp, { Metadata, Sharp } from 'sharp';
 import { JPEG_QUALITY } from '../env';
@@ -9,18 +10,23 @@ interface Options {
   storagePath: string;
   transform?: (sharpImg: Sharp, metadata: Metadata) => Sharp;
   maxPixelSize: number;
+  id?: number;
 }
 
 const saveImage = async (
   req: Request,
-  res: Response,
-  { fieldKey, maxPixelSize, storagePath, transform }: Options,
-  callback: (src: string) => any
+  { fieldKey, id, maxPixelSize, storagePath, transform }: Options,
+  callback: (err?: { code: number; message: string }, src?: string) => any
 ) => {
-  const image = req.files?.[fieldKey];
+  const startTime = Date.now();
+  let image = req.files?.[fieldKey];
+
+  if (id !== undefined && id > 0 && image) {
+    image = (image as UploadedFile[])[id];
+  }
 
   if (!image || 'length' in image) {
-    res.status(400).send({ message: 'No file sent' });
+    callback({ code: 400, message: 'No file sent' });
     return;
   }
 
@@ -34,11 +40,12 @@ const saveImage = async (
     pixels = (metadata.width ?? 0) * (metadata.height ?? 0);
     if (pixels === 0 || !metadata.width || !metadata.height) throw new Error();
   } catch (err) {
-    res.status(500).send({ message: 'Error when reading file metadata' });
+    callback({ code: 500, message: 'Error when reading file metadata' });
     return;
   }
 
   try {
+    imgObj = sharp(await imgObj.rotate().toBuffer());
     if (transform) {
       imgObj = transform(imgObj, await imgObj.metadata());
     }
@@ -59,11 +66,12 @@ const saveImage = async (
     await imgObj
       .jpeg({ quality: JPEG_QUALITY })
       .toFile(path.join(__dirname, filePath));
+    const endTime = Date.now();
+    console.log(`Saving image ${endTime - startTime}ms`);
 
-    callback(imageSource);
+    callback(undefined, imageSource);
   } catch (err) {
-    console.log(err);
-    res.status(500).send({ message: 'Error when compressing file' });
+    callback({ code: 500, message: 'Error when compressing file' });
   }
 };
 

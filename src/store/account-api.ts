@@ -1,18 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { UserType } from '../../server/api-types/auth';
-import type { RootState } from '.';
+import prepareAuthHeader from './prepare-auth-header';
 
 export const accountApi = createApi({
   reducerPath: 'accountApi',
   baseQuery: fetchBaseQuery({
     baseUrl: '/api/account/',
-    prepareHeaders: (headers, { getState }) => {
-      const { token } = (getState() as RootState).auth;
-      if (token) {
-        headers.set('Authorization', `Bearer ${token}`);
-      }
-      return headers;
-    },
+    prepareHeaders: prepareAuthHeader,
   }),
   endpoints: (builder) => ({
     getAccountData: builder.query<UserType, void>({

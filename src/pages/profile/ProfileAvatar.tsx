@@ -3,11 +3,10 @@ import {
   Center,
   IconButton,
   useColorModeValue,
-  VisuallyHiddenInput,
 } from '@chakra-ui/react';
 import { PencilIcon } from '@heroicons/react/outline';
-import { useRef } from 'react';
 import HeroIcon from '../../components/chakra-ui/HeroIcon';
+import CustomFilePicker from '../../components/misc/CustomFilePicker';
 
 interface Props {
   name?: string;
@@ -24,10 +23,6 @@ const ProfileAvatar: React.FC<Props> = ({
   isUploading = false,
   onChange,
 }) => {
-  const avatarInputRef = useRef<HTMLInputElement>(null);
-
-  const openAvatarInput = () => avatarInputRef.current?.click();
-
   const avatarChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newAvatarFile =
       event.currentTarget.files && event.currentTarget.files[0];
@@ -62,23 +57,23 @@ const ProfileAvatar: React.FC<Props> = ({
         name={avatarSrc ? undefined : name}
         sx={avatarStyle}
       >
-        {isEditing && [
-          <IconButton
-            aria-label="Edit profile picture"
-            icon={<HeroIcon as={PencilIcon} />}
-            colorScheme="plainGray"
-            variant="solid"
-            size="md"
-            sx={buttonStyle}
-            onClick={openAvatarInput}
-            disabled={isUploading}
-          />,
-          <VisuallyHiddenInput
-            type="file"
+        {isEditing && (
+          <CustomFilePicker
             onChange={avatarChangeHandler}
-            ref={avatarInputRef}
-          />,
-        ]}
+            accept="image/png, image/jpeg, image/webp, image/gif"
+            capture="user"
+          >
+            <IconButton
+              aria-label="Edit profile picture"
+              icon={<HeroIcon as={PencilIcon} />}
+              colorScheme="plainGray"
+              variant="solid"
+              size="md"
+              sx={buttonStyle}
+              disabled={isUploading}
+            />
+          </CustomFilePicker>
+        )}
       </Avatar>
     </Center>
   );

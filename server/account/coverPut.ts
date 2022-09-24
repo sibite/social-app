@@ -5,15 +5,13 @@ import saveImage from '../shared/saveImage';
 const putCover: RequestHandler = async (req, res) => {
   saveImage(
     req,
-    res,
     {
       storagePath: `${req.userId}/covers`,
       fieldKey: 'cover',
-      maxPixelSize: 1980,
+      maxPixelSize: 2000,
       transform: (img, meta) => {
         const aspectRatio = 3;
         const targetWidth = Math.min(meta.width!, meta.height! * aspectRatio);
-        console.log(targetWidth);
         return img.extract({
           width: Math.floor(targetWidth),
           height: Math.floor(targetWidth / aspectRatio),
@@ -22,14 +20,17 @@ const putCover: RequestHandler = async (req, res) => {
         });
       },
     },
-    (coverSrc) => {
-      console.log(coverSrc);
+    (err, coverSrc) => {
+      if (err) {
+        res.status(err.code).send({ message: err.message });
+        return;
+      }
       db.users.update(
         { _id: req.userId },
         { $set: { coverSrc } },
         {},
-        (err, numOfUpdated) => {
-          if (err || !numOfUpdated) {
+        (dbErr, numOfUpdated) => {
+          if (dbErr || !numOfUpdated) {
             res.status(500).send({ message: 'Error when saving to database' });
             return;
           }

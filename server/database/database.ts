@@ -6,6 +6,14 @@ const db = {
     filename: path.join(__dirname, './store/users'),
     autoload: true,
   }),
+  feed: new Datastore({
+    filename: path.join(__dirname, './store/feed'),
+    autoload: true,
+  }),
+  media: new Datastore({
+    filename: path.join(__dirname, './store/media'),
+    autoload: true,
+  }),
 };
 
 export default db;

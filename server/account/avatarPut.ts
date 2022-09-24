@@ -5,14 +5,12 @@ import saveImage from '../shared/saveImage';
 const putAvatar: RequestHandler = async (req, res) => {
   saveImage(
     req,
-    res,
     {
       storagePath: `${req.userId}/avatars`,
       fieldKey: 'avatar',
-      maxPixelSize: 1280,
+      maxPixelSize: 1920,
       transform: (img, meta) => {
         const minSize = Math.min(meta.width!, meta.height!);
-        console.log(minSize);
         return img.extract({
           width: Math.floor(minSize),
           height: Math.floor(minSize),
@@ -21,14 +19,17 @@ const putAvatar: RequestHandler = async (req, res) => {
         });
       },
     },
-    (avatarSrc) => {
-      console.log(avatarSrc);
+    (err, avatarSrc) => {
+      if (err) {
+        res.status(err.code).send({ message: err.message });
+        return;
+      }
       db.users.update(
         { _id: req.userId },
         { $set: { avatarSrc } },
         {},
-        (err, numOfUpdated) => {
-          if (err || !numOfUpdated) {
+        (dbErr, numOfUpdated) => {
+          if (dbErr || !numOfUpdated) {
             res.status(500).send({ message: 'Error when saving to database' });
             return;
           }

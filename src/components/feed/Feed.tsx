@@ -2,6 +2,7 @@ import { Container, VStack } from '@chakra-ui/react';
 import formatDate from '../../shared/formatDate';
 import { Post as PostType } from '../../store/profile';
 import Card from '../chakra-ui/Card';
+import NewPost from './NewPost';
 import Post from './Post';
 
 interface Props {
@@ -32,7 +33,10 @@ const Feed: React.FC<Props> = ({ posts }) => {
 
   return (
     <Container maxWidth="xl" py={10} px={0}>
-      <VStack spacing={10}>{PostsJSX}</VStack>
+      <VStack spacing={10}>
+        <NewPost />
+        {PostsJSX}
+      </VStack>
     </Container>
   );
 };

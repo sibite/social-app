@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import accountRouter from './account/accountRouter';
 import authRouter from './auth/authRouter';
+import feedRouter from './feed/feedRouter';
 import profileRouter from './profile/profileRouter';
 
 const PORT = 4000;
@@ -14,6 +15,7 @@ router.use('/uploads', express.static(path.join(__dirname, './uploads')));
 router.use('/auth', authRouter);
 router.use('/account', accountRouter);
 router.use('/profile', profileRouter);
+router.use('/feed', feedRouter);
 
 app.use('/api', router);
 

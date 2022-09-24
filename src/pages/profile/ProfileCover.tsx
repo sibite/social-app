@@ -5,11 +5,10 @@ import {
   Image,
   LightMode,
   useColorModeValue,
-  VisuallyHiddenInput,
 } from '@chakra-ui/react';
 import { PencilIcon } from '@heroicons/react/outline';
-import { useRef } from 'react';
 import HeroIcon from '../../components/chakra-ui/HeroIcon';
+import CustomFilePicker from '../../components/misc/CustomFilePicker';
 
 interface Props {
   coverSrc?: string;
@@ -24,10 +23,6 @@ const ProfileCover: React.FC<Props> = ({
   isUploading = false,
   onChange,
 }) => {
-  const coverInputRef = useRef<HTMLInputElement>(null);
-
-  const openCoverInput = () => coverInputRef.current?.click();
-
   const coverChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newCoverFile =
       event.currentTarget.files && event.currentTarget.files[0];
@@ -59,21 +54,21 @@ const ProfileCover: React.FC<Props> = ({
         )}
         {isEditing && (
           <LightMode>
-            <IconButton
-              aria-label="Edit profile picture"
-              icon={<HeroIcon as={PencilIcon} />}
-              colorScheme="translucent"
-              variant="solid"
-              size="md"
-              sx={buttonStyle}
-              onClick={openCoverInput}
-              disabled={isUploading}
-            />
-            <VisuallyHiddenInput
-              type="file"
+            <CustomFilePicker
               onChange={coverChangeHandler}
-              ref={coverInputRef}
-            />
+              accept="image/png, image/jpeg, image/webp, image/gif"
+              capture="environment"
+            >
+              <IconButton
+                aria-label="Edit profile picture"
+                icon={<HeroIcon as={PencilIcon} />}
+                colorScheme="translucent"
+                variant="solid"
+                size="md"
+                sx={buttonStyle}
+                disabled={isUploading}
+              />
+            </CustomFilePicker>
           </LightMode>
         )}
       </Box>

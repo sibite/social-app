@@ -18,11 +18,9 @@ import ProfileCover from './ProfileCover';
 import ProfileHeading from './ProfileHeading';
 import ProfileTabBar from './ProfileTabBar';
 
-interface Props {
-  isMine?: boolean;
-}
+interface Props {}
 
-const ProfilePage: React.FC<Props> = ({ isMine = true }) => {
+const ProfilePage: React.FC<Props> = () => {
   const storeProfile = useAppSelector((state) => state.profile);
   const auth = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
@@ -40,6 +38,8 @@ const ProfilePage: React.FC<Props> = ({ isMine = true }) => {
   if (id === 'me') {
     id = auth.userId ?? 'unknown';
   }
+
+  const isMine = id === auth.userId;
 
   const { data, error, isLoading } = useGetProfileQuery(id);
   const profile = data ?? {};
@@ -173,7 +173,7 @@ const ProfilePage: React.FC<Props> = ({ isMine = true }) => {
       </Box>
       <Container maxWidth="container.lg">
         <Routes>
-          <Route path="*" element={<Navigate to="feed" />} />
+          <Route path="*" element={<Navigate to="feed" replace />} />
           <Route path="feed" element={<Feed posts={storeProfile.feed} />} />
           <Route
             path="photos"

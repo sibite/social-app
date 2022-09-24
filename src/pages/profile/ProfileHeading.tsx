@@ -1,4 +1,4 @@
-import { Center, Heading, Text } from '@chakra-ui/react';
+import { Center, Heading, Text, useColorModeValue } from '@chakra-ui/react';
 import ProfileEditableDescription from './ProfileEditableDescription';
 
 interface Props {
@@ -21,20 +21,29 @@ const ProfileHeading: React.FC<Props> = ({
     if (onChange) onChange(newDescription);
   };
 
+  const descriptionColor = useColorModeValue('gray.700', 'gray.400');
+
   return (
     <>
       <Heading as="h1" size="lg">
         {name}
       </Heading>
       {(!isEditing || isUploading) && (
-        <Text maxWidth="400px" opacity={0.8} px={4} textAlign="center">
+        <Text
+          maxWidth="50ch"
+          px={4}
+          textAlign="center"
+          whiteSpace="pre-line"
+          color={descriptionColor}
+        >
           {description}
         </Text>
       )}
       {isEditing && !isUploading && (
-        <Center>
+        <Center width="100%" maxWidth="50ch">
           <ProfileEditableDescription
             description={description}
+            color={descriptionColor}
             onChange={changeHandler}
           />
         </Center>
