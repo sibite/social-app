@@ -1,4 +1,7 @@
 import {
+  Alert,
+  AlertIcon,
+  AlertTitle,
   Box,
   Button,
   ButtonGroup,
@@ -18,7 +21,7 @@ import {
 import { useRef, useState } from 'react';
 import { CreatePostType } from '../../../server/api-types/feed';
 import useUploadManager from '../../hooks/useUploadManager';
-import { feedApi } from '../../store/feed-api';
+import { feedApi, useCreatePostMutation } from '../../store/feed-api';
 import { useAppDispatch } from '../../store/hooks';
 import Card from '../chakra-ui/Card';
 import HeroIcon from '../chakra-ui/HeroIcon';
@@ -28,15 +31,19 @@ import Thumbnails from './Thumbnails';
 
 const NewPost: React.FC = () => {
   const [isExpanded, setIsExpanded] = useBoolean(false);
-  const [isPosting, setIsPosting] = useBoolean(false);
-  const [error, setError] = useBoolean(false);
   const [description, setDescription] = useState('');
 
-  const textAreaRef = useRef<any>();
-  const dispatch = useAppDispatch();
+  const [createPost, { isLoading, isError }] = useCreatePostMutation();
 
-  const { files, isLoading, changeHandler, removeFile, clearAll } =
-    useUploadManager();
+  const textAreaRef = useRef<any>();
+
+  const {
+    files,
+    isLoading: isLoadingFiles,
+    changeHandler,
+    removeFile,
+    clearAll,
+  } = useUploadManager();
 
   const descriptionChangeHandler = (
     event: React.ChangeEvent<HTMLTextAreaElement>
@@ -52,21 +59,11 @@ const NewPost: React.FC = () => {
       media: files.map((wrapper) => wrapper.file),
     };
 
-    setError.off();
-    setIsPosting.on();
+    await createPost(queryArg).unwrap();
 
-    try {
-      const result = await dispatch(
-        feedApi.endpoints.createPost.initiate(queryArg)
-      );
-      setIsPosting.off();
-      textAreaRef.current.clear();
-      clearAll();
-    } catch (err) {
-      setError.on();
-    } finally {
-      setIsPosting.off();
-    }
+    setDescription('');
+    clearAll();
+    setIsExpanded.off();
   };
 
   const expandButtonStyle = {
@@ -106,12 +103,18 @@ const NewPost: React.FC = () => {
             onClick={setIsExpanded.off}
           />
         </Flex>
+        {isError && (
+          <Alert status="error">
+            <AlertIcon />
+            <AlertTitle>An error occured</AlertTitle>
+          </Alert>
+        )}
         <AutoResizedTextArea
           ref={textAreaRef}
           width="100%"
           minHeight="7em"
           autoFocus
-          disabled={isLoading || isPosting}
+          disabled={isLoadingFiles || isLoading}
           onChange={descriptionChangeHandler}
           defaultValue={description}
         />
@@ -123,8 +126,8 @@ const NewPost: React.FC = () => {
           >
             <Button
               leftIcon={<HeroIcon as={PhotographIcon} inButton />}
-              isLoading={isLoading}
-              loadingText="Loading photos"
+              isLoading={isLoadingFiles}
+              loadingText="Importing photos"
             >
               Import photos
             </Button>
@@ -132,6 +135,9 @@ const NewPost: React.FC = () => {
           <Button
             leftIcon={<HeroIcon as={ArrowRightIcon} inButton />}
             type="submit"
+            disabled={isLoadingFiles}
+            isLoading={isLoading}
+            loadingText="Posting"
           >
             Post
           </Button>

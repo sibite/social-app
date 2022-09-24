@@ -51,12 +51,12 @@ const Gallery: React.FC<Props> = ({ photos }) => {
               {
                 name: 'Mateusz Karbowy',
                 content: 'I wish I was there',
-                date: dayjs().subtract(5, 'hour'),
+                date: dayjs().subtract(5, 'hour').valueOf(),
               },
               {
                 name: 'Chris Heria',
                 content: 'Perfect place to work out',
-                date: dayjs().subtract(20, 'hour'),
+                date: dayjs().subtract(20, 'hour').valueOf(),
               },
             ]}
           >

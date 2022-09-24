@@ -9,6 +9,7 @@ const putCover: RequestHandler = async (req, res) => {
       storagePath: `${req.userId}/covers`,
       fieldKey: 'cover',
       maxPixelSize: 2000,
+      quality: 97,
       transform: (img, meta) => {
         const aspectRatio = 3;
         const targetWidth = Math.min(meta.width!, meta.height! * aspectRatio);
@@ -34,7 +35,7 @@ const putCover: RequestHandler = async (req, res) => {
             res.status(500).send({ message: 'Error when saving to database' });
             return;
           }
-          res.sendStatus(201);
+          res.status(201).send();
         }
       );
     }

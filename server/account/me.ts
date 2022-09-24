@@ -6,7 +6,7 @@ const me = (req: Request, res: Response, next: NextFunction) => {
   const { userId } = req;
 
   if (!userId) {
-    res.sendStatus(403);
+    res.status(403).send();
     return;
   }
 
@@ -15,11 +15,11 @@ const me = (req: Request, res: Response, next: NextFunction) => {
     { passwordHash: 0, salt: 0 },
     (err, user) => {
       if (err) {
-        res.sendStatus(500);
+        res.status(500).send();
         return;
       }
       if (!user) {
-        res.sendStatus(404);
+        res.status(404).send();
         return;
       }
 

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 
 interface SocialObject {
   name: string;
@@ -8,11 +8,11 @@ interface SocialObject {
 }
 
 export interface Comment extends SocialObject {
-  date: Dayjs;
+  date: number;
 }
 
 export interface Post extends SocialObject {
-  date: Dayjs;
+  date: number;
   photoSrc?: string;
   likes: number;
   comments: Comment[];
@@ -32,7 +32,7 @@ const initialState: ProfileState = {
   description: 'The best orthodontist in the world',
   feed: [
     {
-      date: dayjs().subtract(100, 'hour'),
+      date: dayjs().subtract(100, 'hour').valueOf(),
       name: 'Mike Mew',
       content: 'Look at this beautiful view!',
       photoSrc: '/beautiful-blue-view-sky.jpg',
@@ -41,12 +41,12 @@ const initialState: ProfileState = {
         {
           name: 'Mateusz Karbowy',
           content: 'I wish I was there',
-          date: dayjs().subtract(5, 'hour'),
+          date: dayjs().subtract(5, 'hour').valueOf(),
         },
         {
           name: 'Chris Heria',
           content: 'Perfect place to work out',
-          date: dayjs().subtract(20, 'hour'),
+          date: dayjs().subtract(20, 'hour').valueOf(),
         },
       ],
     },

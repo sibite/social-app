@@ -8,8 +8,9 @@ export const feedApi = createApi({
     baseUrl: '/api/feed',
     prepareHeaders: prepareAuthHeader,
   }),
+  tagTypes: ['Post'],
   endpoints: (builder) => ({
-    createPost: builder.query<any, CreatePostType>({
+    createPost: builder.mutation<unknown, CreatePostType>({
       query: (payload) => {
         const formData = new FormData();
 
@@ -25,8 +26,9 @@ export const feedApi = createApi({
           body: formData,
         };
       },
+      invalidatesTags: ['Post'],
     }),
   }),
 });
 
-export const { useCreatePostQuery } = feedApi;
+export const { useCreatePostMutation } = feedApi;

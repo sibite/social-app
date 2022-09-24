@@ -9,13 +9,21 @@ interface Options {
   fieldKey: string;
   storagePath: string;
   transform?: (sharpImg: Sharp, metadata: Metadata) => Sharp;
-  maxPixelSize: number;
+  maxPixelSize?: number;
+  quality?: number;
   id?: number;
 }
 
 const saveImage = async (
   req: Request,
-  { fieldKey, id, maxPixelSize, storagePath, transform }: Options,
+  {
+    fieldKey,
+    id,
+    maxPixelSize = 1280,
+    quality,
+    storagePath,
+    transform,
+  }: Options,
   callback: (err?: { code: number; message: string }, src?: string) => any
 ) => {
   const startTime = Date.now();
@@ -64,7 +72,7 @@ const saveImage = async (
 
     ensureDirExists(path.join(__dirname, dirPath));
     await imgObj
-      .jpeg({ quality: JPEG_QUALITY })
+      .jpeg({ quality: quality || JPEG_QUALITY })
       .toFile(path.join(__dirname, filePath));
     const endTime = Date.now();
     console.log(`Saving image ${endTime - startTime}ms`);

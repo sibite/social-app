@@ -1,4 +1,5 @@
 import { Container, VStack } from '@chakra-ui/react';
+import dayjs from 'dayjs';
 import formatDate from '../../shared/formatDate';
 import { Post as PostType } from '../../store/profile';
 import Card from '../chakra-ui/Card';
@@ -18,7 +19,7 @@ const Feed: React.FC<Props> = ({ posts }) => {
       <Card>
         <Post
           key={key}
-          dateString={formatDate(post.date)}
+          dateString={formatDate(dayjs(post.date))}
           name={post.name}
           comments={post.comments}
           likes={post.likes}

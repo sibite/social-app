@@ -15,7 +15,7 @@ const signUp: RequestHandler = (req, res) => {
   ].every((result) => result);
 
   if (!isFormValid) {
-    res.status(400).send('Invalid form');
+    res.status(400).send({ message: 'Invalid form' });
     return;
   }
 

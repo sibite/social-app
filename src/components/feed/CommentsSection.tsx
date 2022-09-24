@@ -1,4 +1,5 @@
 import { useColorModeValue, VStack } from '@chakra-ui/react';
+import dayjs from 'dayjs';
 import useBackgroundColor from '../../hooks/useBackgroundColor';
 import formatDate from '../../shared/formatDate';
 import { Comment as CommentType } from '../../store/profile';
@@ -15,7 +16,7 @@ const CommentsSection: React.FC<Props> = ({ comments }) => {
     <Comment
       name={comment.name}
       avatarSrc={comment.avatarSrc}
-      dateString={formatDate(comment.date)}
+      dateString={formatDate(dayjs(comment.date))}
     >
       {comment.content}
     </Comment>

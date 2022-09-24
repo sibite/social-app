@@ -22,7 +22,7 @@ const patch: RequestHandler = (req, res) => {
         res.status(500).send({ message: 'Error when updating database entry' });
         return;
       }
-      res.sendStatus(201);
+      res.status(201).send();
     }
   );
 };

@@ -7,17 +7,17 @@ const authenticate = (req: Request, res: Response, next: NextFunction) => {
   const token = authHeader?.split(' ')[1];
 
   if (!token) {
-    res.sendStatus(401);
+    res.status(401).send();
     return;
   }
 
   jwt.verify(token, ACCESS_TOKEN_SECRET, (err, user) => {
     if (err) {
-      res.sendStatus(403);
+      res.status(403).send();
       return;
     }
     if (!user || typeof user === 'string') {
-      res.sendStatus(404);
+      res.status(404).send();
       return;
     }
 

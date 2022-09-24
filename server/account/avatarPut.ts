@@ -9,6 +9,7 @@ const putAvatar: RequestHandler = async (req, res) => {
       storagePath: `${req.userId}/avatars`,
       fieldKey: 'avatar',
       maxPixelSize: 1920,
+      quality: 97,
       transform: (img, meta) => {
         const minSize = Math.min(meta.width!, meta.height!);
         return img.extract({
@@ -33,7 +34,7 @@ const putAvatar: RequestHandler = async (req, res) => {
             res.status(500).send({ message: 'Error when saving to database' });
             return;
           }
-          res.sendStatus(201);
+          res.status(201).send();
         }
       );
     }

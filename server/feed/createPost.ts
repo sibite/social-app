@@ -40,7 +40,7 @@ const createPost: RequestHandler = (req, res) => {
             .send({ message: 'Error when inserting post to database' });
           return;
         }
-        res.sendStatus(201);
+        res.status(201).send();
         console.log(post);
       });
     };
