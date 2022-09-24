@@ -46,6 +46,7 @@ const Gallery: React.FC<Props> = ({ photos }) => {
           <PhotoContainer src={photoSrc} />
           <PhotoSideContent
             name="Mike Mew"
+            content="Nice vibe"
             dateString={formatDate(dayjs().subtract(5, 'minutes'))}
             comments={[
               {
@@ -59,9 +60,7 @@ const Gallery: React.FC<Props> = ({ photos }) => {
                 date: dayjs().subtract(20, 'hour').valueOf(),
               },
             ]}
-          >
-            Nice vibe
-          </PhotoSideContent>
+          />
         </PhotoViewer>
       )}
     </SimpleGrid>

@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express-serve-static-core';
-import { PostType } from '../api-types/feed';
+import { PostDBType } from '../api-types/feed';
 import db from '../database/database';
 import saveImage from '../shared/saveImage';
 
@@ -26,7 +26,7 @@ const createPost: RequestHandler = (req, res) => {
         return;
       }
 
-      const newPost: Partial<PostType> = {
+      const newPost: Partial<PostDBType> = {
         creatorId: req.userId,
         date: Date.now(),
         content,

@@ -1,36 +1,18 @@
 import { Container, VStack } from '@chakra-ui/react';
-import dayjs from 'dayjs';
-import formatDate from '../../shared/formatDate';
-import { Post as PostType } from '../../store/profile';
 import Card from '../chakra-ui/Card';
 import NewPost from './NewPost';
-import Post from './Post';
+import PostApiWrapper from './PostApiWrapper';
 
 interface Props {
-  posts: PostType[];
+  posts: string[];
 }
 
 const Feed: React.FC<Props> = ({ posts }) => {
-  let key = -1;
-  const PostsJSX = posts.map((post) => {
-    key += 1;
-
-    return (
-      <Card>
-        <Post
-          key={key}
-          dateString={formatDate(dayjs(post.date))}
-          name={post.name}
-          comments={post.comments}
-          likes={post.likes}
-          avatarSrc={post.avatarSrc}
-          photoSrc={post.photoSrc}
-        >
-          {post.content}
-        </Post>
-      </Card>
-    );
-  });
+  const PostsJSX = posts.map((postId) => (
+    <Card width="100%">
+      <PostApiWrapper postId={postId} key={postId} />
+    </Card>
+  ));
 
   return (
     <Container maxWidth="xl" py={10} px={0}>

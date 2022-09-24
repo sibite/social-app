@@ -10,6 +10,7 @@ import { Navigate, Route, Routes, useParams } from 'react-router-dom';
 import Feed from '../../components/feed/Feed';
 import PageContainer from '../../components/layout/PageContainer';
 import { accountApi } from '../../store/account-api';
+import { useGetProfileFeedQuery } from '../../store/feed-api';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { profileApi, useGetProfileQuery } from '../../store/profile-api';
 import Gallery from './Gallery';
@@ -41,7 +42,8 @@ const ProfilePage: React.FC<Props> = () => {
 
   const isMine = id === auth.userId;
 
-  const { data, error, isLoading } = useGetProfileQuery(id);
+  const { data, isError, isLoading } = useGetProfileQuery(id);
+  const feedQuery = useGetProfileFeedQuery(id);
   const profile = data ?? {};
 
   const avatarSrc = editingAvatarUrl ?? profile?.avatarSrc;
@@ -174,7 +176,7 @@ const ProfilePage: React.FC<Props> = () => {
       <Container maxWidth="container.lg">
         <Routes>
           <Route path="*" element={<Navigate to="feed" replace />} />
-          <Route path="feed" element={<Feed posts={storeProfile.feed} />} />
+          <Route path="feed" element={<Feed posts={feedQuery.data ?? []} />} />
           <Route
             path="photos"
             element={<Gallery photos={storeProfile.photos} />}

@@ -3,6 +3,8 @@ import fileUpload from 'express-fileupload';
 import authenticate from '../auth/authenticate';
 import { FILE_SIZE_LIMIT } from '../env';
 import createPost from './createPost';
+import getPost from './getPost';
+import getProfileFeed from './getProfileFeed';
 
 const feedRouter = express.Router();
 
@@ -13,5 +15,7 @@ feedRouter.use(
 );
 
 feedRouter.post('/', authenticate, createPost);
+feedRouter.get('/:profileId', authenticate, getProfileFeed);
+feedRouter.get('/post/:postId', authenticate, getPost);
 
 export default feedRouter;

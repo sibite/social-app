@@ -5,6 +5,7 @@ import Post from '../feed/Post';
 interface Props {
   avatarSrc?: string;
   name: string;
+  content?: string;
   dateString: string;
   comments: Comment[];
   children?: React.ReactNode;
@@ -13,21 +14,20 @@ interface Props {
 const PhotoSideContent: React.FC<Props> = ({
   avatarSrc,
   name,
+  content,
   dateString,
   comments,
-  children,
 }) => (
   <Card variant="unstyled">
     <Post
       avatarSrc={avatarSrc}
       name={name}
+      content={content}
       dateString={dateString}
       likes={3}
       comments={comments}
       alwaysShowComments
-    >
-      {children}
-    </Post>
+    />
   </Card>
 );
 export default PhotoSideContent;

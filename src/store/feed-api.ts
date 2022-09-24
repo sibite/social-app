@@ -1,5 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { CreatePostType } from '../../server/api-types/feed';
+import {
+  CreatePostType,
+  PostIncomingType,
+  PostDBType,
+} from '../../server/api-types/feed';
 import prepareAuthHeader from './prepare-auth-header';
 
 export const feedApi = createApi({
@@ -28,7 +32,24 @@ export const feedApi = createApi({
       },
       invalidatesTags: ['Post'],
     }),
+    getProfileFeed: builder.query<string[], string>({
+      query: (profileId) => ({
+        url: profileId,
+        method: 'GET',
+      }),
+      providesTags: ['Post'],
+    }),
+    getPost: builder.query<PostIncomingType, string>({
+      query: (postId) => ({
+        url: `post/${postId}`,
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
-export const { useCreatePostMutation } = feedApi;
+export const {
+  useCreatePostMutation,
+  useGetProfileFeedQuery,
+  useGetPostQuery,
+} = feedApi;

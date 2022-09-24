@@ -135,7 +135,7 @@ const NewPost: React.FC = () => {
           <Button
             leftIcon={<HeroIcon as={ArrowRightIcon} inButton />}
             type="submit"
-            disabled={isLoadingFiles}
+            disabled={isLoadingFiles || description.length + files.length === 0}
             isLoading={isLoading}
             loadingText="Posting"
           >
