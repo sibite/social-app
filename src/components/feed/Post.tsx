@@ -1,7 +1,12 @@
 import { Badge, Button, Grid, Image, Text, VStack } from '@chakra-ui/react';
 import { AnnotationIcon, HeartIcon, ShareIcon } from '@heroicons/react/outline';
+import { HeartIcon as HeartIconFilled } from '@heroicons/react/solid';
 import { PostIncomingType } from '../../../server/api-types/feed';
-import { useDeletePostMutation } from '../../store/feed-api';
+import {
+  useDeletePostMutation,
+  useToggleLikeMutation,
+} from '../../store/feed-api';
+import { useAppSelector } from '../../store/hooks';
 import { Comment } from '../../store/profile';
 import HeroIcon from '../chakra-ui/HeroIcon';
 import CommentsSection from './CommentsSection';
@@ -15,7 +20,7 @@ interface Props {
   name: string;
   content?: string;
   dateString: string;
-  likes: number;
+  likedBy: string[];
   comments: Comment[];
   alwaysShowComments?: boolean;
   options: PostIncomingType['options'];
@@ -28,17 +33,25 @@ const Post: React.FC<Props> = ({
   dateString,
   content,
   media = [],
-  likes,
+  likedBy,
   comments,
   alwaysShowComments = false,
   options = {},
 }) => {
-  const fontSize = content && content.length > 30 ? 'md' : 'xl';
-  const [removePost, result] = useDeletePostMutation();
+  const [removePost] = useDeletePostMutation();
+  const [toggleLike] = useToggleLikeMutation();
+
+  const myId = useAppSelector((state) => state.auth.userId);
 
   const deleteHandler = (withMedia: boolean) => {
     removePost({ postId, withMedia });
   };
+
+  const likeHandler = () => toggleLike(postId);
+
+  const liked = myId && likedBy.indexOf(myId) !== -1;
+
+  const fontSize = content && content.length > 40 ? 'md' : 'xl';
 
   return (
     <>
@@ -46,7 +59,9 @@ const Post: React.FC<Props> = ({
         <PostHeader avatarSrc={avatarSrc} name={name} dateString={dateString}>
           <PostMenu onDelete={deleteHandler} options={options} />
         </PostHeader>
-        <Text fontSize={fontSize}>{content}</Text>
+        <Text fontSize={fontSize} whiteSpace="pre-wrap">
+          {content}
+        </Text>
       </VStack>
       <VStack>
         {media.map(({ _id, src }) => (
@@ -59,11 +74,13 @@ const Post: React.FC<Props> = ({
       >
         <Button
           variant="ghost"
-          leftIcon={<HeroIcon as={HeartIcon} />}
+          colorScheme={liked ? 'red' : 'gray'}
+          onClick={likeHandler}
+          leftIcon={<HeroIcon as={liked ? HeartIconFilled : HeartIcon} />}
           rightIcon={
-            likes ? (
+            likedBy.length ? (
               <Badge variant="subtle" colorScheme="blue">
-                {likes}
+                {likedBy.length}
               </Badge>
             ) : undefined
           }

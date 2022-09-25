@@ -26,7 +26,7 @@ const PhotoSideContent: React.FC<Props> = ({
       name={name}
       content={content}
       dateString={dateString}
-      likes={3}
+      likedBy={['sd', 'dsa', 'dsaa']}
       comments={comments}
       alwaysShowComments
     />

@@ -19,7 +19,7 @@ const PostApiWrapper: React.FC<Props> = ({ postId }) => {
       name={data.fullName}
       content={data.content}
       comments={data.comments ?? []}
-      likes={(data.likedBy ?? []).length}
+      likedBy={data.likedBy ?? []}
       avatarSrc={data.avatarSrc}
       media={data.media}
       options={data.options}

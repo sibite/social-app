@@ -127,6 +127,7 @@ const NewPost: React.FC = () => {
             <Button
               leftIcon={<HeroIcon as={PhotographIcon} inButton />}
               isLoading={isLoadingFiles}
+              disabled={isLoading || isLoadingFiles}
               loadingText="Importing photos"
             >
               Import photos
@@ -135,7 +136,11 @@ const NewPost: React.FC = () => {
           <Button
             leftIcon={<HeroIcon as={ArrowRightIcon} inButton />}
             type="submit"
-            disabled={isLoadingFiles || description.length + files.length === 0}
+            disabled={
+              isLoading ||
+              isLoadingFiles ||
+              description.length + files.length === 0
+            }
             isLoading={isLoading}
             loadingText="Posting"
           >

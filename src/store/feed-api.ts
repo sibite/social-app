@@ -43,6 +43,13 @@ export const feedApi = createApi({
       }),
       invalidatesTags: ['Post'],
     }),
+    toggleLike: builder.mutation<unknown, string>({
+      query: (postId) => ({
+        url: `post/${postId}/like`,
+        method: 'PATCH',
+      }),
+      invalidatesTags: (_result, _err, arg) => [{ type: 'Post', id: arg }],
+    }),
     getProfileFeed: builder.query<string[], string>({
       query: (profileId) => ({
         url: profileId,
@@ -55,6 +62,7 @@ export const feedApi = createApi({
         url: `post/${postId}`,
         method: 'GET',
       }),
+      providesTags: (_result, _err, arg) => [{ type: 'Post', id: arg }],
     }),
   }),
 });
@@ -62,6 +70,7 @@ export const feedApi = createApi({
 export const {
   useCreatePostMutation,
   useDeletePostMutation,
+  useToggleLikeMutation,
   useGetProfileFeedQuery,
   useGetPostQuery,
 } = feedApi;

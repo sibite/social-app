@@ -10,5 +10,9 @@ const singleCallback =
 const arrCallback =
   (resolve: Resolve, reject: Reject) => (err: Error | null, result: any[]) =>
     err ? reject(err) : resolve(result);
+const updateCallback =
+  (resolve: Resolve, reject: Reject) =>
+  (err: Error | null, num: number, affected: any, upsert: boolean) =>
+    err ? reject(err) : resolve({ num, affected, upsert });
 
-export { numCallback, arrCallback, singleCallback };
+export { numCallback, arrCallback, singleCallback, updateCallback };
