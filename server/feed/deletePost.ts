@@ -55,7 +55,7 @@ const deletePost: RequestHandler = async (req, res) => {
       rmSync(path.join(__dirname, `../${src}`));
     });
 
-    res.send(200).send();
+    res.status(200).send();
   } catch (err) {
     return res.status(500).send();
   }

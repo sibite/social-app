@@ -30,7 +30,7 @@ export const feedApi = createApi({
           body: formData,
         };
       },
-      invalidatesTags: ['Post'],
+      invalidatesTags: [{ type: 'Post', id: 'ALL' }],
     }),
     deletePost: builder.mutation<
       unknown,
@@ -41,7 +41,7 @@ export const feedApi = createApi({
         method: 'DELETE',
         body: { withMedia },
       }),
-      invalidatesTags: ['Post'],
+      invalidatesTags: [{ type: 'Post', id: 'ALL' }],
     }),
     toggleLike: builder.mutation<unknown, string>({
       query: (postId) => ({
@@ -55,7 +55,7 @@ export const feedApi = createApi({
         url: profileId,
         method: 'GET',
       }),
-      providesTags: ['Post'],
+      providesTags: [{ type: 'Post', id: 'ALL' }],
     }),
     getPost: builder.query<PostIncomingType, string>({
       query: (postId) => ({

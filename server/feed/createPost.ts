@@ -1,51 +1,57 @@
 import { RequestHandler } from 'express-serve-static-core';
 import { PostDBType } from '../api-types/feed';
 import db from '../database/database';
+import { arrCallback, singleCallback } from '../shared/nedbPromises';
 import saveImage from '../shared/saveImage';
 
 interface MediaWrapper {
   date: number;
-  src: string;
+  mediaSrc: string;
 }
 
 const createPost: RequestHandler = (req, res) => {
   const { content } = req.body;
   const uploadedMedia: MediaWrapper[] = [];
 
-  const finishUploading = () => {
-    const newEntries = uploadedMedia.map((mediaWrapper) => ({
-      ...mediaWrapper,
-      creatorId: req.userId,
-    }));
-
-    const onMediaInsert = (err: Error | null, media: any) => {
-      if (err) {
-        res
-          .status(500)
-          .send({ message: 'Error when inserting media to database' });
-        return;
-      }
-
-      const newPost: Partial<PostDBType> = {
+  const finishUploading = async () => {
+    let newEntries: Partial<PostDBType>[] = uploadedMedia.map(
+      (mediaWrapper) => ({
+        ...mediaWrapper,
+        likedBy: [],
+        comments: [],
+        content: '',
         creatorId: req.userId,
-        date: Date.now(),
-        content,
-        mediaIds: media.map((mediaEntry: any) => mediaEntry._id),
-      };
+      })
+    );
 
-      db.feed.insert(newPost, (postErr, post) => {
-        if (postErr) {
-          res
-            .status(500)
-            .send({ message: 'Error when inserting post to database' });
-          return;
-        }
-        res.status(201).send();
-        console.log(post);
-      });
+    const newPost: Partial<PostDBType> = {
+      creatorId: req.userId,
+      date: Date.now(),
+      content,
+      type: 'post',
     };
 
-    db.media.insert(newEntries, onMediaInsert);
+    try {
+      if (newEntries.length === 1) {
+        newPost.mediaSrc = newEntries[0].mediaSrc;
+      } else {
+        newEntries = newEntries.map((entry) => ({ ...entry, type: 'media' }));
+
+        const media = await new Promise<any>((r, j) => {
+          db.feed.insert(newEntries, arrCallback(r, j));
+        });
+
+        newPost.mediaIds = media.map((mediaEntry: any) => mediaEntry._id);
+      }
+
+      await new Promise<any>((r, j) => {
+        db.feed.insert(newPost, singleCallback(r, j));
+      });
+
+      res.status(201).send();
+    } catch (err) {
+      res.status(500).send();
+    }
   };
 
   const saveNextImage = (id: number) => {
@@ -63,7 +69,7 @@ const createPost: RequestHandler = (req, res) => {
           return;
         }
         if (!err && mediaSrc) {
-          uploadedMedia.push({ date: Date.now(), src: mediaSrc });
+          uploadedMedia.push({ date: Date.now(), mediaSrc });
           saveNextImage(id + 1);
           return;
         }

@@ -59,9 +59,11 @@ const Post: React.FC<Props> = ({
         <PostHeader avatarSrc={avatarSrc} name={name} dateString={dateString}>
           <PostMenu onDelete={deleteHandler} options={options} />
         </PostHeader>
-        <Text fontSize={fontSize} whiteSpace="pre-wrap">
-          {content}
-        </Text>
+        {content?.length && (
+          <Text fontSize={fontSize} whiteSpace="pre-wrap">
+            {content}
+          </Text>
+        )}
       </VStack>
       <VStack>
         {media.map(({ _id, src }) => (

@@ -3,9 +3,11 @@ export interface PostDBType {
   creatorId: string;
   date: number;
   content: string;
-  mediaIds: string[];
-  likedBy?: string[];
+  mediaSrc?: string;
+  mediaIds?: string[];
+  likedBy: string[];
   comments?: any[];
+  type: 'post' | 'media';
 }
 
 export interface PostType extends PostDBType {

@@ -10,7 +10,7 @@ const getProfileFeed: RequestHandler = (req, res) => {
   }
 
   db.feed
-    .find({ creatorId: profileId }, { creatorId: 1 })
+    .find({ creatorId: profileId, type: 'post' }, { creatorId: 1 })
     .sort({ date: -1 })
     .exec((err, posts) => {
       if (err) {

@@ -15,7 +15,7 @@ import {
   Checkbox,
 } from '@chakra-ui/react';
 import { DotsVerticalIcon, TrashIcon } from '@heroicons/react/outline';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { PostIncomingType } from '../../../server/api-types/feed';
 import HeroIcon from '../chakra-ui/HeroIcon';
 
@@ -29,6 +29,10 @@ const PostMenu: React.FC<Props> = ({ onDelete, options }) => {
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useBoolean(false);
   const [withMedia, setWithMedia] = useBoolean(true);
   const [isDeleting, setIsDeleting] = useBoolean(false);
+
+  useEffect(() => {
+    setIsDeleting.off();
+  }, [isConfirmDialogOpen]);
 
   const deleteHandler = () => {
     onDelete(withMedia);
@@ -51,7 +55,10 @@ const PostMenu: React.FC<Props> = ({ onDelete, options }) => {
         />
         <MenuList>
           {options.delete && (
-            <MenuItem icon={<TrashIcon />} onClick={setIsConfirmDialogOpen.on}>
+            <MenuItem
+              icon={<HeroIcon as={TrashIcon} />}
+              onClick={setIsConfirmDialogOpen.on}
+            >
               Delete
             </MenuItem>
           )}
@@ -76,7 +83,11 @@ const PostMenu: React.FC<Props> = ({ onDelete, options }) => {
             </AlertDialogBody>
 
             <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={setIsConfirmDialogOpen.off}>
+              <Button
+                ref={cancelRef}
+                onClick={setIsConfirmDialogOpen.off}
+                disabled={isDeleting}
+              >
                 Cancel
               </Button>
               <Button
