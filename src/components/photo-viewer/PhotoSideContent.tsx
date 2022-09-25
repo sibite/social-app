@@ -20,6 +20,8 @@ const PhotoSideContent: React.FC<Props> = ({
 }) => (
   <Card variant="unstyled">
     <Post
+      postId="unknown"
+      options={{}}
       avatarSrc={avatarSrc}
       name={name}
       content={content}

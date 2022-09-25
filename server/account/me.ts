@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import db from '../database/database';
 import getFullName from '../shared/getFullName';
+import getSrcUrl from '../shared/getSrcUrl';
 
 const me = (req: Request, res: Response, next: NextFunction) => {
   const { userId } = req;
@@ -23,7 +24,12 @@ const me = (req: Request, res: Response, next: NextFunction) => {
         return;
       }
 
-      const account = { ...user, fullName: getFullName(user) };
+      const account = {
+        ...user,
+        fullName: getFullName(user),
+        avatarSrc: getSrcUrl(user.avatarSrc),
+        coverSrc: getSrcUrl(user.coverSrc),
+      };
 
       res.status(200).send(account);
     }

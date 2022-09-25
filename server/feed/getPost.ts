@@ -2,6 +2,7 @@ import { RequestHandler } from 'express';
 import { PostDBType } from '../api-types/feed';
 import db from '../database/database';
 import getFullName from '../shared/getFullName';
+import getSrcUrl from '../shared/getSrcUrl';
 
 const dbErrResponse = { message: 'Error when reaching feed database' };
 
@@ -41,8 +42,12 @@ const getPost: RequestHandler = (req, res) => {
               ...post,
               mediaIds: undefined,
               fullName: getFullName({ name, lastName }),
-              avatarSrc,
-              media,
+              avatarSrc: getSrcUrl(avatarSrc),
+              media: media.map((mediaItem) => ({
+                ...mediaItem,
+                src: getSrcUrl(mediaItem.src),
+              })),
+              options: { delete: req.userId === post.creatorId },
             });
           });
       }

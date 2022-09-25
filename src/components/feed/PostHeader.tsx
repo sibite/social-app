@@ -1,13 +1,4 @@
-import {
-  Avatar,
-  Flex,
-  Heading,
-  IconButton,
-  Text,
-  VStack,
-} from '@chakra-ui/react';
-import { DotsVerticalIcon } from '@heroicons/react/outline';
-import HeroIcon from '../chakra-ui/HeroIcon';
+import { Avatar, Flex, Heading, Text, VStack } from '@chakra-ui/react';
 
 interface Props {
   avatarSrc?: string;
@@ -22,24 +13,17 @@ const PostHeader: React.FC<Props> = ({
   dateString,
   children,
 }) => (
-  <VStack spacing={4} p={4} align="stretch">
-    <Flex align="center" gap={2}>
-      <Avatar name={avatarSrc ? undefined : name} src={avatarSrc} />
-      <VStack align="flex-start" flexGrow={1} spacing={0}>
-        <Heading as="span" size="sm">
-          {name}
-        </Heading>
-        <Text opacity={0.6} fontSize="sm">
-          {dateString}
-        </Text>
-      </VStack>
-      <IconButton
-        aria-label="Options"
-        icon={<HeroIcon as={DotsVerticalIcon} />}
-        variant="ghost"
-      />
-    </Flex>
-    <Text>{children}</Text>
-  </VStack>
+  <Flex align="center" gap={2}>
+    <Avatar name={avatarSrc ? undefined : name} src={avatarSrc} />
+    <VStack align="flex-start" flexGrow={1} spacing={0}>
+      <Heading as="span" size="sm">
+        {name}
+      </Heading>
+      <Text opacity={0.6} fontSize="sm">
+        {dateString}
+      </Text>
+    </VStack>
+    {children}
+  </Flex>
 );
 export default PostHeader;

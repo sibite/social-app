@@ -18,6 +18,9 @@ export interface PostIncomingType extends Omit<PostType, 'mediaIds'> {
     _id: string;
     src: string;
   }[];
+  options: {
+    delete?: boolean;
+  };
 }
 
 export interface CreatePostType {

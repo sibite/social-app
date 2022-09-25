@@ -14,6 +14,7 @@ const PostApiWrapper: React.FC<Props> = ({ postId }) => {
 
   return (
     <Post
+      postId={postId}
       dateString={formatDate(dayjs(data.date))}
       name={data.fullName}
       content={data.content}
@@ -21,6 +22,7 @@ const PostApiWrapper: React.FC<Props> = ({ postId }) => {
       likes={(data.likedBy ?? []).length}
       avatarSrc={data.avatarSrc}
       media={data.media}
+      options={data.options}
     />
   );
 };

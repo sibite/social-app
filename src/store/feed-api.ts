@@ -32,6 +32,17 @@ export const feedApi = createApi({
       },
       invalidatesTags: ['Post'],
     }),
+    deletePost: builder.mutation<
+      unknown,
+      { postId: string; withMedia: boolean }
+    >({
+      query: ({ postId, withMedia }) => ({
+        url: `post/${postId}`,
+        method: 'DELETE',
+        body: { withMedia },
+      }),
+      invalidatesTags: ['Post'],
+    }),
     getProfileFeed: builder.query<string[], string>({
       query: (profileId) => ({
         url: profileId,
@@ -50,6 +61,7 @@ export const feedApi = createApi({
 
 export const {
   useCreatePostMutation,
+  useDeletePostMutation,
   useGetProfileFeedQuery,
   useGetPostQuery,
 } = feedApi;

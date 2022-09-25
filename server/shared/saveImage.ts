@@ -29,8 +29,9 @@ const saveImage = async (
   const startTime = Date.now();
   let image = req.files?.[fieldKey];
 
-  if (id !== undefined && id > 0 && image) {
-    image = (image as UploadedFile[])[id];
+  if (id !== undefined && image) {
+    image =
+      (image as UploadedFile[])[id] ?? (id === 0 && (image as UploadedFile));
   }
 
   if (!image || 'length' in image) {
@@ -68,7 +69,7 @@ const saveImage = async (
 
     const dirPath = `../uploads/${storagePath}`;
     const filePath = `${dirPath}/${Date.now()}_${image.md5}.jpg`;
-    const imageSource = `/api${filePath.slice(2)}`;
+    const imageSource = `${filePath.slice(3)}`;
 
     ensureDirExists(path.join(__dirname, dirPath));
     await imgObj
