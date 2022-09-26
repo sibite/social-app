@@ -1,32 +1,27 @@
-import { Comment } from '../../store/profile';
 import Card from '../chakra-ui/Card';
 import Post from '../feed/Post';
 
-interface Props {
-  avatarSrc?: string;
-  name: string;
-  content?: string;
-  dateString: string;
-  comments: Comment[];
-  children?: React.ReactNode;
-}
+type Props = Parameters<typeof Post>[0];
 
 const PhotoSideContent: React.FC<Props> = ({
+  postId,
   avatarSrc,
   name,
   content,
+  likedBy,
   dateString,
   comments,
+  options,
 }) => (
   <Card variant="unstyled">
     <Post
-      postId="unknown"
-      options={{}}
+      postId={postId}
+      options={options}
       avatarSrc={avatarSrc}
       name={name}
       content={content}
       dateString={dateString}
-      likedBy={['sd', 'dsa', 'dsaa']}
+      likedBy={likedBy}
       comments={comments}
       alwaysShowComments
     />

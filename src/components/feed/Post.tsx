@@ -11,6 +11,7 @@ import { Comment } from '../../store/profile';
 import HeroIcon from '../chakra-ui/HeroIcon';
 import CommentsSection from './CommentsSection';
 import PostHeader from './PostHeader';
+import PostMediaGroup from './PostMediaGroup';
 import PostMenu from './PostMenu';
 
 interface Props {
@@ -43,9 +44,8 @@ const Post: React.FC<Props> = ({
 
   const myId = useAppSelector((state) => state.auth.userId);
 
-  const deleteHandler = (withMedia: boolean) => {
-    removePost({ postId, withMedia });
-  };
+  const deleteHandler = (withMedia: boolean) =>
+    removePost({ postId, withMedia }).unwrap();
 
   const likeHandler = () => toggleLike(postId);
 
@@ -65,11 +65,7 @@ const Post: React.FC<Props> = ({
           </Text>
         )}
       </VStack>
-      <VStack>
-        {media.map(({ _id, src }) => (
-          <Image src={src} key={_id} />
-        ))}
-      </VStack>
+      <PostMediaGroup media={media} />
       <Grid
         templateRows="1fr"
         templateColumns={`repeat(${alwaysShowComments ? 2 : 3}, 1fr)`}

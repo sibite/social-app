@@ -12,7 +12,7 @@ const FixedContainer = forwardRef<HTMLDivElement, Props>(
       height: '100vh',
       pointerEvents: 'none',
       position: 'fixed',
-      zIndex: '1000',
+      zIndex: '1',
       top: '0',
       left: '0',
       flexDirection: 'column',

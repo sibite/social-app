@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import profileReducer from './profile';
 import authReducer from './auth';
+import photoViewerReducer from './photo-viewer';
 import { profileApi } from './profile-api';
 import { accountApi } from './account-api';
 import { feedApi } from './feed-api';
@@ -9,6 +10,7 @@ const store = configureStore({
   reducer: {
     profile: profileReducer,
     auth: authReducer,
+    photoViewer: photoViewerReducer,
     [profileApi.reducerPath]: profileApi.reducer,
     [accountApi.reducerPath]: accountApi.reducer,
     [feedApi.reducerPath]: feedApi.reducer,

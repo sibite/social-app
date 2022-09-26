@@ -21,7 +21,7 @@ import HeroIcon from '../chakra-ui/HeroIcon';
 
 interface Props {
   options: PostIncomingType['options'];
-  onDelete: Function;
+  onDelete: (withMedia: boolean) => Promise<any>;
 }
 
 const PostMenu: React.FC<Props> = ({ onDelete, options }) => {
@@ -34,10 +34,15 @@ const PostMenu: React.FC<Props> = ({ onDelete, options }) => {
     setIsDeleting.off();
   }, [isConfirmDialogOpen]);
 
-  const deleteHandler = () => {
-    onDelete(withMedia);
-    setIsDeleting.on();
-    setWithMedia.on();
+  const deleteHandler = async () => {
+    try {
+      setIsDeleting.on();
+      await onDelete(!!options.withMedia && withMedia);
+    } finally {
+      setIsDeleting.off();
+      setWithMedia.on();
+      setIsConfirmDialogOpen.off();
+    }
   };
 
   if (!options) {
@@ -69,7 +74,7 @@ const PostMenu: React.FC<Props> = ({ onDelete, options }) => {
         leastDestructiveRef={cancelRef}
         onClose={setIsConfirmDialogOpen.off}
       >
-        <AlertDialogOverlay>
+        <AlertDialogOverlay pointerEvents="auto">
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
               Delete post
@@ -77,9 +82,11 @@ const PostMenu: React.FC<Props> = ({ onDelete, options }) => {
 
             <AlertDialogBody>
               Are you sure? This operation is inreversible
-              <Checkbox mt={2} defaultChecked onChange={setWithMedia.toggle}>
-                Delete attached media
-              </Checkbox>
+              {options.withMedia && (
+                <Checkbox mt={2} defaultChecked onChange={setWithMedia.toggle}>
+                  Delete attached media (if there are more than 1)
+                </Checkbox>
+              )}
             </AlertDialogBody>
 
             <AlertDialogFooter>

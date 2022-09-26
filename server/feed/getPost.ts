@@ -30,7 +30,10 @@ const getPost: RequestHandler = async (req, res) => {
       ...postRes,
       fullName: getFullName({ name, lastName }),
       avatarSrc: getSrcUrl(avatarSrc),
-      options: { delete: req.userId === postRes.creatorId },
+      options: {
+        delete: req.userId === postRes.creatorId,
+        withMedia: postRes.type === 'post',
+      },
     };
 
     let media;

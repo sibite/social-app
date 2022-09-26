@@ -22,6 +22,7 @@ export interface PostIncomingType extends Omit<PostType, 'mediaIds'> {
   }[];
   options: {
     delete?: boolean;
+    withMedia?: boolean;
   };
 }
 

@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { Navigate, Route, Routes, useParams } from 'react-router-dom';
 import Feed from '../../components/feed/Feed';
 import PageContainer from '../../components/layout/PageContainer';
+import PhotoViewerWrapper from '../../components/photo-viewer/PhotoViewerWrapper';
 import { accountApi } from '../../store/account-api';
 import { useGetProfileFeedQuery } from '../../store/feed-api';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -133,11 +134,18 @@ const ProfilePage: React.FC<Props> = () => {
   };
 
   const bg1 = useColorModeValue('gray.100', 'black');
-  const bgCard = useColorModeValue('white', 'gray.900');
+  const bg2 = useColorModeValue('white', 'gray.900');
+  const borderColor = useColorModeValue('gray.200', 'gray.800');
 
   return (
     <PageContainer width="100%" bg={bg1}>
-      <Box width="100%" bg={bgCard}>
+      <PhotoViewerWrapper />
+      <Box
+        width="100%"
+        bg={bg2}
+        borderBottom="1px solid"
+        borderBottomColor={borderColor}
+      >
         <Container maxWidth="container.lg">
           <Box width="100%">
             <ProfileCover

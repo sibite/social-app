@@ -1,9 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import {
-  CreatePostType,
-  PostIncomingType,
-  PostDBType,
-} from '../../server/api-types/feed';
+import { CreatePostType, PostIncomingType } from '../../server/api-types/feed';
 import prepareAuthHeader from './prepare-auth-header';
 
 export const feedApi = createApi({
@@ -41,7 +37,10 @@ export const feedApi = createApi({
         method: 'DELETE',
         body: { withMedia },
       }),
-      invalidatesTags: [{ type: 'Post', id: 'ALL' }],
+      invalidatesTags: (_result, _err, arg) => [
+        { type: 'Post', id: 'ALL' },
+        { type: 'Post', id: arg.postId },
+      ],
     }),
     toggleLike: builder.mutation<unknown, string>({
       query: (postId) => ({
@@ -58,11 +57,25 @@ export const feedApi = createApi({
       providesTags: [{ type: 'Post', id: 'ALL' }],
     }),
     getPost: builder.query<PostIncomingType, string>({
-      query: (postId) => ({
-        url: `post/${postId}`,
-        method: 'GET',
-      }),
-      providesTags: (_result, _err, arg) => [{ type: 'Post', id: arg }],
+      query: (postId) =>
+        postId && {
+          url: `post/${postId}`,
+          method: 'GET',
+        },
+      providesTags: (result, _err, arg) => {
+        const affectingTags: { type: 'Post'; id: string }[] = [
+          { type: 'Post', id: arg },
+        ];
+        if (result) {
+          affectingTags.push(
+            ...result.media.map(({ _id }): { type: 'Post'; id: string } => ({
+              type: 'Post',
+              id: _id,
+            }))
+          );
+        }
+        return affectingTags;
+      },
     }),
   }),
 });

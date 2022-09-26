@@ -39,7 +39,11 @@ const PhotoViewer: React.FC<Props> = ({
   const style = {
     gridTemplate: '100% / auto auto',
     bgColor: 'gray.900',
-    maxHeight: 'calc(100% - 40px)',
+    '& > *': {
+      maxHeight: 'inherit',
+    },
+    maxHeight: 'calc(100vh - 60px)',
+    my: 0,
     mx: 14,
     pointerEvents: 'auto',
   };
