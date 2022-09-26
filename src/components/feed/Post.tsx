@@ -65,7 +65,7 @@ const Post: React.FC<Props> = ({
           </Text>
         )}
       </VStack>
-      <PostMediaGroup media={media} />
+      <PostMediaGroup postId={postId} media={media} />
       <Grid
         templateRows="1fr"
         templateColumns={`repeat(${alwaysShowComments ? 2 : 3}, 1fr)`}

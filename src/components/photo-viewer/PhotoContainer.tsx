@@ -5,8 +5,11 @@ interface Props {
 }
 
 const PhotoContainer: React.FC<Props> = ({ src }) => (
-  <Box minWidth={{ md: '360px' }} maxHeight="100%">
-    <Image src={src} boxSize="100%" objectFit="contain" />
-  </Box>
+  <Image
+    src={src}
+    minWidth={{ md: '360px' }}
+    boxSize="100%"
+    objectFit="contain"
+  />
 );
 export default PhotoContainer;

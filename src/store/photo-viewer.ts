@@ -2,14 +2,14 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export interface PhotoViewerState {
   visible: boolean;
-  mediaIds: string[];
-  initialIndex: number;
+  postId?: string;
+  mediaIds?: string[];
+  index: number;
 }
 
 const initialState: PhotoViewerState = {
   visible: false,
-  mediaIds: [],
-  initialIndex: 0,
+  index: 0,
 };
 
 export const photoViewerSlice = createSlice({
@@ -18,25 +18,38 @@ export const photoViewerSlice = createSlice({
   reducers: {
     openMediaGroup: (
       state,
-      {
-        payload,
-      }: {
-        type: string;
-        payload: { mediaIds: string[]; initialIndex?: number };
+      action: { type: string; payload: string | string[] }
+    ) => {
+      if (typeof action.payload === 'string') {
+        return {
+          visible: true,
+          index: 0,
+          postId: action.payload,
+        };
       }
-    ) => ({
-      mediaIds: payload.mediaIds,
-      visible: !!payload.mediaIds.length,
-      initialIndex: payload.initialIndex ?? 0,
-    }),
+      return {
+        visible: true,
+        index: 0,
+        mediaIds: action.payload,
+      };
+    },
+    setIndex: (
+      state,
+      action: {
+        type: string;
+        payload: number;
+      }
+    ) => {
+      state.index = action.payload;
+    },
     closeMediaGroup: (state) => ({
-      mediaIds: [],
       visible: false,
-      initialIndex: 0,
+      index: 0,
     }),
   },
 });
 
-export const { openMediaGroup, closeMediaGroup } = photoViewerSlice.actions;
+export const { setIndex, openMediaGroup, closeMediaGroup } =
+  photoViewerSlice.actions;
 
 export default photoViewerSlice.reducer;

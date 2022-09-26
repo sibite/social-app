@@ -13,14 +13,16 @@ interface Props {
   children: React.ReactNode;
   onSlideLeft?: Function;
   onSlideRight?: Function;
+  side?: -1 | 0 | 1;
   onClose?: Function;
 }
 
-const PhotoViewer: React.FC<Props> = ({
+const PhotoViewerContainer: React.FC<Props> = ({
   children,
   onSlideLeft,
   onSlideRight,
   onClose,
+  side,
 }) => {
   const portalRef = useContext(PortalRefContext);
 
@@ -65,6 +67,7 @@ const PhotoViewer: React.FC<Props> = ({
               size="md"
               variant="ghost"
               onClick={arrowLeftHandler}
+              disabled={side === -1}
             />
           </Center>
           <Center position="absolute" top="0" right="0" height="100%">
@@ -75,6 +78,7 @@ const PhotoViewer: React.FC<Props> = ({
               size="md"
               variant="ghost"
               onClick={arrowRightHandler}
+              disabled={side === 1}
             />
           </Center>
           <IconButton
@@ -94,4 +98,4 @@ const PhotoViewer: React.FC<Props> = ({
     </Portal>
   );
 };
-export default PhotoViewer;
+export default PhotoViewerContainer;

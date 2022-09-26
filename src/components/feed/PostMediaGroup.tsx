@@ -1,23 +1,23 @@
-import { AspectRatio, Box, Grid } from '@chakra-ui/react';
+import { Grid } from '@chakra-ui/react';
 import { PostIncomingType } from '../../../server/api-types/feed';
 import { useAppDispatch } from '../../store/hooks';
-import { openMediaGroup } from '../../store/photo-viewer';
+import { openMediaGroup, setIndex } from '../../store/photo-viewer';
 import PostMediaItem from './PostMediaItem';
 
 interface Props {
+  postId: string;
   media: PostIncomingType['media'];
 }
 
-const PostMediaGroup: React.FC<Props> = ({ media }) => {
+const PostMediaGroup: React.FC<Props> = ({ postId, media }) => {
   const dispatch = useAppDispatch();
 
   const styleIndex = Math.min(6, media.length) - 1;
 
   const openMediaHandler = (mediaId: string) => {
     const mediaIds = media.map(({ _id }) => _id);
-    dispatch(
-      openMediaGroup({ mediaIds, initialIndex: mediaIds.indexOf(mediaId) })
-    );
+    dispatch(openMediaGroup(postId));
+    dispatch(setIndex(mediaIds.indexOf(mediaId)));
   };
 
   const gridStyles = [

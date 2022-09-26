@@ -5,7 +5,7 @@ export interface PostDBType {
   content: string;
   mediaSrc?: string;
   mediaIds?: string[];
-  likedBy: string[];
+  likedBy?: string[];
   comments?: any[];
   type: 'post' | 'media';
 }

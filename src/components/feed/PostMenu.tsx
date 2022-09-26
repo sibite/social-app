@@ -32,12 +32,12 @@ const PostMenu: React.FC<Props> = ({ onDelete, options }) => {
 
   useEffect(() => {
     setIsDeleting.off();
-  }, [isConfirmDialogOpen]);
+  }, [isConfirmDialogOpen, setIsDeleting]);
 
   const deleteHandler = async () => {
     try {
       setIsDeleting.on();
-      await onDelete(!!options.withMedia && withMedia);
+      await onDelete(options.withMedia ? true : withMedia);
     } finally {
       setIsDeleting.off();
       setWithMedia.on();
@@ -84,7 +84,7 @@ const PostMenu: React.FC<Props> = ({ onDelete, options }) => {
               Are you sure? This operation is inreversible
               {options.withMedia && (
                 <Checkbox mt={2} defaultChecked onChange={setWithMedia.toggle}>
-                  Delete attached media (if there are more than 1)
+                  Delete attached media
                 </Checkbox>
               )}
             </AlertDialogBody>

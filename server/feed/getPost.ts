@@ -32,7 +32,7 @@ const getPost: RequestHandler = async (req, res) => {
       avatarSrc: getSrcUrl(avatarSrc),
       options: {
         delete: req.userId === postRes.creatorId,
-        withMedia: postRes.type === 'post',
+        withMedia: postRes.type === 'post' && !postRes.mediaSrc,
       },
     };
 
@@ -63,7 +63,7 @@ const getPost: RequestHandler = async (req, res) => {
 
     res.status(200).send(post);
   } catch (err) {
-    res.status(500).send({ message: 'Error when reaching feed database' });
+    res.status(typeof err === 'number' ? err : 500).send();
     console.error(err);
   }
 };

@@ -25,14 +25,15 @@ const PostMediaItem: React.FC<Props> = ({
       <Image
         src={src}
         boxSize="100%"
-        objectFit="cover"
+        maxHeight="600px"
+        objectFit="contain"
         cursor="pointer"
         onClick={clickHandler}
       />
       {leftItemsCount ? (
         <Box
           gridArea="2 / 3 / 3 / 4"
-          bgColor="rgba(0, 0, 0, 0.3)"
+          bgColor="rgba(0, 0, 0, 0.5)"
           fontSize="2em"
           boxSize="100%"
           overflow="hidden"
