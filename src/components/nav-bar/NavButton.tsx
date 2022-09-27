@@ -1,4 +1,9 @@
-import { Button, Text, useColorModeValue } from '@chakra-ui/react';
+import {
+  Button,
+  Text,
+  useBreakpointValue,
+  useColorModeValue,
+} from '@chakra-ui/react';
 import { Link, useMatch } from 'react-router-dom';
 import HeroIcon from '../chakra-ui/HeroIcon';
 
@@ -9,19 +14,27 @@ interface Props {
 }
 
 const NavButton: React.FC<Props> = ({ icon, route, children }) => {
-  const style = {};
-
   const isActive = useMatch(`${route}/*`);
 
   const activeBgColor = useColorModeValue('blue.50', 'gray.800');
   const activeColor = 'blue.500';
+
+  const isTextShown = useBreakpointValue({ base: false, md: true });
+
+  const style = {
+    bgColor: isActive ? activeBgColor : 'default',
+    height: 'calc(100% - 16px)',
+    m: isTextShown ? 2 : 1,
+    paddingRight: isTextShown ? undefined : 0,
+    paddingLeft: isTextShown ? undefined : 3,
+  };
 
   return (
     <Button
       as={Link}
       to={route}
       variant="ghost"
-      style={style}
+      sx={style}
       leftIcon={
         <HeroIcon
           as={icon}
@@ -29,13 +42,12 @@ const NavButton: React.FC<Props> = ({ icon, route, children }) => {
           color={isActive ? activeColor : 'initial'}
         />
       }
-      bgColor={isActive ? activeBgColor : 'default'}
-      height="calc(100% - 16px)"
-      m={2}
     >
-      <Text fontSize="md" color={isActive ? activeColor : 'initial'}>
-        {children}
-      </Text>
+      {isTextShown && (
+        <Text fontSize="md" color={isActive ? activeColor : 'initial'}>
+          {children}
+        </Text>
+      )}
     </Button>
   );
 };

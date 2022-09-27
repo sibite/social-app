@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express';
-import db from '../database/database';
+import db from '../database';
 
 const getProfileFeed: RequestHandler = (req, res) => {
   const { profileId } = req.params;

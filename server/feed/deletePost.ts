@@ -2,7 +2,7 @@
 import { RequestHandler } from 'express';
 import { rmSync } from 'fs';
 import path from 'path';
-import db from '../database/database';
+import db from '../database';
 import {
   arrCallback,
   numCallback,

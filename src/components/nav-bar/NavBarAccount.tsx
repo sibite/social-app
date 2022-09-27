@@ -70,7 +70,7 @@ const NavBarAccount: React.FC<Props> = () => {
   );
 
   return (
-    <Flex direction="row-reverse" alignItems="center" px={4} gap={4}>
+    <Flex direction="row-reverse" alignItems="center" pr={4} gap={4}>
       {user && AccountBarJSX}
       <ThemeToggle />
     </Flex>

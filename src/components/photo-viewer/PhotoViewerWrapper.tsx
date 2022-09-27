@@ -5,7 +5,7 @@ import PhotoViewerAPIWrapper from './PhotoViewerAPIWrapper';
 const PostWrapper: React.FC<{ postId: string }> = ({ postId }) => {
   const { data: parentPost } = useGetPostQuery(postId);
 
-  if (parentPost?.media)
+  if (parentPost?.media && parentPost.media.length !== 0)
     return (
       <PhotoViewerAPIWrapper
         mediaIds={parentPost.media.map(({ _id }) => _id)}
@@ -20,7 +20,8 @@ const PhotoViewerWrapper: React.FC = () => {
 
   if (postId) return <PostWrapper postId={postId} />;
 
-  if (mediaIds) return <PhotoViewerAPIWrapper mediaIds={mediaIds} />;
+  if (mediaIds && mediaIds.length !== 0)
+    return <PhotoViewerAPIWrapper mediaIds={mediaIds} />;
 
   return null;
 };

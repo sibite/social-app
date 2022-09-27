@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express-serve-static-core';
 import { PostDBType } from '../api-types/feed';
-import db from '../database/database';
+import db from '../database';
 import { arrCallback, singleCallback } from '../shared/nedbPromises';
 import saveImage from '../shared/saveImage';
 

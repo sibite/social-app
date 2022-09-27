@@ -12,7 +12,7 @@ const MessageList: React.FC<Props> = () => (
     maxH="full"
     overflowY="auto"
   >
-    <Message direction="from">I&apos;m not so good</Message>
+    <Message direction="from">I&apos;m great</Message>
     <Message direction="to">Hey, I&apos;m fine. What about you?</Message>
     <Message direction="from">Hi, how are you?</Message>
   </Flex>

@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express';
-import db from '../database/database';
+import db from '../database';
 import saveImage from '../shared/saveImage';
 
 const putAvatar: RequestHandler = async (req, res) => {

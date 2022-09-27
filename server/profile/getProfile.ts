@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express';
-import db from '../database/database';
+import db from '../database';
 import getSrcUrl from '../shared/getSrcUrl';
 
 const getProfile: RequestHandler = (req, res) => {

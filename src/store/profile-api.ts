@@ -8,7 +8,10 @@ export const profileApi = createApi({
     getProfile: builder.query<UserPublicType, string>({
       query: (id) => String(id),
     }),
+    searchProfiles: builder.query<UserPublicType[], string>({
+      query: (query) => `search/${query}`,
+    }),
   }),
 });
 
-export const { useGetProfileQuery } = profileApi;
+export const { useGetProfileQuery, useSearchProfilesQuery } = profileApi;

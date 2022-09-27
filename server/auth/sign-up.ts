@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 import { RequestHandler } from 'express';
 import validator from 'validator';
-import db from '../database/database';
+import db from '../database';
 
 const signUp: RequestHandler = (req, res) => {
   const { name, lastName, email, password, birthDate } = req.body;

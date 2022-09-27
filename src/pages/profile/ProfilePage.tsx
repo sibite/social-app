@@ -138,7 +138,7 @@ const ProfilePage: React.FC<Props> = () => {
   const borderColor = useColorModeValue('gray.200', 'gray.800');
 
   return (
-    <PageContainer width="100%" bg={bg1}>
+    <PageContainer bg={bg1}>
       <PhotoViewerWrapper />
       <Box
         width="100%"

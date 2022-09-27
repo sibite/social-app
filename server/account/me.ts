@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import db from '../database/database';
+import db from '../database';
 import getFullName from '../shared/getFullName';
 import getSrcUrl from '../shared/getSrcUrl';
 

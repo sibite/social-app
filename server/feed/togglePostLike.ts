@@ -1,6 +1,6 @@
 /* eslint-disable consistent-return */
 import { RequestHandler } from 'express';
-import db from '../database/database';
+import db from '../database';
 import { updateCallback, numCallback } from '../shared/nedbPromises';
 
 const togglePostLike: RequestHandler = async (req, res) => {

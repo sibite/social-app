@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 import { RequestHandler } from 'express';
 import jwt from 'jsonwebtoken';
-import db from '../database/database';
+import db from '../database';
 import { ACCESS_TOKEN_SECRET } from '../env';
 
 const logIn: RequestHandler = (req, res) => {

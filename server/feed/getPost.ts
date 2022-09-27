@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 import { PostDBType, PostIncomingType } from '../api-types/feed';
-import db from '../database/database';
+import db from '../database';
 import getFullName from '../shared/getFullName';
 import getSrcUrl from '../shared/getSrcUrl';
 import { arrCallback, singleCallback } from '../shared/nedbPromises';

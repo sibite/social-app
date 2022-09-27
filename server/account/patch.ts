@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 import { UserType } from '../api-types/auth';
-import db from '../database/database';
+import db from '../database';
 
 const patchableFields: (keyof UserType)[] = ['description', 'birthDate'];
 

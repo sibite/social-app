@@ -1,7 +1,14 @@
-import { Box, Grid, useColorModeValue } from '@chakra-ui/react';
+import {
+  Box,
+  Grid,
+  useColorModeValue,
+  useBreakpointValue,
+  Flex,
+} from '@chakra-ui/react';
 import { forwardRef } from 'react';
 import NavBarAccount from './NavBarAccount';
 import NavBarButtons from './NavBarButtons';
+import NavBarSearch from './NavBarSearch';
 
 const NavBar = forwardRef<HTMLDivElement>((_props, ref) => {
   const heightVal = 60;
@@ -9,6 +16,7 @@ const NavBar = forwardRef<HTMLDivElement>((_props, ref) => {
 
   const barStyle = {
     width: '100%',
+    boxSizing: 'content-box',
     zIndex: 1000,
     pointerEvents: 'auto',
     bgColor: useColorModeValue('white', 'black'),
@@ -16,17 +24,32 @@ const NavBar = forwardRef<HTMLDivElement>((_props, ref) => {
     borderBottomColor: useColorModeValue('gray.200', 'gray.800'),
   };
 
-  return (
-    <Grid
-      sx={barStyle}
-      templateRows={height}
-      templateColumns="repeat(3, 1fr)"
-      ref={ref}
-    >
-      <Box />
+  const variant = useBreakpointValue({ base: 'flex', lg: 'grid' });
+
+  const InnerJSX = (
+    <>
+      <NavBarSearch />
       <NavBarButtons />
       <NavBarAccount />
-    </Grid>
+    </>
+  );
+
+  if (variant === 'grid')
+    return (
+      <Grid
+        sx={barStyle}
+        templateRows={height}
+        templateColumns="repeat(3, 1fr)"
+        ref={ref}
+      >
+        {InnerJSX}
+      </Grid>
+    );
+
+  return (
+    <Flex sx={barStyle} height={height} ref={ref} justify="space-between">
+      {InnerJSX}
+    </Flex>
   );
 });
 
