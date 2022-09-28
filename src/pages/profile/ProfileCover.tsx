@@ -57,7 +57,6 @@ const ProfileCover: React.FC<Props> = ({
             <CustomFilePicker
               onChange={coverChangeHandler}
               accept="image/png, image/jpeg, image/webp, image/gif"
-              capture="environment"
             >
               <IconButton
                 aria-label="Edit profile picture"

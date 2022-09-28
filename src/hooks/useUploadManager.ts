@@ -15,12 +15,6 @@ function useUploadManager() {
   const [files, setFiles] = useState<FileWrapper[]>([]);
   const [isLoading, setIsLoading] = useBoolean(false);
 
-  // const formData = (() => {
-  //   const formBody = new FormData();
-  //   files.forEach(({ file }, id) => formBody.append(`files[${id}]`, file));
-  //   return formBody;
-  // })();
-
   useEffect(() => {
     const len = newRawFiles.length;
     if (len === 0) return;

@@ -1,10 +1,19 @@
-import { Center, DarkMode, Grid, IconButton, Portal } from '@chakra-ui/react';
+import {
+  Center,
+  DarkMode,
+  Flex,
+  Grid,
+  IconButton,
+  Portal,
+  useBreakpointValue,
+} from '@chakra-ui/react';
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
   XIcon,
 } from '@heroicons/react/outline';
 import { useContext } from 'react';
+import useKeyPress from '../../hooks/useKeyPress';
 import PortalRefContext from '../../store/ref-context';
 import HeroIcon from '../chakra-ui/HeroIcon';
 import Overlay from '../misc/Overlay';
@@ -38,15 +47,24 @@ const PhotoViewerContainer: React.FC<Props> = ({
     if (onClose) onClose();
   };
 
+  useKeyPress('ArrowLeft', arrowLeftHandler);
+  useKeyPress('ArrowRight', arrowRightHandler);
+  useKeyPress('Escape', closeHandler);
+
   const style = {
-    gridTemplate: '100% / auto auto',
+    gridTemplate: useBreakpointValue({
+      base: '40% 60% / 100%',
+      md: '100% / auto auto',
+    }),
     bgColor: 'gray.900',
     '& > *': {
       maxHeight: 'inherit',
     },
     maxHeight: 'calc(100vh - 60px)',
+    height: useBreakpointValue({ base: '100%', md: 'auto' }),
+    width: useBreakpointValue({ base: '100%', md: 'auto' }),
     my: 0,
-    mx: 14,
+    mx: useBreakpointValue({ base: 0, md: 14 }),
     pointerEvents: 'auto',
   };
 
@@ -59,28 +77,46 @@ const PhotoViewerContainer: React.FC<Props> = ({
           <Grid sx={style}>{children}</Grid>
         </Center>
         <DarkMode>
-          <Center position="absolute" top="0" left="0" height="100%">
+          <Flex
+            justify="center"
+            align="center"
+            position="absolute"
+            top="0"
+            height={useBreakpointValue({ base: '40%', md: '100%' })}
+            left="0"
+          >
             <IconButton
               icon={<HeroIcon as={ChevronLeftIcon} />}
               aria-label="Previous photo"
               ml={buttonMargin}
               size="md"
-              variant="ghost"
+              colorScheme="translucent"
+              variant={{ base: 'solid', md: 'ghost' }}
               onClick={arrowLeftHandler}
-              disabled={side === -1}
+              disabled={(side ?? 1) <= 0}
+              visibility={side !== 0 ? 'visible' : 'hidden'}
             />
-          </Center>
-          <Center position="absolute" top="0" right="0" height="100%">
+          </Flex>
+          <Flex
+            justify="center"
+            align="center"
+            position="absolute"
+            top="0"
+            height={useBreakpointValue({ base: '40%', md: '100%' })}
+            right="0"
+          >
             <IconButton
               icon={<HeroIcon as={ChevronRightIcon} />}
               aria-label="Next photo"
               mr={buttonMargin}
               size="md"
-              variant="ghost"
+              colorScheme="translucent"
+              variant={{ base: 'solid', md: 'ghost' }}
               onClick={arrowRightHandler}
-              disabled={side === 1}
+              disabled={(side ?? -1) >= 0}
+              visibility={side !== 0 ? 'visible' : 'hidden'}
             />
-          </Center>
+          </Flex>
           <IconButton
             position="absolute"
             top="0"
@@ -90,7 +126,8 @@ const PhotoViewerContainer: React.FC<Props> = ({
             mt={buttonMargin}
             mr={buttonMargin}
             size="md"
-            variant="ghost"
+            colorScheme="translucent"
+            variant={{ base: 'solid', md: 'ghost' }}
             onClick={closeHandler}
           />
         </DarkMode>

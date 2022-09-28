@@ -27,8 +27,8 @@ const me = (req: Request, res: Response, next: NextFunction) => {
       const account = {
         ...user,
         fullName: getFullName(user),
-        avatarSrc: getSrcUrl(user.avatarSrc),
-        coverSrc: getSrcUrl(user.coverSrc),
+        avatarSrc: user.avatarSrc && getSrcUrl(user.avatarSrc),
+        coverSrc: user.coverSrc && getSrcUrl(user.coverSrc),
       };
 
       res.status(200).send(account);

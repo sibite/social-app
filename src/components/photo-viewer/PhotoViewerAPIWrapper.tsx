@@ -1,4 +1,4 @@
-import { CircularProgress } from '@chakra-ui/react';
+import { Center, CircularProgress } from '@chakra-ui/react';
 import dayjs from 'dayjs';
 import formatDate from '../../shared/formatDate';
 import { useGetPostQuery } from '../../store/feed-api';
@@ -17,9 +17,10 @@ const PhotoViewerAPIWrapper: React.FC<Props> = ({ mediaIds }) => {
   const index = useAppSelector((state) => state.photoViewer.index);
   const currentIndex = Math.max(0, Math.min(index, mediaIds.length - 1 ?? 0));
   const side = ((i) => {
+    if (mediaIds.length <= 1) return 0;
     if (i === 0) return -1;
     if (i === mediaIds.length - 1) return 1;
-    return 0;
+    return undefined;
   })(currentIndex);
 
   const closePhotoViewer = () => {
@@ -42,12 +43,14 @@ const PhotoViewerAPIWrapper: React.FC<Props> = ({ mediaIds }) => {
 
   if (isLoading || isFetching)
     ContentJSX = (
-      <CircularProgress
-        margin={4}
-        isIndeterminate
-        trackColor="gray.700"
-        color="white"
-      />
+      <Center>
+        <CircularProgress
+          margin={4}
+          isIndeterminate
+          trackColor="gray.700"
+          color="white"
+        />
+      </Center>
     );
   else if (mediaPost) {
     const { media, fullName, avatarSrc, content, date, likedBy, options } =

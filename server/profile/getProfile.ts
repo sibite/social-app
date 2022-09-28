@@ -31,8 +31,8 @@ const getProfile: RequestHandler = async (req, res) => {
       ...profile,
       followed,
       fullName: `${profile.name} ${profile.lastName}`,
-      avatarSrc: getSrcUrl(profile.avatarSrc ?? ''),
-      coverSrc: getSrcUrl(profile.coverSrc ?? ''),
+      avatarSrc: profile.avatarSrc && getSrcUrl(profile.avatarSrc),
+      coverSrc: profile.coverSrc && getSrcUrl(profile.coverSrc),
     };
 
     res.status(200).json(response);

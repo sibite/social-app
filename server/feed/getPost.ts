@@ -29,7 +29,7 @@ const getPost: RequestHandler = async (req, res) => {
     const post: Partial<PostIncomingType> = {
       ...postRes,
       fullName: getFullName({ name, lastName }),
-      avatarSrc: getSrcUrl(avatarSrc),
+      avatarSrc: avatarSrc && getSrcUrl(avatarSrc),
       options: {
         delete: req.userId === postRes.creatorId,
         withMedia: postRes.type === 'post' && !postRes.mediaSrc,

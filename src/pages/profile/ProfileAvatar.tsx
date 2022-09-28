@@ -61,7 +61,6 @@ const ProfileAvatar: React.FC<Props> = ({
           <CustomFilePicker
             onChange={avatarChangeHandler}
             accept="image/png, image/jpeg, image/webp, image/gif"
-            capture="user"
           >
             <IconButton
               aria-label="Edit profile picture"
