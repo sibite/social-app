@@ -13,7 +13,11 @@ import PhotoViewerWrapper from '../../components/photo-viewer/PhotoViewerWrapper
 import { accountApi } from '../../store/account-api';
 import { useGetProfileFeedQuery } from '../../store/feed-api';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { profileApi, useGetProfileQuery } from '../../store/profile-api';
+import {
+  profileApi,
+  useGetProfileQuery,
+  useToggleFollowMutation,
+} from '../../store/profile-api';
 import Gallery from './Gallery';
 import ProfileAvatar from './ProfileAvatar';
 import ProfileCover from './ProfileCover';
@@ -43,13 +47,18 @@ const ProfilePage: React.FC<Props> = () => {
 
   const isMine = id === auth.userId;
 
+  const [toggleFollow] = useToggleFollowMutation();
   const { data, isError, isLoading } = useGetProfileQuery(id);
   const feedQuery = useGetProfileFeedQuery(id);
-  const profile = data ?? {};
+  const profile = data;
 
   const avatarSrc = editingAvatarUrl ?? profile?.avatarSrc;
   const coverSrc = editingCoverUrl ?? profile?.coverSrc;
   const description = editingDescription ?? profile?.description;
+
+  const toggleFollowHandler = () => {
+    toggleFollow(id);
+  };
 
   const getEditingChangeFn =
     (setFn: (val: Blob) => any, setUrlFn: (val: string) => any) =>
@@ -155,7 +164,7 @@ const ProfilePage: React.FC<Props> = () => {
               onChange={coverChangeHandler}
             />
             <ProfileAvatar
-              name={profile.fullName}
+              name={profile?.fullName}
               avatarSrc={avatarSrc}
               isEditing={isEditing}
               isUploading={isUploading}
@@ -163,7 +172,7 @@ const ProfilePage: React.FC<Props> = () => {
             />
             <VStack spacing={4} pt={6}>
               <ProfileHeading
-                name={profile.fullName}
+                name={profile?.fullName}
                 description={description}
                 isEditing={isEditing}
                 isUploading={isUploading}
@@ -173,9 +182,11 @@ const ProfilePage: React.FC<Props> = () => {
                 isEditing={isEditing}
                 isUploading={isUploading}
                 isMine={isMine}
+                followed={profile?.followed}
                 editOn={setIsEditing.on}
                 editOff={cancelEditing}
                 onSave={saveHandler}
+                toggleFollow={toggleFollowHandler}
               />
             </VStack>
           </Box>

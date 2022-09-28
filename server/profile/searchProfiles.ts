@@ -19,17 +19,19 @@ const searchProfiles: RequestHandler = async (req, res) => {
 
   try {
     const profiles = await new Promise<UserType[]>((r, j) => {
-      db.users.find(
-        {
-          $or: [
-            { name: regExQuery },
-            { lastName: regExQuery },
-            { description: regExQuery },
-          ],
-        },
-        { name: 1, lastName: 1, avatarSrc: 1, description: 1 },
-        arrCallback(r, j)
-      );
+      db.users
+        .find(
+          {
+            $or: [
+              { name: regExQuery },
+              { lastName: regExQuery },
+              { description: regExQuery },
+            ],
+          },
+          { name: 1, lastName: 1, avatarSrc: 1, description: 1 }
+        )
+        .limit(100)
+        .exec(arrCallback(r, j));
     });
 
     const resProfiles = profiles.map(

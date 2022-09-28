@@ -21,7 +21,7 @@ const SearchItem: React.FC<Props> = ({
   };
 
   return (
-    <Card p={3} as="button" onClick={clickHandler}>
+    <Card variant="clickable" px={4} py={4} as="button" onClick={clickHandler}>
       <Flex align="flex-start" gap={2}>
         <Avatar name={avatarSrc ? undefined : fullName} src={avatarSrc} />
         <VStack align="flex-start" flexGrow={1} spacing={1} overflow="hidden">

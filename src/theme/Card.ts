@@ -13,6 +13,18 @@ const Card: StyleConfig = {
       borderRadius: 'lg',
       boxShadow: 'md',
     },
+    clickable: ({ colorMode }) => ({
+      borderRadius: 'lg',
+      boxShadow: 'sm',
+      transition: 'all 120ms',
+      '&:hover': {
+        background: colorMode === 'light' ? 'gray.50' : 'gray.700',
+        boxShadow: 'md',
+      },
+      '&:active': {
+        background: colorMode === 'light' ? 'gray.200' : 'gray.600',
+      },
+    }),
     flat: {
       borderRadius: 'lg',
     },

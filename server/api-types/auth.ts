@@ -17,10 +17,13 @@ export interface UserType {
   name: string;
   lastName: string;
   email: string;
+  following?: string[];
   avatarSrc?: string;
   coverSrc?: string;
   birthDate?: number;
   description?: string;
 }
 
-export type UserPublicType = Partial<UserType>;
+export interface UserPublicType extends Partial<UserType> {
+  followed: boolean;
+}
