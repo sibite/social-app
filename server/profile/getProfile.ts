@@ -15,12 +15,19 @@ const getProfile: RequestHandler = async (req, res) => {
     const profile = await new Promise<Partial<UserType>>((r, j) => {
       db.users.findOne(
         { _id: profileId },
-        { name: 1, lastName: 1, avatarSrc: 1, coverSrc: 1, description: 1 },
+        {
+          name: 1,
+          lastName: 1,
+          avatarSrc: 1,
+          coverSrc: 1,
+          description: 1,
+          following: 1,
+        },
         singleCallback(r, j)
       );
     });
 
-    const followed = !!(await new Promise<any>((r, j) => {
+    const isFollowed = !!(await new Promise<any>((r, j) => {
       db.users.count(
         { _id: userId, following: { $elemMatch: profileId } },
         numCallback(r, j)
@@ -29,7 +36,7 @@ const getProfile: RequestHandler = async (req, res) => {
 
     const response = {
       ...profile,
-      followed,
+      isFollowed,
       fullName: `${profile.name} ${profile.lastName}`,
       avatarSrc: profile.avatarSrc && getSrcUrl(profile.avatarSrc),
       coverSrc: profile.coverSrc && getSrcUrl(profile.coverSrc),

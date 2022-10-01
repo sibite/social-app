@@ -24,7 +24,13 @@ const SearchItem: React.FC<Props> = ({
     <Card variant="clickable" px={4} py={4} as="button" onClick={clickHandler}>
       <Flex align="flex-start" gap={2}>
         <Avatar name={avatarSrc ? undefined : fullName} src={avatarSrc} />
-        <VStack align="flex-start" flexGrow={1} spacing={1} overflow="hidden">
+        <VStack
+          align="flex-start"
+          flexGrow={1}
+          spacing={1}
+          ml={1}
+          overflow="hidden"
+        >
           <Heading as="span" size="sm">
             {fullName}
           </Heading>

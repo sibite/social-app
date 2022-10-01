@@ -8,6 +8,7 @@ import {
 import { useState } from 'react';
 import { Navigate, Route, Routes, useParams } from 'react-router-dom';
 import Feed from '../../components/feed/Feed';
+import Following from '../../components/followers/Following';
 import PageContainer from '../../components/layout/PageContainer';
 import PhotoViewerWrapper from '../../components/photo-viewer/PhotoViewerWrapper';
 import { accountApi } from '../../store/account-api';
@@ -182,7 +183,8 @@ const ProfilePage: React.FC<Props> = () => {
                 isEditing={isEditing}
                 isUploading={isUploading}
                 isMine={isMine}
-                followed={profile?.followed}
+                followed={profile?.isFollowed}
+                followingCount={profile?.following?.length || 0}
                 editOn={setIsEditing.on}
                 editOff={cancelEditing}
                 onSave={saveHandler}
@@ -199,6 +201,10 @@ const ProfilePage: React.FC<Props> = () => {
           <Route
             path="photos"
             element={<Gallery photos={storeProfile.photos} />}
+          />
+          <Route
+            path="following"
+            element={<Following followed={profile?.following || []} />}
           />
         </Routes>
       </Container>

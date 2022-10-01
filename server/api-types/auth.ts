@@ -25,5 +25,5 @@ export interface UserType {
 }
 
 export interface UserPublicType extends Partial<UserType> {
-  followed: boolean;
+  isFollowed: boolean;
 }

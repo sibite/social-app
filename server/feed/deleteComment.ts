@@ -5,12 +5,16 @@ import { numCallback } from '../shared/nedbPromises';
 
 const deleteComment: RequestHandler = async (req, res) => {
   const { commentId } = req.params;
+  const { userId } = req;
 
   if (!commentId) return res.status(500).send();
 
   try {
     await new Promise<number>((r, j) => {
-      db.comments.remove({ _id: commentId }, numCallback(r, j));
+      db.comments.remove(
+        { _id: commentId, creatorId: userId },
+        numCallback(r, j)
+      );
     });
 
     res.status(200).send();

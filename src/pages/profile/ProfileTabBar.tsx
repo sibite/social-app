@@ -1,4 +1,12 @@
-import { Button, Flex, HStack, Tab, TabList, Tabs } from '@chakra-ui/react';
+import {
+  Badge,
+  Button,
+  Flex,
+  HStack,
+  Tab,
+  TabList,
+  Tabs,
+} from '@chakra-ui/react';
 import {
   ChatAltIcon,
   CheckIcon,
@@ -16,6 +24,7 @@ interface Props {
   isUploading?: boolean;
   isMine?: boolean;
   followed?: boolean;
+  followingCount?: number;
   editOn?: Function;
   editOff?: Function;
   onSave?: Function;
@@ -27,13 +36,19 @@ const ProfileTabBar: React.FC<Props> = ({
   isUploading = false,
   isMine = false,
   followed = false,
+  followingCount = 0,
   editOff,
   editOn,
   onSave,
   toggleFollow,
 }) => {
-  const match = useMatch(useResolvedPath('photos').pathname);
-  const tabIndex = match ? 1 : 0;
+  const matches = [
+    useMatch(useResolvedPath('feed').pathname),
+    useMatch(useResolvedPath('photos').pathname),
+    useMatch(useResolvedPath('following').pathname),
+  ];
+  let tabIndex = matches.findIndex((obj) => !!obj);
+  tabIndex = tabIndex === -1 ? 0 : tabIndex;
 
   const editHandler = (_event: React.MouseEvent) => {
     if (editOn) editOn();
@@ -112,13 +127,21 @@ const ProfileTabBar: React.FC<Props> = ({
 
   return (
     <Flex width="100%" justify="space-between">
-      <Tabs defaultIndex={tabIndex}>
+      <Tabs index={tabIndex}>
         <TabList mt={2}>
           <Link to="feed">
             <Tab>Feed</Tab>
           </Link>
           <Link to="photos">
             <Tab>Photos</Tab>
+          </Link>
+          <Link to="following">
+            <Tab>
+              Following
+              <Badge ml={2} colorScheme={tabIndex === 2 ? 'blue' : 'gray'}>
+                {followingCount}
+              </Badge>
+            </Tab>
           </Link>
         </TabList>
       </Tabs>

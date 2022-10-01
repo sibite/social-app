@@ -1,4 +1,4 @@
-import { Grid } from '@chakra-ui/react';
+import { Grid, useColorModeValue } from '@chakra-ui/react';
 import { PostIncomingType } from '../../../server/api-types/feed';
 import { useAppDispatch } from '../../store/hooks';
 import { openMediaGroup, setIndex } from '../../store/photo-viewer';
@@ -45,6 +45,7 @@ const PostMediaGroup: React.FC<Props> = ({ postId, media }) => {
   const gridStyle = {
     ...gridStyles[styleIndex],
     gap: '1px',
+    bgColor: useColorModeValue('gray.50', 'gray.900'),
   };
   const ratio = [undefined, 1, 2 / 1, 3 / 2, 4 / 3, 1][styleIndex];
 

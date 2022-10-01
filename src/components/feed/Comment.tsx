@@ -73,16 +73,18 @@ const Comment: React.FC<Props> = ({
           </Text>
         </Box>
       </VStack>
-      <HStack className="toolbar" alignSelf="center">
-        <IconButton
-          variant="ghost"
-          colorScheme="red"
-          size="sm"
-          aria-label="Delete comment"
-          icon={<HeroIcon as={TrashIcon} />}
-          onClick={deleteHandler}
-        />
-      </HStack>
+      {isDeletable && (
+        <HStack className="toolbar" alignSelf="center" mb={4}>
+          <IconButton
+            variant="ghost"
+            colorScheme="red"
+            size="sm"
+            aria-label="Delete comment"
+            icon={<HeroIcon as={TrashIcon} />}
+            onClick={deleteHandler}
+          />
+        </HStack>
+      )}
     </Flex>
   );
 };

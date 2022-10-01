@@ -1,7 +1,9 @@
 import {
-  Box,
+  Avatar,
+  Center,
   Flex,
   IconButton,
+  Spinner,
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react';
@@ -9,6 +11,7 @@ import { ChevronDoubleRightIcon } from '@heroicons/react/outline';
 import dayjs from 'dayjs';
 import { useRef, useState } from 'react';
 import formatDate from '../../shared/formatDate';
+import { useGetAccountDataQuery } from '../../store/account-api';
 import {
   useCreateCommentMutation,
   useGetCommentsQuery,
@@ -23,11 +26,15 @@ interface Props {
 }
 
 const CommentsSection: React.FC<Props> = ({ postId }) => {
-  const { data: comments, isLoading, isError } = useGetCommentsQuery(postId);
-  const [createComment] = useCreateCommentMutation();
+  const { data: comments, isLoading } = useGetCommentsQuery(postId);
+  const { data: account } = useGetAccountDataQuery();
+  const [createComment, { isLoading: isSending }] = useCreateCommentMutation();
   const myId = useAppSelector((state) => state.auth.userId);
   const [content, setContent] = useState('');
   const newCommentRef = useRef<any>(null);
+
+  const fullName = account?.fullName;
+  const avatarSrc = account?.avatarSrc;
 
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
@@ -74,16 +81,23 @@ const CommentsSection: React.FC<Props> = ({ postId }) => {
         bgColor={bg}
         overflowY="auto"
       >
-        {CommentsJSX}
+        {CommentsJSX ||
+          (isLoading && (
+            <Center alignSelf="center">
+              <Spinner />
+            </Center>
+          ))}
       </VStack>
       <Flex
         as="form"
         width="100%"
-        p={4}
+        px={4}
+        pb={4}
         gap={2}
-        alignItems="flex-end"
+        alignItems="center"
         onSubmit={submitHandler}
       >
+        <Avatar src={avatarSrc} name={fullName} size="sm" />
         <AutoResizedTextArea
           autofocus
           flexGrow="1"
@@ -97,7 +111,9 @@ const CommentsSection: React.FC<Props> = ({ postId }) => {
           type="submit"
           colorScheme="twitter"
           aria-label="Submit comment"
-          disabled={content.length === 0}
+          alignSelf="flex-end"
+          isLoading={isSending}
+          disabled={content.length === 0 || isSending}
         />
       </Flex>
     </Flex>
