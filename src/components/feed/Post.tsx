@@ -1,4 +1,13 @@
-import { Badge, Button, Grid, Image, Text, VStack } from '@chakra-ui/react';
+import {
+  Badge,
+  Box,
+  Button,
+  Flex,
+  Grid,
+  Text,
+  useBoolean,
+  VStack,
+} from '@chakra-ui/react';
 import { AnnotationIcon, HeartIcon, ShareIcon } from '@heroicons/react/outline';
 import { HeartIcon as HeartIconFilled } from '@heroicons/react/solid';
 import { PostIncomingType } from '../../../server/api-types/feed';
@@ -7,7 +16,6 @@ import {
   useToggleLikeMutation,
 } from '../../store/feed-api';
 import { useAppSelector } from '../../store/hooks';
-import { Comment } from '../../store/profile';
 import HeroIcon from '../chakra-ui/HeroIcon';
 import CommentsSection from './CommentsSection';
 import PostHeader from './PostHeader';
@@ -22,7 +30,7 @@ interface Props {
   content?: string;
   dateString: string;
   likedBy: string[];
-  comments: Comment[];
+  commentsCount: number;
   alwaysShowComments?: boolean;
   options: PostIncomingType['options'];
 }
@@ -35,12 +43,13 @@ const Post: React.FC<Props> = ({
   content,
   media = [],
   likedBy,
-  comments,
+  commentsCount,
   alwaysShowComments = false,
   options = {},
 }) => {
   const [removePost] = useDeletePostMutation();
   const [toggleLike] = useToggleLikeMutation();
+  const [areCommentsShown, setAreCommentsShown] = useBoolean(false);
 
   const myId = useAppSelector((state) => state.auth.userId);
 
@@ -53,8 +62,16 @@ const Post: React.FC<Props> = ({
 
   const fontSize = content && content.length > 40 ? 'md' : 'xl';
 
+  const containerStyle = {
+    width: '100%',
+    maxHeight: '100%',
+    flexDirection: 'column',
+    flexWrap: 'none',
+    justifyContent: 'flex-start',
+  };
+
   return (
-    <>
+    <Flex sx={containerStyle} overflow="hidden">
       <VStack spacing={4} p={4} align="stretch">
         <PostHeader avatarSrc={avatarSrc} name={name} dateString={dateString}>
           <PostMenu onDelete={deleteHandler} options={options} />
@@ -65,7 +82,7 @@ const Post: React.FC<Props> = ({
           </Text>
         )}
       </VStack>
-      <PostMediaGroup postId={postId} media={media} />
+      {media.length !== 0 && <PostMediaGroup postId={postId} media={media} />}
       <Grid
         templateRows="1fr"
         templateColumns={`repeat(${alwaysShowComments ? 2 : 3}, 1fr)`}
@@ -90,12 +107,13 @@ const Post: React.FC<Props> = ({
             variant="ghost"
             leftIcon={<HeroIcon as={AnnotationIcon} />}
             rightIcon={
-              comments.length ? (
+              commentsCount ? (
                 <Badge variant="subtle" colorScheme="blue">
-                  {comments.length}
+                  {commentsCount}
                 </Badge>
               ) : undefined
             }
+            onClick={setAreCommentsShown.toggle}
           >
             Comments
           </Button>
@@ -104,8 +122,10 @@ const Post: React.FC<Props> = ({
           Share
         </Button>
       </Grid>
-      {comments.length > 0 && <CommentsSection comments={comments} />}
-    </>
+      {(areCommentsShown || alwaysShowComments) && (
+        <CommentsSection postId={postId} />
+      )}
+    </Flex>
   );
 };
 

@@ -1,5 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { CreatePostType, PostIncomingType } from '../../server/api-types/feed';
+import {
+  CommentIncomingType,
+  CreatePostType,
+  PostIncomingType,
+} from '../../server/api-types/feed';
 import prepareAuthHeader from './prepare-auth-header';
 
 export const feedApi = createApi({
@@ -8,7 +12,7 @@ export const feedApi = createApi({
     baseUrl: '/api/feed',
     prepareHeaders: prepareAuthHeader,
   }),
-  tagTypes: ['Post'],
+  tagTypes: ['Post', 'Comments'],
   endpoints: (builder) => ({
     createPost: builder.mutation<unknown, CreatePostType>({
       query: (payload) => {
@@ -41,6 +45,37 @@ export const feedApi = createApi({
         { type: 'Post', id: 'ALL' },
         { type: 'Post', id: arg.postId },
       ],
+    }),
+    createComment: builder.mutation<
+      unknown,
+      { postId: string; content: string }
+    >({
+      query: ({ postId, content }) => ({
+        url: `comments/${postId}`,
+        method: 'POST',
+        body: { content },
+      }),
+      invalidatesTags: (_result, _err, arg) => [
+        { type: 'Comments', id: arg.postId },
+        { type: 'Post', id: arg.postId },
+      ],
+    }),
+    deleteComment: builder.mutation<
+      unknown,
+      { postId: string; commentId: string }
+    >({
+      query: ({ commentId }) => ({
+        url: `comments/${commentId}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: (_result, _err, arg) => [
+        { type: 'Comments', id: arg.postId },
+        { type: 'Post', id: arg.postId },
+      ],
+    }),
+    getComments: builder.query<CommentIncomingType[], string>({
+      query: (postId) => `comments/${postId}`,
+      providesTags: (_result, _err, arg) => [{ type: 'Comments', id: arg }],
     }),
     toggleLike: builder.mutation<unknown, string>({
       query: (postId) => ({
@@ -84,6 +119,9 @@ export const {
   useCreatePostMutation,
   useDeletePostMutation,
   useToggleLikeMutation,
+  useCreateCommentMutation,
+  useDeleteCommentMutation,
+  useGetCommentsQuery,
   useGetProfileFeedQuery,
   useGetPostQuery,
 } = feedApi;

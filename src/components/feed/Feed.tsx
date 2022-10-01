@@ -9,7 +9,7 @@ interface Props {
 
 const Feed: React.FC<Props> = ({ posts }) => {
   const PostsJSX = posts.map((postId) => (
-    <Card width="100%">
+    <Card width="100%" maxHeight="130vh">
       <PostApiWrapper postId={postId} key={postId} />
     </Card>
   ));

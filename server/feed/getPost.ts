@@ -3,7 +3,11 @@ import { PostDBType, PostIncomingType } from '../api-types/feed';
 import db from '../database';
 import getFullName from '../shared/getFullName';
 import getSrcUrl from '../shared/getSrcUrl';
-import { arrCallback, singleCallback } from '../shared/nedbPromises';
+import {
+  arrCallback,
+  numCallback,
+  singleCallback,
+} from '../shared/nedbPromises';
 
 const getPost: RequestHandler = async (req, res) => {
   const { postId } = req.params;
@@ -26,10 +30,15 @@ const getPost: RequestHandler = async (req, res) => {
       );
     });
 
+    const commentsCount = await new Promise<number>((r, j) => {
+      db.comments.count({ postId }, numCallback(r, j));
+    });
+
     const post: Partial<PostIncomingType> = {
       ...postRes,
       fullName: getFullName({ name, lastName }),
       avatarSrc: avatarSrc && getSrcUrl(avatarSrc),
+      commentsCount,
       options: {
         delete: req.userId === postRes.creatorId,
         withMedia: postRes.type === 'post' && !postRes.mediaSrc,

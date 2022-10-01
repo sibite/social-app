@@ -37,11 +37,16 @@ const PhotoViewerAPIWrapper: React.FC<Props> = ({ mediaIds }) => {
 
   const mediaId = mediaIds[currentIndex];
 
-  const { data: mediaPost, isLoading, isFetching } = useGetPostQuery(mediaId);
+  const {
+    data: mediaPost,
+    isLoading,
+    isFetching,
+    currentData,
+  } = useGetPostQuery(mediaId);
 
   let ContentJSX;
 
-  if (isLoading || isFetching)
+  if ((isLoading || isFetching) && !currentData)
     ContentJSX = (
       <Center>
         <CircularProgress
@@ -53,8 +58,16 @@ const PhotoViewerAPIWrapper: React.FC<Props> = ({ mediaIds }) => {
       </Center>
     );
   else if (mediaPost) {
-    const { media, fullName, avatarSrc, content, date, likedBy, options } =
-      mediaPost;
+    const {
+      media,
+      fullName,
+      avatarSrc,
+      content,
+      date,
+      likedBy,
+      options,
+      commentsCount,
+    } = mediaPost;
 
     ContentJSX = (
       <>
@@ -67,7 +80,7 @@ const PhotoViewerAPIWrapper: React.FC<Props> = ({ mediaIds }) => {
           content={content}
           dateString={formatDate(dayjs(date).subtract(5, 'minutes'))}
           likedBy={likedBy ?? []}
-          comments={[]}
+          commentsCount={commentsCount}
         />
       </>
     );

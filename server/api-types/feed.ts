@@ -6,20 +6,17 @@ export interface PostDBType {
   mediaSrc?: string;
   mediaIds?: string[];
   likedBy?: string[];
-  comments?: any[];
   type: 'post' | 'media';
 }
 
-export interface PostType extends PostDBType {
+export interface PostIncomingType extends Omit<PostDBType, 'mediaIds'> {
   fullName: string;
   avatarSrc: string;
-}
-
-export interface PostIncomingType extends Omit<PostType, 'mediaIds'> {
   media: {
     _id: string;
     src: string;
   }[];
+  commentsCount: number;
   options: {
     delete?: boolean;
     withMedia?: boolean;
@@ -38,4 +35,17 @@ export interface MediaType {
   creatorId: string;
   likedBy: string[];
   comments: any[];
+}
+
+export interface CommentDBType {
+  _id: string;
+  postId: string;
+  creatorId: string;
+  date: number;
+  content: string;
+}
+
+export interface CommentIncomingType extends CommentDBType {
+  fullName: string;
+  avatarSrc?: string;
 }

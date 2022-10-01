@@ -10,10 +10,10 @@ const PhotoSideContent: React.FC<Props> = ({
   content,
   likedBy,
   dateString,
-  comments,
+  commentsCount,
   options,
 }) => (
-  <Card variant="unstyled">
+  <Card variant="unstyled" height="100%" minWidth="180px">
     <Post
       postId={postId}
       options={options}
@@ -22,7 +22,7 @@ const PhotoSideContent: React.FC<Props> = ({
       content={content}
       dateString={dateString}
       likedBy={likedBy}
-      comments={comments}
+      commentsCount={commentsCount}
       alwaysShowComments
     />
   </Card>

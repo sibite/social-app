@@ -136,6 +136,7 @@ const NewPost: React.FC = () => {
           <Button
             leftIcon={<HeroIcon as={ArrowRightIcon} inButton />}
             type="submit"
+            colorScheme="twitter"
             disabled={
               isLoading ||
               isLoadingFiles ||

@@ -1,9 +1,9 @@
 import {
   Center,
-  DarkMode,
   Flex,
   Grid,
   IconButton,
+  LightMode,
   Portal,
   useBreakpointValue,
 } from '@chakra-ui/react';
@@ -76,7 +76,7 @@ const PhotoViewerContainer: React.FC<Props> = ({
         <Center width="100%" height="100%" pointerEvents="none">
           <Grid sx={style}>{children}</Grid>
         </Center>
-        <DarkMode>
+        <LightMode>
           <Flex
             justify="center"
             align="center"
@@ -130,7 +130,7 @@ const PhotoViewerContainer: React.FC<Props> = ({
             variant={{ base: 'solid', md: 'ghost' }}
             onClick={closeHandler}
           />
-        </DarkMode>
+        </LightMode>
       </Overlay>
     </Portal>
   );

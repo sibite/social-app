@@ -10,6 +10,10 @@ const db = {
     filename: path.join(__dirname, './database/feed'),
     autoload: true,
   }),
+  comments: new Datastore({
+    filename: path.join(__dirname, './database/comments'),
+    autoload: true,
+  }),
 };
 
 export default db;
