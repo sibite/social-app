@@ -27,7 +27,7 @@ import Card from '../chakra-ui/Card';
 import HeroIcon from '../chakra-ui/HeroIcon';
 import AutoResizedTextArea from '../misc/AutoResizedTextArea';
 import CustomFilePicker from '../misc/CustomFilePicker';
-import Thumbnails from './Thumbnails';
+import Thumbnails from '../post/Thumbnails';
 
 const NewPost: React.FC = () => {
   const [isExpanded, setIsExpanded] = useBoolean(false);

@@ -24,6 +24,7 @@ import Gallery from './Gallery';
 import ProfileAvatar from './ProfileAvatar';
 import ProfileCover from './ProfileCover';
 import ProfileHeading from './ProfileHeading';
+import ProfilePageSkeleton from './ProfilePageSkeleton';
 import ProfileTabBar from './ProfileTabBar';
 
 interface Props {}
@@ -49,9 +50,11 @@ const ProfilePage: React.FC<Props> = () => {
   const isMine = id === auth.userId;
 
   const [toggleFollow] = useToggleFollowMutation();
-  const { data, isError, isLoading } = useGetProfileQuery(id);
+  const { data, isFetching, isLoading } = useGetProfileQuery(id);
   const feedQuery = useGetProfileFeedQuery(id);
+
   const profile = data;
+  const posts = feedQuery.isFetching || isFetching ? [] : feedQuery.data ?? [];
 
   const avatarSrc = editingAvatarUrl ?? profile?.avatarSrc;
   const coverSrc = editingCoverUrl ?? profile?.coverSrc;
@@ -147,8 +150,15 @@ const ProfilePage: React.FC<Props> = () => {
   const bg2 = useColorModeValue('white', 'gray.900');
   const borderColor = useColorModeValue('gray.200', 'gray.800');
 
+  if (isLoading || isFetching)
+    return (
+      <PageContainer bg={bg1}>
+        <ProfilePageSkeleton />
+      </PageContainer>
+    );
+
   return (
-    <PageContainer bg={bg1}>
+    <PageContainer bg={bg1} key={id}>
       <PhotoViewerWrapper />
       <Box
         width="100%"
@@ -197,7 +207,15 @@ const ProfilePage: React.FC<Props> = () => {
       <Container maxWidth="container.lg" px={0}>
         <Routes>
           <Route path="*" element={<Navigate to="feed" replace />} />
-          <Route path="feed" element={<Feed posts={feedQuery.data ?? []} />} />
+          <Route
+            path="feed"
+            element={
+              <Feed
+                posts={posts}
+                isLoading={feedQuery.isFetching || isLoading}
+              />
+            }
+          />
           <Route path="photos" element={<Gallery photos={[]} />} />
           <Route
             path="following"

@@ -1,18 +1,25 @@
 import { Container, VStack } from '@chakra-ui/react';
-import Card from '../chakra-ui/Card';
+import FeedPost from './FeedPost';
 import NewPost from './NewPost';
-import PostApiWrapper from './PostApiWrapper';
+import PostSkeleton from './PostSkeleton';
 
 interface Props {
   posts: string[];
+  isLoading?: boolean;
 }
 
-const Feed: React.FC<Props> = ({ posts }) => {
-  const PostsJSX = posts.map((postId) => (
-    <Card width="100%" overflow="hidden" key={postId}>
-      <PostApiWrapper postId={postId} />
-    </Card>
-  ));
+const Feed: React.FC<Props> = ({ posts, isLoading = false }) => {
+  const PostsJSX = (() => {
+    if (isLoading)
+      return (
+        <>
+          <PostSkeleton />
+          <PostSkeleton />
+        </>
+      );
+
+    return posts.map((postId) => <FeedPost key={postId} postId={postId} />);
+  })();
 
   return (
     <Container maxWidth="xl" py={10} px={0}>

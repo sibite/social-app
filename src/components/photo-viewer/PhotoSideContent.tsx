@@ -1,6 +1,6 @@
 import { useBreakpointValue } from '@chakra-ui/react';
 import Card from '../chakra-ui/Card';
-import Post from '../feed/Post';
+import Post from '../post/Post';
 
 type Props = Parameters<typeof Post>[0];
 

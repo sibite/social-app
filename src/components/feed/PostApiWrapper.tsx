@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import formatDate from '../../shared/formatDate';
 import { useGetPostQuery } from '../../store/feed-api';
-import Post from './Post';
+import Post from '../post/Post';
 
 interface Props {
   postId: string;
