@@ -1,6 +1,5 @@
 import {
   Badge,
-  Box,
   Button,
   Flex,
   Grid,
@@ -32,6 +31,7 @@ interface Props {
   likedBy: string[];
   commentsCount: number;
   alwaysShowComments?: boolean;
+  limitHeight?: boolean;
   options: PostIncomingType['options'];
 }
 
@@ -45,6 +45,7 @@ const Post: React.FC<Props> = ({
   likedBy,
   commentsCount,
   alwaysShowComments = false,
+  limitHeight = false,
   options = {},
 }) => {
   const [removePost] = useDeletePostMutation();
@@ -123,7 +124,7 @@ const Post: React.FC<Props> = ({
         </Button>
       </Grid>
       {(areCommentsShown || alwaysShowComments) && (
-        <CommentsSection postId={postId} />
+        <CommentsSection postId={postId} limitHeight={limitHeight} />
       )}
     </Flex>
   );

@@ -10,6 +10,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { TrashIcon } from '@heroicons/react/outline';
+import { memo } from 'react';
 import { useDeleteCommentMutation } from '../../store/feed-api';
 import Card from '../chakra-ui/Card';
 import HeroIcon from '../chakra-ui/HeroIcon';
@@ -61,7 +62,7 @@ const Comment: React.FC<Props> = ({
     <Flex sx={style} gap={2}>
       <Avatar name={avatarSrc ? undefined : name} src={avatarSrc} size="sm" />
       <VStack align="flex-start">
-        <Card sx={cardStyle} variant="flat">
+        <Card sx={cardStyle} variant="flat" borderRadius="xl">
           <Heading as="span" size="xs">
             {name}
           </Heading>
@@ -89,4 +90,4 @@ const Comment: React.FC<Props> = ({
   );
 };
 
-export default Comment;
+export default memo(Comment);

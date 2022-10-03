@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { closeMediaGroup, setIndex } from '../../store/photo-viewer';
 import PhotoContainer from './PhotoContainer';
 import PhotoSideContent from './PhotoSideContent';
-import PhotoViewerContainer from './PhotoViewerContainer';
+import PhotoViewerContainerWrapper from './PhotoViewerContainerWrapper';
 
 interface Props {
   mediaIds: string[];
@@ -78,7 +78,7 @@ const PhotoViewerAPIWrapper: React.FC<Props> = ({ mediaIds }) => {
           options={options}
           name={fullName}
           content={content}
-          dateString={formatDate(dayjs(date).subtract(5, 'minutes'))}
+          dateString={formatDate(dayjs(date))}
           likedBy={likedBy ?? []}
           commentsCount={commentsCount}
         />
@@ -87,14 +87,14 @@ const PhotoViewerAPIWrapper: React.FC<Props> = ({ mediaIds }) => {
   } else ContentJSX = null;
 
   return (
-    <PhotoViewerContainer
+    <PhotoViewerContainerWrapper
       onClose={closePhotoViewer}
       onSlideLeft={slideLeftHandler}
       onSlideRight={slideRightHandler}
       side={side}
     >
       {ContentJSX}
-    </PhotoViewerContainer>
+    </PhotoViewerContainerWrapper>
   );
 };
 export default PhotoViewerAPIWrapper;

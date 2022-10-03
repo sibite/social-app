@@ -1,3 +1,4 @@
+import { useBreakpointValue } from '@chakra-ui/react';
 import Card from '../chakra-ui/Card';
 import Post from '../feed/Post';
 
@@ -13,7 +14,12 @@ const PhotoSideContent: React.FC<Props> = ({
   commentsCount,
   options,
 }) => (
-  <Card variant="unstyled" height="100%" minWidth="180px">
+  <Card
+    variant="unstyled"
+    height="100%"
+    minWidth="180px"
+    maxWidth={useBreakpointValue({ base: 'none', md: '420px' })}
+  >
     <Post
       postId={postId}
       options={options}
@@ -23,6 +29,7 @@ const PhotoSideContent: React.FC<Props> = ({
       dateString={dateString}
       likedBy={likedBy}
       commentsCount={commentsCount}
+      limitHeight={useBreakpointValue({ base: false, md: true })}
       alwaysShowComments
     />
   </Card>

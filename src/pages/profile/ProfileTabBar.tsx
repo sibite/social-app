@@ -125,8 +125,16 @@ const ProfileTabBar: React.FC<Props> = ({
     </Button>
   );
 
+  const flexStyle = {
+    width: '100%',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: { base: 'column-reverse', md: 'row' },
+    paddingTop: { base: 4, md: 0 },
+  };
+
   return (
-    <Flex width="100%" justify="space-between">
+    <Flex sx={flexStyle}>
       <Tabs index={tabIndex}>
         <TabList mt={2}>
           <Link to="feed">

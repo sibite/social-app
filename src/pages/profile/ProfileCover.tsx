@@ -62,7 +62,6 @@ const ProfileCover: React.FC<Props> = ({
                 aria-label="Edit profile picture"
                 icon={<HeroIcon as={PencilIcon} />}
                 colorScheme="translucent"
-                variant="solid"
                 size="md"
                 sx={buttonStyle}
                 disabled={isUploading}

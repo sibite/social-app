@@ -12,7 +12,7 @@ const Following: React.FC<Props> = ({ followed }) => {
     <VStack spacing={8} py={12}>
       <Heading as="h2" size="lg" alignSelf="flex-start">
         Following
-        <Badge ml={3} fontSize="lg">
+        <Badge ml={3} fontSize="lg" colorScheme="blue">
           {followed.length}
         </Badge>
       </Heading>

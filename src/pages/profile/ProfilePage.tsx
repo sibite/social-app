@@ -107,7 +107,7 @@ const ProfilePage: React.FC<Props> = () => {
             dispatch(accountApi.endpoints.uploadCover.initiate(editingCover))
           );
         }
-        if (editingDescription) {
+        if (typeof editingDescription === 'string') {
           requests.push(
             dispatch(
               accountApi.endpoints.patchDetails.initiate({

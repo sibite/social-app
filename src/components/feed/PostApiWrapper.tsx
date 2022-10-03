@@ -23,6 +23,7 @@ const PostApiWrapper: React.FC<Props> = ({ postId }) => {
       avatarSrc={data.avatarSrc}
       media={data.media}
       options={data.options}
+      limitHeight
     />
   );
 };

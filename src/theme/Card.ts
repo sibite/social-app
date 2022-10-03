@@ -6,7 +6,6 @@ const Card: StyleConfig = {
     flexDirection: 'column',
     background: colorMode === 'light' ? 'white' : 'gray.800',
     alignItems: 'stretch',
-    overflow: 'hidden',
   }),
   variants: {
     shaded: {

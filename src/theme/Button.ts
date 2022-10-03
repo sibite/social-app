@@ -1,26 +1,7 @@
 import { StyleConfig } from '@chakra-ui/react';
 
 const Button: StyleConfig = {
-  baseStyle: ({ colorScheme, colorMode }) => {
-    if (colorScheme === 'translucent') {
-      const bg = colorMode === 'light' ? 'blackAlpha.600' : 'whiteAlpha.600';
-      const color = colorMode === 'light' ? 'white' : 'black';
-      return {
-        bg,
-        color,
-        _hover: {
-          bg: colorMode === 'light' ? 'blackAlpha.700' : 'whiteAlpha.700',
-          _disabled: {
-            bg,
-          },
-        },
-        _active: {
-          bg: colorMode === 'light' ? 'blackAlpha.900' : 'whiteAlpha.900',
-        },
-      };
-    }
-    return {};
-  },
+  baseStyle: {},
   variants: {
     solid: ({ colorScheme, colorMode }) => {
       if (colorScheme === 'gray') {
@@ -51,6 +32,32 @@ const Button: StyleConfig = {
           _active: {
             bg: colorMode === 'light' ? 'gray.300' : 'gray.500',
           },
+        };
+      }
+      if (colorScheme === 'translucent') {
+        const bg = colorMode === 'light' ? 'blackAlpha.600' : 'whiteAlpha.600';
+        const color = colorMode === 'light' ? 'white' : 'black';
+        return {
+          bg,
+          color,
+          _hover: {
+            bg: colorMode === 'light' ? 'blackAlpha.700' : 'whiteAlpha.700',
+            _disabled: {
+              bg,
+            },
+          },
+          _active: {
+            bg: colorMode === 'light' ? 'blackAlpha.900' : 'whiteAlpha.900',
+          },
+        };
+      }
+      return {};
+    },
+    ghost: ({ colorScheme, colorMode }) => {
+      if (colorScheme === 'translucent') {
+        const color = colorMode === 'light' ? 'white' : 'black';
+        return {
+          color,
         };
       }
       return {};

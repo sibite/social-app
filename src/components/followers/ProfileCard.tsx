@@ -1,12 +1,11 @@
 import {
-  Flex,
   Avatar,
-  VStack,
+  Flex,
   Heading,
-  Text,
-  HStack,
   SkeletonCircle,
   SkeletonText,
+  Text,
+  VStack,
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { useGetProfileQuery } from '../../store/profile-api';
@@ -37,7 +36,7 @@ const ProfileCard: React.FC<Props> = ({ profileId }) => {
   if (!profile)
     profile = {
       avatarSrc: '',
-      description: 'Account deleted',
+      description: 'Account unavailable',
       isFollowed: true,
     };
 
@@ -45,8 +44,12 @@ const ProfileCard: React.FC<Props> = ({ profileId }) => {
 
   return (
     <Card variant="clickable" px={4} py={4} as="button" onClick={clickHandler}>
-      <Flex align="flex-start" gap={2}>
-        <Avatar name={avatarSrc ? undefined : fullName} src={avatarSrc} />
+      <Flex align="center" gap={2}>
+        <Avatar
+          name={avatarSrc ? undefined : fullName}
+          src={avatarSrc}
+          size="lg"
+        />
         <VStack
           align="flex-start"
           flexGrow={1}

@@ -11,12 +11,6 @@ const Overlay: React.FC<BoxProps> = ({ children, onClick, ...rest }) => {
     bgColor: 'blackAlpha.700',
   };
 
-  const backgroundStyle = {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-  };
-
   const clickHandler = (event: React.MouseEvent<HTMLDivElement>) => {
     const wasClickedOnBackground = event.currentTarget === event.target;
     if (onClick && wasClickedOnBackground) onClick(event);
