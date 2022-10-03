@@ -25,17 +25,17 @@ const PostMediaGroup: React.FC<Props> = ({ postId, media }) => {
     { gridTemplate: '1fr / repeat(2, 1fr)' },
     {
       gridTemplate: '1fr 1fr / 1fr 1fr',
-      '& > *:nth-child(1)': {
+      '& > *:nth-of-type(1)': {
         gridRow: 'span 2',
       },
     },
     { gridTemplate: '1fr 1fr / 1fr 1fr' },
     {
       gridTemplate: '3fr 2fr / repeat(6, 1fr)',
-      '& > *:nth-child(-n+2)': {
+      '& > *:nth-of-type(-n+2)': {
         gridColumn: 'span 3',
       },
-      '& > *:nth-child(n+3)': {
+      '& > *:nth-of-type(n+3)': {
         gridColumn: 'span 2',
       },
     },

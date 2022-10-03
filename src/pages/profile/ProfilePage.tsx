@@ -2,6 +2,7 @@ import {
   Box,
   Container,
   useBoolean,
+  useBreakpointValue,
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react';
@@ -28,7 +29,6 @@ import ProfileTabBar from './ProfileTabBar';
 interface Props {}
 
 const ProfilePage: React.FC<Props> = () => {
-  const storeProfile = useAppSelector((state) => state.profile);
   const auth = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
 
@@ -194,14 +194,11 @@ const ProfilePage: React.FC<Props> = () => {
           </Box>
         </Container>
       </Box>
-      <Container maxWidth="container.lg">
+      <Container maxWidth="container.lg" px={0}>
         <Routes>
           <Route path="*" element={<Navigate to="feed" replace />} />
           <Route path="feed" element={<Feed posts={feedQuery.data ?? []} />} />
-          <Route
-            path="photos"
-            element={<Gallery photos={storeProfile.photos} />}
-          />
+          <Route path="photos" element={<Gallery photos={[]} />} />
           <Route
             path="following"
             element={<Following followed={profile?.following || []} />}

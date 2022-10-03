@@ -68,6 +68,7 @@ const CommentsSection: React.FC<Props> = ({ postId, limitHeight }) => {
       comments &&
       comments.map((comment) => (
         <Comment
+          key={comment._id}
           postId={postId}
           commentId={comment._id}
           isDeletable={myId === comment.creatorId}
@@ -87,7 +88,14 @@ const CommentsSection: React.FC<Props> = ({ postId, limitHeight }) => {
       maxHeight={limitHeight ? `${windowHeight - 61 - 150}px` : undefined}
       overflowY={limitHeight ? 'auto' : undefined}
     >
-      <VStack align="flex-start" px={4} py={4} spacing={5} bgColor={bg}>
+      <VStack
+        align="flex-start"
+        px={4}
+        py={4}
+        spacing={5}
+        bgColor={bg}
+        width="100%"
+      >
         <Flex
           as="form"
           width="100%"
@@ -98,7 +106,7 @@ const CommentsSection: React.FC<Props> = ({ postId, limitHeight }) => {
         >
           <Avatar src={avatarSrc} name={fullName} size="sm" />
           <AutoResizedTextArea
-            autofocus
+            autoFocus
             required
             flexGrow="1"
             placeholder="Enter new comment"

@@ -49,6 +49,7 @@ const Comment: React.FC<Props> = ({
   };
 
   const style = {
+    minWidth: 0,
     '.toolbar': {
       opacity: 0,
       transition: 'all 150ms',
@@ -66,7 +67,7 @@ const Comment: React.FC<Props> = ({
           <Heading as="span" size="xs">
             {name}
           </Heading>
-          <Text>{children}</Text>
+          <Text wordBreak="break-word">{children}</Text>
         </Card>
         <Box>
           <Text opacity={0.6} fontSize="xs" marginTop={-2}>

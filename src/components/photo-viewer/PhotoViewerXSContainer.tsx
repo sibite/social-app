@@ -33,7 +33,7 @@ const PhotoViewerXSContainer: React.FC<Props> = ({
     overflowY: 'auto',
     pointerEvents: 'auto',
     position: 'relative',
-    '& > *:nth-child(1)': {
+    '& > *:nth-of-type(1)': {
       minHeight: photoHeight,
       maxheight: photoHeight,
     },
