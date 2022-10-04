@@ -40,37 +40,31 @@ const PhotoViewerMDContainer: React.FC<Props> = ({
       <Center width="100%" height="100%" pointerEvents="none">
         <Grid sx={style}>{children}</Grid>
       </Center>
-      <LightMode>
-        <Flex
-          justify="center"
-          align="center"
-          position="absolute"
-          top="0"
-          height="100%"
-          left="0"
-          mr={2}
-        >
-          <LeftButton side={side} clickHandler={onSlideLeft} variant="ghost" />
-        </Flex>
-        <Flex
-          justify="center"
-          align="center"
-          position="absolute"
-          top="0"
-          height="100%"
-          right="0"
-          mr={2}
-        >
-          <RightButton
-            side={side}
-            clickHandler={onSlideRight}
-            variant="ghost"
-          />
-        </Flex>
-        <Box position="absolute" top="0" right="0" mr={2} mt={2}>
-          <CloseButton clickHandler={onClose} variant="ghost" />
-        </Box>
-      </LightMode>
+      <Flex
+        justify="center"
+        align="center"
+        position="absolute"
+        top="0"
+        height="100%"
+        left="0"
+        ml={2}
+      >
+        <LeftButton side={side} clickHandler={onSlideLeft} variant="ghost" />
+      </Flex>
+      <Flex
+        justify="center"
+        align="center"
+        position="absolute"
+        top="0"
+        height="100%"
+        right="0"
+        mr={2}
+      >
+        <RightButton side={side} clickHandler={onSlideRight} variant="ghost" />
+      </Flex>
+      <Box position="absolute" top="0" right="0" mr={2} mt={2}>
+        <CloseButton clickHandler={onClose} variant="ghost" />
+      </Box>
     </Overlay>
   );
 };

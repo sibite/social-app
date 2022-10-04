@@ -7,7 +7,7 @@ import {
 } from '@chakra-ui/react';
 
 const PostSkeleton: React.FC = () => (
-  <Stack w="100%" spacing={6} py={5}>
+  <Stack w="100%" spacing={6} py={5} px={3}>
     <HStack>
       <SkeletonCircle />
       <Skeleton h={4} w={20} />

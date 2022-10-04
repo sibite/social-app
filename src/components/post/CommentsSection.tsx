@@ -106,7 +106,6 @@ const CommentsSection: React.FC<Props> = ({ postId, limitHeight }) => {
         >
           <Avatar src={avatarSrc} name={fullName} size="sm" />
           <AutoResizedTextArea
-            autoFocus
             required
             flexGrow="1"
             placeholder="Enter new comment"

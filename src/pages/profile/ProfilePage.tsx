@@ -50,11 +50,11 @@ const ProfilePage: React.FC<Props> = () => {
   const isMine = id === auth.userId;
 
   const [toggleFollow] = useToggleFollowMutation();
-  const { data, isFetching, isLoading } = useGetProfileQuery(id);
+  const { currentData, isFetching, isLoading } = useGetProfileQuery(id);
   const feedQuery = useGetProfileFeedQuery(id);
 
-  const profile = data;
-  const posts = feedQuery.isFetching || isFetching ? [] : feedQuery.data ?? [];
+  const profile = currentData;
+  const posts = feedQuery.currentData ?? [];
 
   const avatarSrc = editingAvatarUrl ?? profile?.avatarSrc;
   const coverSrc = editingCoverUrl ?? profile?.coverSrc;
@@ -150,7 +150,7 @@ const ProfilePage: React.FC<Props> = () => {
   const bg2 = useColorModeValue('white', 'gray.900');
   const borderColor = useColorModeValue('gray.200', 'gray.800');
 
-  if (isLoading || isFetching)
+  if ((isLoading || isFetching) && !currentData)
     return (
       <PageContainer bg={bg1}>
         <ProfilePageSkeleton />
@@ -209,12 +209,7 @@ const ProfilePage: React.FC<Props> = () => {
           <Route path="*" element={<Navigate to="feed" replace />} />
           <Route
             path="feed"
-            element={
-              <Feed
-                posts={posts}
-                isLoading={feedQuery.isFetching || isLoading}
-              />
-            }
+            element={<Feed posts={posts} isLoading={!feedQuery.currentData} />}
           />
           <Route path="photos" element={<Gallery photos={[]} />} />
           <Route

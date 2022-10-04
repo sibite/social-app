@@ -21,8 +21,7 @@ import {
 import { useRef, useState } from 'react';
 import { CreatePostType } from '../../../server/api-types/feed';
 import useUploadManager from '../../hooks/useUploadManager';
-import { feedApi, useCreatePostMutation } from '../../store/feed-api';
-import { useAppDispatch } from '../../store/hooks';
+import { useCreatePostMutation } from '../../store/feed-api';
 import Card from '../chakra-ui/Card';
 import HeroIcon from '../chakra-ui/HeroIcon';
 import AutoResizedTextArea from '../misc/AutoResizedTextArea';
@@ -114,7 +113,7 @@ const NewPost: React.FC = () => {
           width="100%"
           minHeight="7em"
           autoFocus
-          disabled={isLoadingFiles || isLoading}
+          disabled={isLoading}
           onChange={descriptionChangeHandler}
           defaultValue={description}
         />

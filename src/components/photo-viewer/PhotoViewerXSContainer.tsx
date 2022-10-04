@@ -28,49 +28,45 @@ const PhotoViewerXSContainer: React.FC<Props> = ({
   const style = {
     bgColor: 'gray.900',
     flexDirection: 'column',
-    maxHeight: `${windowHeight - 61}px`,
+    height: `${windowHeight - 61}px`,
     width: '100%',
     overflowY: 'auto',
     pointerEvents: 'auto',
     position: 'relative',
-    '& > *:nth-of-type(1)': {
+    '& > img': {
       minHeight: photoHeight,
-      maxheight: photoHeight,
+      maxHeight: photoHeight,
     },
   };
 
   return (
-    <Overlay onClick={onClose} bgColor={useColorModeValue('white', 'gray.800')}>
+    <Overlay onClick={onClose}>
       <Flex sx={style}>
         {children}
-        <LightMode>
-          <Flex
-            alignItems="center"
-            height={photoHeight}
-            position="absolute"
-            top="0"
-            left="0"
-            ml={2}
-          >
-            <LeftButton side={side} clickHandler={onSlideLeft} />
-          </Flex>
-          <Flex
-            alignItems="center"
-            height={photoHeight}
-            position="absolute"
-            top="0"
-            right="0"
-            mr={2}
-          >
-            <RightButton side={side} clickHandler={onSlideRight} />
-          </Flex>
-        </LightMode>
+        <Flex
+          alignItems="center"
+          height={photoHeight}
+          position="absolute"
+          top="0"
+          left="0"
+          ml={2}
+        >
+          <LeftButton side={side} clickHandler={onSlideLeft} />
+        </Flex>
+        <Flex
+          alignItems="center"
+          height={photoHeight}
+          position="absolute"
+          top="0"
+          right="0"
+          mr={2}
+        >
+          <RightButton side={side} clickHandler={onSlideRight} />
+        </Flex>
       </Flex>
-      <LightMode>
-        <Box position="absolute" top={2} right={2}>
-          <CloseButton clickHandler={onClose} />
-        </Box>
-      </LightMode>
+      <Box position="absolute" top={2} right={2}>
+        <CloseButton clickHandler={onClose} />
+      </Box>
     </Overlay>
   );
 };

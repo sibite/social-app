@@ -39,7 +39,7 @@ const searchProfiles: RequestHandler = async (req, res) => {
         _id,
         fullName: getFullName({ name, lastName }),
         description,
-        avatarSrc: getSrcUrl(avatarSrc || ''),
+        avatarSrc: avatarSrc && getSrcUrl(avatarSrc),
       })
     );
     res.status(200).json(resProfiles);
