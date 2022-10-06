@@ -1,4 +1,4 @@
-import { Box, Center, Flex, Grid, LightMode } from '@chakra-ui/react';
+import { Box, Center, Flex, Grid } from '@chakra-ui/react';
 import React from 'react';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
 import Overlay from '../misc/Overlay';
@@ -21,7 +21,7 @@ const PhotoViewerMDContainer: React.FC<Props> = ({
   onClose,
   side,
 }) => {
-  const { windowHeight, windowWidth } = useWindowDimensions();
+  const { windowHeight } = useWindowDimensions();
 
   const style = {
     gridTemplate: '100% / auto auto',

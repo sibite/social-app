@@ -24,6 +24,7 @@ const Thumbnails: React.FC<Props> = ({ files, onRemove }) => (
           '& .remove-button': { visibility: 'hidden' },
           '&:hover .remove-button': { visibility: 'visible' },
         }}
+        key={id}
       >
         <Image
           objectFit="cover"

@@ -1,7 +1,6 @@
 import { Grid, useColorModeValue } from '@chakra-ui/react';
+import { useSearchParams } from 'react-router-dom';
 import { PostIncomingType } from '../../../server/api-types/feed';
-import { useAppDispatch } from '../../store/hooks';
-import { openMediaGroup, setIndex } from '../../store/photo-viewer';
 import PostMediaItem from './PostMediaItem';
 
 interface Props {
@@ -10,14 +9,16 @@ interface Props {
 }
 
 const PostMediaGroup: React.FC<Props> = ({ postId, media }) => {
-  const dispatch = useAppDispatch();
+  const setSearchParams = useSearchParams()[1];
 
   const styleIndex = Math.min(6, media.length) - 1;
 
   const openMediaHandler = (mediaId: string) => {
-    const mediaIds = media.map(({ _id }) => _id);
-    dispatch(openMediaGroup(postId));
-    dispatch(setIndex(mediaIds.indexOf(mediaId)));
+    setSearchParams((prevSearchParams) => ({
+      ...prevSearchParams,
+      postId,
+      mediaId,
+    }));
   };
 
   const gridStyles = [

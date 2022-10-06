@@ -1,50 +1,54 @@
 import { Center, CircularProgress } from '@chakra-ui/react';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import dayjs from 'dayjs';
+import { useEffect } from 'react';
 import formatDate from '../../shared/formatDate';
 import { useGetPostQuery } from '../../store/feed-api';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { closeMediaGroup, setIndex } from '../../store/photo-viewer';
 import PhotoContainer from './PhotoContainer';
 import PhotoSideContent from './PhotoSideContent';
 import PhotoViewerContainerWrapper from './PhotoViewerContainerWrapper';
 
 interface Props {
-  mediaIds: string[];
+  mediaId: string;
+  onPrev?: Function;
+  onNext?: Function;
+  onClose?: Function;
+  side?: -1 | 0 | 1;
 }
 
-const PhotoViewerAPIWrapper: React.FC<Props> = ({ mediaIds }) => {
-  const dispatch = useAppDispatch();
-  const index = useAppSelector((state) => state.photoViewer.index);
-  const currentIndex = Math.max(0, Math.min(index, mediaIds.length - 1 ?? 0));
-  const side = ((i) => {
-    if (mediaIds.length <= 1) return 0;
-    if (i === 0) return -1;
-    if (i === mediaIds.length - 1) return 1;
-    return undefined;
-  })(currentIndex);
-
+const PhotoViewerAPIWrapper: React.FC<Props> = ({
+  mediaId,
+  onPrev,
+  onNext,
+  onClose,
+  side,
+}) => {
   const closePhotoViewer = () => {
-    dispatch(closeMediaGroup());
+    if (onClose) onClose();
   };
 
   const slideLeftHandler = () => {
-    dispatch(setIndex(currentIndex - 1));
+    if (onPrev) onPrev();
   };
 
   const slideRightHandler = () => {
-    dispatch(setIndex(currentIndex + 1));
+    if (onNext) onNext();
   };
-
-  const mediaId = mediaIds[currentIndex];
 
   const {
     data: mediaPost,
     isLoading,
     isFetching,
+    error,
     currentData,
   } = useGetPostQuery(mediaId);
 
   let ContentJSX;
+
+  useEffect(() => {
+    if (error && (error as FetchBaseQueryError).status === 404 && onPrev)
+      onPrev();
+  }, [error, onPrev]);
 
   if ((isLoading || isFetching) && !currentData)
     ContentJSX = (
