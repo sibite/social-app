@@ -54,6 +54,14 @@ const deletePost: RequestHandler = async (req, res) => {
       );
     });
 
+    await new Promise<number>((resolve, reject) => {
+      db.comments.remove(
+        { postId: { $in: toRemoveIds } },
+        { multi: true },
+        numCallback(resolve, reject)
+      );
+    });
+
     media.forEach(({ mediaSrc }) => {
       rmSync(path.join(__dirname, `../${mediaSrc}`));
     });
