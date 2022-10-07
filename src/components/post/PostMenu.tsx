@@ -24,6 +24,8 @@ interface Props {
   onDelete: (withMedia: boolean) => Promise<any>;
 }
 
+const menuOptions: (keyof PostIncomingType['options'])[] = ['delete'];
+
 const PostMenu: React.FC<Props> = ({ onDelete, options }) => {
   const cancelRef = useRef<HTMLButtonElement>(null);
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useBoolean(false);
@@ -45,7 +47,11 @@ const PostMenu: React.FC<Props> = ({ onDelete, options }) => {
     }
   };
 
-  if (!options) {
+  const showMenu = menuOptions.find((key) =>
+    Object.entries(options).find(([key2, val]) => key === key2 && val)
+  );
+
+  if (!options || !showMenu) {
     return null;
   }
 

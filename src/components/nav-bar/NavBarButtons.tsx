@@ -6,7 +6,7 @@ interface Props {}
 
 const NavBarButtons: React.FC<Props> = () => (
   <Center>
-    <NavButton icon={HomeIcon} route="#">
+    <NavButton icon={HomeIcon} route="/feed">
       Feed
     </NavButton>
     <NavButton icon={ChatAlt2Icon} route="/messages">

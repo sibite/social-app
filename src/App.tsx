@@ -1,6 +1,7 @@
 import { ChakraProvider } from '@chakra-ui/react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import ChatPage from './pages/chat/ChatPage';
+import FeedPage from './pages/feed/FeedPage';
 import LogInPage from './pages/log-in/LogInPage';
 import ProfilePage from './pages/profile/ProfilePage';
 import SearchPage from './pages/search/SearchPage';
@@ -17,6 +18,7 @@ const App = () => (
       <Route path="/messages" element={<ChatPage />} />
       <Route path="/profile/:id/*" element={<ProfilePage />} />
       <Route path="/profile" element={<Navigate to="me" />} />
+      <Route path="/feed/*" element={<FeedPage />} />
     </Routes>
   </ChakraProvider>
 );

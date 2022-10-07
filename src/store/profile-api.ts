@@ -17,9 +17,12 @@ export const profileApi = createApi({
     searchProfiles: builder.query<UserPublicType[], string>({
       query: (query) => `search/${query}`,
     }),
-    toggleFollow: builder.mutation<any, string>({
+    toggleFollow: builder.mutation<{ invalidates: string }, string>({
       query: (profileId) => ({ url: `follow/${profileId}`, method: 'PATCH' }),
-      invalidatesTags: (_result, _err, arg) => [{ type: 'Profile', id: arg }],
+      invalidatesTags: (result, _err, arg) => [
+        { type: 'Profile', id: arg },
+        { type: 'Profile', id: result?.invalidates },
+      ],
     }),
   }),
 });

@@ -32,7 +32,7 @@ const toggleFollow: RequestHandler = async (req, res) => {
       );
     });
 
-    res.status(201).send();
+    res.status(201).send({ invalidates: userId });
   } catch (err) {
     res.status(500).send();
   }

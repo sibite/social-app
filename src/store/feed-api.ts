@@ -84,6 +84,13 @@ export const feedApi = createApi({
       }),
       invalidatesTags: (_result, _err, arg) => [{ type: 'Post', id: arg }],
     }),
+    getTotalFeed: builder.query<string[], void>({
+      query: () => ({
+        url: 'total',
+        method: 'GET',
+      }),
+      providesTags: [{ type: 'Post', id: 'ALL' }],
+    }),
     getProfileFeed: builder.query<string[], string>({
       query: (profileId) => ({
         url: profileId,
@@ -122,6 +129,7 @@ export const {
   useCreateCommentMutation,
   useDeleteCommentMutation,
   useGetCommentsQuery,
+  useGetTotalFeedQuery,
   useGetProfileFeedQuery,
   useGetPostQuery,
 } = feedApi;

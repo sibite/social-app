@@ -10,6 +10,7 @@ import getPost from './getPost';
 import getProfileFeed from './getProfileFeed';
 import togglePostLike from './togglePostLike';
 import deleteComment from './deleteComment';
+import getTotalFeed from './getTotalFeed';
 
 const feedRouter = express.Router();
 
@@ -19,6 +20,7 @@ feedRouter.use(
   })
 );
 
+feedRouter.get('/total', authenticate, getTotalFeed);
 feedRouter.get('/:profileId', authenticate, getProfileFeed);
 feedRouter.post('/', authenticate, createPost);
 feedRouter.get('/post/:postId', authenticate, getPost);
