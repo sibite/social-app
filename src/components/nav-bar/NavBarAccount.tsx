@@ -12,14 +12,24 @@ import {
   PopoverTrigger,
 } from '@chakra-ui/react';
 import { CogIcon, LogoutIcon } from '@heroicons/react/outline';
+import { useNavigate } from 'react-router-dom';
 import { useGetAccountDataQuery } from '../../store/account-api';
+import { authActions } from '../../store/auth';
+import { useAppDispatch } from '../../store/hooks';
 import HeroIcon from '../chakra-ui/HeroIcon';
 import ThemeToggle from './ThemeToggle';
 
 interface Props {}
 
 const NavBarAccount: React.FC<Props> = () => {
-  const { data, error, isLoading } = useGetAccountDataQuery();
+  const { data } = useGetAccountDataQuery();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const logOutHandler = () => {
+    dispatch(authActions.logOut());
+    navigate('/login');
+  };
 
   const user = data;
 
@@ -60,6 +70,7 @@ const NavBarAccount: React.FC<Props> = () => {
               leftIcon={<HeroIcon as={LogoutIcon} />}
               variant="ghost"
               justifyContent="flex-start"
+              onClick={logOutHandler}
             >
               Log out
             </Button>

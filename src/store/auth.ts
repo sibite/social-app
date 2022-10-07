@@ -10,7 +10,7 @@ const initialState: AuthState = {
   userId: localStorage.getItem('social-app.user-id') ?? undefined,
 };
 
-export const profileSlice = createSlice({
+export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
@@ -20,9 +20,14 @@ export const profileSlice = createSlice({
       localStorage.setItem('social-app.auth-token', action.payload.token);
       localStorage.setItem('social-app.user-id', action.payload.userId);
     },
+    logOut() {
+      localStorage.removeItem('social-app.auth-token');
+      localStorage.removeItem('social-app.user-id');
+      return {};
+    },
   },
 });
 
-export const profileActions = profileSlice.actions;
+export const authActions = authSlice.actions;
 
-export default profileSlice.reducer;
+export default authSlice.reducer;
