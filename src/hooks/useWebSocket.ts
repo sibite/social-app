@@ -1,9 +1,13 @@
 import { useEffect } from 'react';
-import { io } from 'socket.io-client';
+import { io, Socket } from 'socket.io-client';
 import { useAppSelector } from '../store/hooks';
+import type {
+  ServerToClientEvents,
+  ClientToServerEvents,
+} from '../../server/chat-socket/types';
 
 const getSocketInstance = (() => {
-  let socket: ReturnType<typeof io>;
+  let socket: Socket<ServerToClientEvents, ClientToServerEvents>;
   return () => {
     if (!socket) {
       socket = io();

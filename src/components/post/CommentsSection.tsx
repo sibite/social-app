@@ -9,9 +9,9 @@ import {
 } from '@chakra-ui/react';
 import { ChevronDoubleRightIcon } from '@heroicons/react/outline';
 import dayjs from 'dayjs';
-import { useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
-import formatDate from '../../shared/formatDate';
+import formatDateRelative from '../../shared/formatDateRelative';
 import { useGetAccountDataQuery } from '../../store/account-api';
 import {
   useCreateCommentMutation,
@@ -42,8 +42,7 @@ const CommentsSection: React.FC<Props> = ({ postId, limitHeight }) => {
   const fullName = account?.fullName;
   const avatarSrc = account?.avatarSrc;
 
-  const submitHandler = (event: React.FormEvent) => {
-    event.preventDefault();
+  const sendComment = useCallback(() => {
     createComment({
       postId,
       content,
@@ -53,12 +52,24 @@ const CommentsSection: React.FC<Props> = ({ postId, limitHeight }) => {
         setContent('');
         newCommentRef.current.clear();
       });
+  }, [postId, content, createComment]);
+
+  const submitHandler = (event: React.FormEvent) => {
+    event.preventDefault();
+    sendComment();
   };
 
   const newCommentChangeHandler = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     setContent(event.currentTarget.value);
+  };
+
+  const textAreaKeyPressHandler = (event: React.KeyboardEvent) => {
+    if (event.code !== 'Enter' || event.shiftKey) return;
+
+    event.preventDefault();
+    sendComment();
   };
 
   const bg = useColorModeValue('white', 'gray.800');
@@ -74,7 +85,7 @@ const CommentsSection: React.FC<Props> = ({ postId, limitHeight }) => {
           isDeletable={myId === comment.creatorId}
           name={comment.fullName}
           avatarSrc={comment.avatarSrc}
-          dateString={formatDate(dayjs(comment.date))}
+          dateString={formatDateRelative(dayjs(comment.date))}
         >
           {comment.content}
         </Comment>
@@ -111,6 +122,7 @@ const CommentsSection: React.FC<Props> = ({ postId, limitHeight }) => {
             placeholder="Enter new comment"
             defaultValue={content}
             onChange={newCommentChangeHandler}
+            onKeyPress={textAreaKeyPressHandler}
             ref={newCommentRef}
           />
           <IconButton

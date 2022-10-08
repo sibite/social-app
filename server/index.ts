@@ -3,7 +3,7 @@ import { createServer } from 'http';
 import path from 'path';
 import accountRouter from './account/accountRouter';
 import authRouter from './auth/authRouter';
-import createSocketIO from './chat-socket/socket';
+import createSocketIO from './chat-socket/socket-server';
 import feedRouter from './feed/feedRouter';
 import profileRouter from './profile/profileRouter';
 

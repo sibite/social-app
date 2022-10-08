@@ -12,7 +12,6 @@ import {
   CheckIcon,
   PencilIcon,
   UserAddIcon,
-  UserIcon,
   XIcon,
 } from '@heroicons/react/outline';
 import React from 'react';
@@ -20,6 +19,7 @@ import { Link, useMatch, useResolvedPath } from 'react-router-dom';
 import HeroIcon from '../../components/chakra-ui/HeroIcon';
 
 interface Props {
+  profileId: string;
   isEditing?: boolean;
   isUploading?: boolean;
   isMine?: boolean;
@@ -32,6 +32,7 @@ interface Props {
 }
 
 const ProfileTabBar: React.FC<Props> = ({
+  profileId,
   isEditing = false,
   isUploading = false,
   isMine = false,
@@ -67,7 +68,12 @@ const ProfileTabBar: React.FC<Props> = ({
   };
 
   const ChatButtonJSX = (
-    <Button leftIcon={<HeroIcon as={ChatAltIcon} />} mx={2}>
+    <Button
+      as={Link}
+      to={`/messages/${profileId}`}
+      leftIcon={<HeroIcon as={ChatAltIcon} />}
+      mx={2}
+    >
       Chat
     </Button>
   );

@@ -1,4 +1,5 @@
 import { Flex, Grid, GridItem, useColorModeValue } from '@chakra-ui/react';
+import { useParams } from 'react-router-dom';
 import ContactsHeader from './ContactsHeader';
 import Contacts from './Contacts';
 import LayoutBlock from './LayoutBlock';
@@ -8,6 +9,7 @@ import Messages from './messages/Messages';
 import NavBar from '../../components/nav-bar/NavBar';
 
 const ChatPage: React.FC = () => {
+  const { id } = useParams();
   const bgColor = useColorModeValue('gray.200', 'gray.800');
 
   return (
@@ -38,19 +40,13 @@ const ChatPage: React.FC = () => {
           </LayoutBlock>
         </GridItem>
         <GridItem area="messages-header">
-          <LayoutBlock>
-            <MessagesHeader />
-          </LayoutBlock>
+          <LayoutBlock>{id && <MessagesHeader profileId={id} />}</LayoutBlock>
         </GridItem>
         <GridItem area="messages">
-          <LayoutBlock>
-            <Messages />
-          </LayoutBlock>
+          <LayoutBlock>{id && <Messages profileId={id} />}</LayoutBlock>
         </GridItem>
         <GridItem area="user-details">
-          <LayoutBlock>
-            <UserDetails />
-          </LayoutBlock>
+          <LayoutBlock>{id && <UserDetails profileId={id} />}</LayoutBlock>
         </GridItem>
       </Grid>
     </Flex>

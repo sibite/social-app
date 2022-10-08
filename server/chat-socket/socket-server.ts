@@ -21,13 +21,26 @@ const createSocketIO = (httpServer: HttpServerType) => {
   io.on('connection', (socket) => {
     console.log('Client connected', socket.handshake.auth);
 
+    const { userId } = socket.data;
+
+    if (!userId) return;
+
+    socket.join(userId);
+
     socket.on('disconnect', () => {
       console.log('Client disconnected');
     });
 
-    socket.on('new-message', ({ to, content }) => {
-      console.log('new message', to, content);
-      socket.emit('new-message', { from: 'test1', to, date: 0, content });
+    socket.on('new-message', ({ toId, content }) => {
+      const newMessage = {
+        fromId: userId,
+        toId,
+        date: Date.now(),
+        content,
+      };
+      console.log('new message', { userId, toId });
+      socket.emit('new-message', newMessage);
+      io.in(toId).emit('new-message', newMessage);
     });
   });
 };

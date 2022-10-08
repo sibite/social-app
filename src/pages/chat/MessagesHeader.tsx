@@ -1,22 +1,30 @@
 import { Avatar, Flex, Heading } from '@chakra-ui/react';
+import { useGetProfileQuery } from '../../store/profile-api';
 
 interface Props {
-  name?: string;
-  avatarSrc?: string;
+  profileId: string;
 }
 
-const ContactsHeader: React.FC<Props> = ({ avatarSrc, name = 'User' }) => {
+const ContactsHeader: React.FC<Props> = ({ profileId }) => {
+  const { currentData } = useGetProfileQuery(profileId);
+
   const style = {
     w: 'full',
     h: 'full',
     px: 3,
   };
 
+  if (!currentData) return <span>Loading</span>;
+
   return (
     <Flex alignItems="center" sx={style} gap={4}>
-      <Avatar size="md" name={avatarSrc ? undefined : name} />
+      <Avatar
+        size="md"
+        src={currentData.avatarSrc}
+        name={currentData.avatarSrc ? undefined : currentData.name}
+      />
       <Heading as="h1" size="md">
-        {name}
+        {currentData.name}
       </Heading>
     </Flex>
   );

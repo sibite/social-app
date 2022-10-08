@@ -2,7 +2,7 @@ import { Center, CircularProgress } from '@chakra-ui/react';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import dayjs from 'dayjs';
 import { useEffect } from 'react';
-import formatDate from '../../shared/formatDate';
+import formatDateRelative from '../../shared/formatDateRelative';
 import { useGetPostQuery } from '../../store/feed-api';
 import PhotoContainer from './PhotoContainer';
 import PhotoSideContent from './PhotoSideContent';
@@ -82,7 +82,7 @@ const PhotoViewerAPIWrapper: React.FC<Props> = ({
           options={options}
           name={fullName}
           content={content}
-          dateString={formatDate(dayjs(date))}
+          dateString={formatDateRelative(dayjs(date))}
           likedBy={likedBy ?? []}
           commentsCount={commentsCount}
         />

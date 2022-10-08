@@ -1,16 +1,16 @@
 import dayjs, { Dayjs } from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
 
-dayjs.extend(relativeTime);
+type DateFormatterFunction = (date: Dayjs) => string;
 
-const formatDate = (date: Dayjs): string => {
-  const format = {
-    today: date.fromNow(),
-    yesterday: date.format('[Yesterday at] HH:mm'),
-    thisWeek: date.format('dddd[,] HH:mm'),
-    thisYear: date.format('DD MMMM[,] HH:mm'),
-    anytime: date.format('DD MMMM YYYY[,] HH:mm'),
-  };
+export interface DateFormatterFormats {
+  today: DateFormatterFunction;
+  yesterday: DateFormatterFunction;
+  thisWeek: DateFormatterFunction;
+  thisYear: DateFormatterFunction;
+  anytime: DateFormatterFunction;
+}
+
+const dateFormatter = (date: Dayjs, formats: DateFormatterFormats): string => {
   const diff = dayjs().diff(date, 'hours');
   const isYesterday = date.isSameOrAfter(
     dayjs().subtract(1, 'day').startOf('day')
@@ -20,13 +20,13 @@ const formatDate = (date: Dayjs): string => {
   );
   const isThisYear = date.isSameOrAfter(dayjs().startOf('year'));
   let dateFormatted;
-  if (diff < 22) dateFormatted = format.today;
-  else if (isYesterday) dateFormatted = format.yesterday;
-  else if (isThisWeek) dateFormatted = format.thisWeek;
-  else if (isThisYear) dateFormatted = format.thisYear;
-  else dateFormatted = format.anytime;
+  if (diff < 22) dateFormatted = formats.today(date);
+  else if (isYesterday) dateFormatted = formats.yesterday(date);
+  else if (isThisWeek) dateFormatted = formats.thisWeek(date);
+  else if (isThisYear) dateFormatted = formats.thisYear(date);
+  else dateFormatted = formats.anytime(date);
 
   return dateFormatted;
 };
 
-export default formatDate;
+export default dateFormatter;

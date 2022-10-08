@@ -23,6 +23,7 @@ const App = () => {
         {isAuthenticated && (
           <>
             <Route path="/search/:searchQuery" element={<SearchPage />} />
+            <Route path="/messages/:id" element={<ChatPage />} />
             <Route path="/messages" element={<ChatPage />} />
             <Route path="/profile/:id/*" element={<ProfilePage />} />
             <Route path="/profile" element={<Navigate to="me" />} />

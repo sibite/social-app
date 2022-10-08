@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import formatDate from '../../shared/formatDate';
+import formatDateRelative from '../../shared/formatDateRelative';
 import { useGetPostQuery } from '../../store/feed-api';
 import Post from '../post/Post';
 
@@ -15,7 +15,7 @@ const PostApiWrapper: React.FC<Props> = ({ postId }) => {
   return (
     <Post
       postId={postId}
-      dateString={formatDate(dayjs(data.date))}
+      dateString={formatDateRelative(dayjs(data.date))}
       name={data.fullName}
       content={data.content}
       commentsCount={data.commentsCount ?? []}

@@ -5,16 +5,19 @@ import HeroIcon from '../../../components/chakra-ui/HeroIcon';
 import AutoResizedTextArea from '../../../components/misc/AutoResizedTextArea';
 import useMessages from '../../../hooks/useMessages';
 
-interface Props {}
+interface Props {
+  profileId: string;
+}
 
-const MessagesInput: React.FC<Props> = () => {
+const MessagesInput: React.FC<Props> = ({ profileId }) => {
   const [message, setMessage] = useState('');
-  const { sendMessage } = useMessages('test');
+  const { sendMessage } = useMessages(profileId);
   const textAreaRef = useRef<any>();
 
   const sendHandler = () => {
     sendMessage(message);
     textAreaRef.current.clear();
+    setMessage('');
   };
 
   const contentChangeHandler = (
@@ -31,7 +34,7 @@ const MessagesInput: React.FC<Props> = () => {
   };
 
   return (
-    <HStack p={2}>
+    <HStack p={2} maxHeight="25vh">
       <AutoResizedTextArea
         ref={textAreaRef}
         flexGrow="1"

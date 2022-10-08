@@ -41,7 +41,8 @@ const AutoResizedTextArea = forwardRef<any, Props>(
         onChange={changeHandler}
         ref={elRef}
         resize="none"
-        overflowY="hidden"
+        overflowY="auto"
+        maxHeight="100%"
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...rest}
       />

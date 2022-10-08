@@ -1,19 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
+import { ServerToClientMessage } from '../../server/chat-socket/types';
 import useWebSocket from './useWebSocket';
 
 const useMessages = (userId: string) => {
   const socket = useWebSocket();
-  const [messages, setMessages] = useState<
-    { from: string; to: string; date: number; content: string }[]
-  >([]);
+  const [messages, setMessages] = useState<ServerToClientMessage[]>([]);
 
   useEffect(() => {
-    const newMessageHandler = (message: {
-      from: string;
-      to: string;
-      date: number;
-      content: string;
-    }) => {
+    const newMessageHandler = (message: ServerToClientMessage) => {
       setMessages((prev) => [message, ...prev]);
     };
     socket.on('new-message', newMessageHandler);
@@ -26,9 +20,11 @@ const useMessages = (userId: string) => {
 
   const sendMessage = useCallback(
     (content: string) => {
+      const contentTrimmed = content.trim();
+      if (!contentTrimmed) return;
       socket.emit('new-message', {
-        to: userId,
-        content,
+        toId: userId,
+        content: contentTrimmed,
       });
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps

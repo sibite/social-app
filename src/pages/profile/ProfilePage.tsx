@@ -190,6 +190,7 @@ const ProfilePage: React.FC<Props> = () => {
                 onChange={descriptionChangeHandler}
               />
               <ProfileTabBar
+                profileId={id}
                 isEditing={isEditing}
                 isUploading={isUploading}
                 isMine={isMine}

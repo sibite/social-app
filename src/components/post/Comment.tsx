@@ -67,7 +67,9 @@ const Comment: React.FC<Props> = ({
           <Heading as="span" size="xs">
             {name}
           </Heading>
-          <Text wordBreak="break-word">{children}</Text>
+          <Text wordBreak="break-word" whiteSpace="pre-wrap">
+            {children}
+          </Text>
         </Card>
         <Box>
           <Text opacity={0.6} fontSize="xs" marginTop={-2}>

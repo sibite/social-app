@@ -1,16 +1,18 @@
 import type { Server, Socket } from 'socket.io';
 
+export interface ServerToClientMessage {
+  fromId: string;
+  toId: string;
+  date: number;
+  content: string;
+}
+
 export interface ServerToClientEvents {
-  'new-message': (message: {
-    from: string;
-    to: string;
-    date: number;
-    content: string;
-  }) => void;
+  'new-message': (message: ServerToClientMessage) => void;
 }
 
 export interface ClientToServerEvents {
-  'new-message': (message: { to: string; content: string }) => void;
+  'new-message': (message: { toId: string; content: string }) => void;
 }
 
 export interface InterServerEvents {}
