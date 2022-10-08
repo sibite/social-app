@@ -8,11 +8,7 @@ const Contacts: React.FC = () => {
     p: 3,
   };
 
-  return (
-    <VStack sx={style}>
-      <Contact />
-    </VStack>
-  );
+  return <VStack sx={style} />;
 };
 
 export default Contacts;

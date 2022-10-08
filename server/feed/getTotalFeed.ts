@@ -35,7 +35,7 @@ const getTotalFeed: RequestHandler = async (req, res) => {
 
     res.status(200).send(posts);
   } catch (err) {
-    res.status(typeof err === 'number' ? err : 500);
+    res.status(typeof err === 'number' ? err : 500).send();
   }
 };
 

@@ -1,5 +1,7 @@
 import type { Server as HttpServerType } from 'http';
 import { Server } from 'socket.io';
+import db from '../database';
+import { singleCallback } from '../shared/nedbPromises';
 import authenticateWS from './authenticateWS';
 import {
   ClientToServerEvents,
@@ -31,13 +33,17 @@ const createSocketIO = (httpServer: HttpServerType) => {
       console.log('Client disconnected');
     });
 
-    socket.on('new-message', ({ toId, content }) => {
+    socket.on('new-message', async ({ toId, content }) => {
       const newMessage = {
         fromId: userId,
         toId,
         date: Date.now(),
         content,
       };
+
+      await new Promise<any>((r, j) => {
+        db.messages.insert(newMessage, singleCallback(r, j));
+      });
       console.log('new message', { userId, toId });
       socket.emit('new-message', newMessage);
       io.in(toId).emit('new-message', newMessage);

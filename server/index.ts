@@ -5,6 +5,7 @@ import accountRouter from './account/accountRouter';
 import authRouter from './auth/authRouter';
 import createSocketIO from './chat-socket/socket-server';
 import feedRouter from './feed/feedRouter';
+import messagesRouter from './messages/messagesRouter';
 import profileRouter from './profile/profileRouter';
 
 const PORT = 4000;
@@ -19,6 +20,7 @@ router.use('/auth', authRouter);
 router.use('/account', accountRouter);
 router.use('/profile', profileRouter);
 router.use('/feed', feedRouter);
+router.use('/messages', messagesRouter);
 
 app.use('/api', router);
 

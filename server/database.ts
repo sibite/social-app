@@ -15,6 +15,10 @@ const db = {
     filename: path.join(__dirname, '../database/comments'),
     autoload: true,
   }),
+  messages: new Datastore({
+    filename: path.join(__dirname, '../database/messages'),
+    autoload: true,
+  }),
 };
 
 export default db;

@@ -11,6 +11,7 @@ export const accountApi = createApi({
   endpoints: (builder) => ({
     getAccountData: builder.query<UserType, void>({
       query: () => 'me',
+      keepUnusedDataFor: 0,
     }),
     uploadAvatar: builder.query<void, Blob>({
       query: (file) => {

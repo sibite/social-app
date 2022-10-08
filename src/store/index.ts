@@ -4,6 +4,7 @@ import photoViewerReducer from './photo-viewer';
 import { profileApi } from './profile-api';
 import { accountApi } from './account-api';
 import { feedApi } from './feed-api';
+import { messagesApi } from './messages-api';
 
 const store = configureStore({
   reducer: {
@@ -12,12 +13,14 @@ const store = configureStore({
     [profileApi.reducerPath]: profileApi.reducer,
     [accountApi.reducerPath]: accountApi.reducer,
     [feedApi.reducerPath]: feedApi.reducer,
+    [messagesApi.reducerPath]: messagesApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       profileApi.middleware,
       accountApi.middleware,
-      feedApi.middleware
+      feedApi.middleware,
+      messagesApi.middleware
     ),
 });
 

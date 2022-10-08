@@ -51,7 +51,7 @@ const getComments: RequestHandler = async (req, res) => {
 
     res.status(200).json(comments);
   } catch (err) {
-    res.status(typeof err === 'number' ? err : 500);
+    res.status(typeof err === 'number' ? err : 500).send();
   }
 };
 
