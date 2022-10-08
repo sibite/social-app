@@ -1,4 +1,5 @@
 import { Avatar, Box, HStack, Text, useColorModeValue } from '@chakra-ui/react';
+import useMessages from '../../../hooks/useMessages';
 
 interface Props {
   direction: 'from' | 'to';
@@ -18,7 +19,7 @@ const Message: React.FC<Props> = ({
   const isDirectionTo = direction === 'to';
 
   let content = [
-    <Avatar size="xs" name={avatarSrc ? undefined : name} />,
+    <Avatar size="xs" name={avatarSrc ? undefined : name} key="av" />,
     <Box
       maxW="70%"
       py={1}
@@ -26,8 +27,11 @@ const Message: React.FC<Props> = ({
       borderRadius={8}
       marginInlineStart={0}
       bgColor={bgColor}
+      key="box"
     >
-      <Text>{children}</Text>
+      <Text key="text" whiteSpace="pre-line">
+        {children}
+      </Text>
     </Box>,
   ];
 

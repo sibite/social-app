@@ -1,9 +1,11 @@
 import { Flex } from '@chakra-ui/react';
 import Message from './Message';
 
-interface Props {}
+interface Props {
+  messages: { from: string; to: string; date: number; content: string }[];
+}
 
-const MessageList: React.FC<Props> = () => (
+const MessageList: React.FC<Props> = ({ messages }) => (
   <Flex
     direction="column-reverse"
     position="absolute"
@@ -12,9 +14,12 @@ const MessageList: React.FC<Props> = () => (
     maxH="full"
     overflowY="auto"
   >
-    <Message direction="from">I&apos;m great</Message>
-    <Message direction="to">Hey, I&apos;m fine. What about you?</Message>
-    <Message direction="from">Hi, how are you?</Message>
+    {messages.map(({ from, to, date, content }, index) => (
+      // eslint-disable-next-line react/no-array-index-key
+      <Message direction="from" key={index}>
+        {content}
+      </Message>
+    ))}
   </Flex>
 );
 

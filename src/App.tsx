@@ -20,13 +20,15 @@ const App = () => {
         <Route path="*" element={<Navigate to={defaultPage} />} />
         <Route path="/sign-up" element={<SignUpPage />} />
         <Route path="/login" element={<LogInPage />} />
-        {isAuthenticated && [
-          <Route path="/search/:searchQuery" element={<SearchPage />} />,
-          <Route path="/messages" element={<ChatPage />} />,
-          <Route path="/profile/:id/*" element={<ProfilePage />} />,
-          <Route path="/profile" element={<Navigate to="me" />} />,
-          <Route path="/feed/*" element={<FeedPage />} />,
-        ]}
+        {isAuthenticated && (
+          <>
+            <Route path="/search/:searchQuery" element={<SearchPage />} />
+            <Route path="/messages" element={<ChatPage />} />
+            <Route path="/profile/:id/*" element={<ProfilePage />} />
+            <Route path="/profile" element={<Navigate to="me" />} />
+            <Route path="/feed/*" element={<FeedPage />} />
+          </>
+        )}
       </Routes>
     </ChakraProvider>
   );

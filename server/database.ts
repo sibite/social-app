@@ -4,15 +4,15 @@ import { UserType } from './api-types/auth';
 
 const db = {
   users: new Datastore<UserType>({
-    filename: path.join(__dirname, './database/users'),
+    filename: path.join(__dirname, '../database/users'),
     autoload: true,
   }),
   feed: new Datastore({
-    filename: path.join(__dirname, './database/feed'),
+    filename: path.join(__dirname, '../database/feed'),
     autoload: true,
   }),
   comments: new Datastore({
-    filename: path.join(__dirname, './database/comments'),
+    filename: path.join(__dirname, '../database/comments'),
     autoload: true,
   }),
 };
