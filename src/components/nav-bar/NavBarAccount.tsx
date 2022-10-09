@@ -15,7 +15,10 @@ import { CogIcon, LogoutIcon } from '@heroicons/react/outline';
 import { useNavigate } from 'react-router-dom';
 import { useGetAccountDataQuery } from '../../store/account-api';
 import { authActions } from '../../store/auth';
+import { feedApi } from '../../store/feed-api';
 import { useAppDispatch } from '../../store/hooks';
+import { messagesApi } from '../../store/messages-api';
+import { profileApi } from '../../store/profile-api';
 import HeroIcon from '../chakra-ui/HeroIcon';
 import ThemeToggle from './ThemeToggle';
 
@@ -27,6 +30,9 @@ const NavBarAccount: React.FC<Props> = () => {
   const navigate = useNavigate();
 
   const logOutHandler = () => {
+    dispatch(feedApi.util.resetApiState());
+    dispatch(profileApi.util.resetApiState());
+    dispatch(messagesApi.util.resetApiState());
     dispatch(authActions.logOut());
     navigate('/login');
   };

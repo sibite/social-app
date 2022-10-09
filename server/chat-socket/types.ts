@@ -1,6 +1,7 @@
 import type { Server, Socket } from 'socket.io';
 
 export interface ServerToClientMessage {
+  _id: string;
   fromId: string;
   toId: string;
   date: number;

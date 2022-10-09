@@ -1,7 +1,8 @@
 import { Flex } from '@chakra-ui/react';
 import { ServerToClientMessage } from '../../../../server/chat-socket/types';
 import { useAppSelector } from '../../../store/hooks';
-import Message from './Message';
+import MessagesGroup from './MessagesGroup';
+import toFancyMessages from './toFancyMessages';
 
 interface Props {
   messages: ServerToClientMessage[];
@@ -9,30 +10,27 @@ interface Props {
 
 const MessageList: React.FC<Props> = ({ messages }) => {
   const userId = useAppSelector((state) => state.auth.userId);
+  const fancyMessages = toFancyMessages(messages);
+
+  if (!userId) return <span>Unexpected error</span>;
 
   return (
     <Flex
       direction="column-reverse"
       position="absolute"
       bottom="0"
+      pt={4}
       w="full"
       maxH="full"
       overflowY="auto"
     >
-      {messages.map(({ fromId, toId, date, content }) => {
-        const direction = userId === fromId ? 'to' : 'from';
-
-        return (
-          <Message
-            key={fromId + date}
-            direction={direction}
-            profileId={fromId}
-            date={date}
-          >
-            {content}
-          </Message>
-        );
-      })}
+      {fancyMessages.map((group) => (
+        <MessagesGroup
+          key={group.messages[0]._id}
+          group={group}
+          userId={userId}
+        />
+      ))}
     </Flex>
   );
 };

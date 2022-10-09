@@ -21,7 +21,7 @@ const createSocketIO = (httpServer: HttpServerType) => {
   io.use(authenticateWS);
 
   io.on('connection', (socket) => {
-    console.log('Client connected', socket.handshake.auth);
+    console.log('Client connected');
 
     const { userId } = socket.data;
 

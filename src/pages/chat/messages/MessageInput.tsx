@@ -37,6 +37,7 @@ const MessagesInput: React.FC<Props> = ({ profileId }) => {
     <HStack p={2} maxHeight="25vh">
       <AutoResizedTextArea
         ref={textAreaRef}
+        placeholder="Type your message"
         flexGrow="1"
         onChange={contentChangeHandler}
         onKeyPress={textAreaKeyPressHandler}

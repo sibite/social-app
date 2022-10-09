@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { ServerToClientMessage } from '../../server/chat-socket/types';
 import {
-  messagesApi,
   useGetMessagesCountQuery,
   useGetMessagesQuery,
 } from '../store/messages-api';
@@ -9,13 +8,16 @@ import useWebSocket from './useWebSocket';
 
 const useMessages = (userId: string) => {
   const socket = useWebSocket();
+
   const { currentData: messagesCount, refetch } =
     useGetMessagesCountQuery(userId);
+
   const { currentData: messagesFetched } = useGetMessagesQuery({
     profileId: userId,
     from: 0,
     to: (messagesCount?.count ?? 1) - 1,
   });
+
   const [newMessages, setNewMessages] = useState<ServerToClientMessage[]>([]);
 
   useEffect(() => {
@@ -25,7 +27,7 @@ const useMessages = (userId: string) => {
   useEffect(() => {
     const newMessageHandler = (message: ServerToClientMessage) => {
       if (message.fromId !== userId && message.toId !== userId) return;
-      setNewMessages((prev) => [message, ...prev]);
+      setNewMessages((prev) => [...prev, message]);
     };
     socket.on('new-message', newMessageHandler);
 
@@ -49,13 +51,7 @@ const useMessages = (userId: string) => {
   );
 
   return {
-    messages: newMessages.concat(
-      (() => {
-        const arr = messagesFetched && messagesFetched.slice();
-        arr?.reverse();
-        return arr ?? [];
-      })()
-    ),
+    messages: (messagesFetched ?? []).concat(newMessages),
     sendMessage,
   };
 };

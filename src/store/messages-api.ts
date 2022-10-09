@@ -10,6 +10,7 @@ export const messagesApi = createApi({
   endpoints: (builder) => ({
     getMessagesCount: builder.query<{ count: number }, string>({
       query: (profileId) => `${profileId}/count`,
+      keepUnusedDataFor: 0,
     }),
     getMessages: builder.query<
       {
