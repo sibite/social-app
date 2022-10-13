@@ -5,15 +5,17 @@ import { profileApi } from './profile-api';
 import { accountApi } from './account-api';
 import { feedApi } from './feed-api';
 import messagesReducer from './messages';
+import contactsReducer from './contacts';
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
     photoViewer: photoViewerReducer,
+    messages: messagesReducer,
+    contacts: contactsReducer,
     [profileApi.reducerPath]: profileApi.reducer,
     [accountApi.reducerPath]: accountApi.reducer,
     [feedApi.reducerPath]: feedApi.reducer,
-    messages: messagesReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(

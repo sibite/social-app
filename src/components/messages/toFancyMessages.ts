@@ -39,8 +39,6 @@ const toFancyMessages = (messages: ServerToClientMessage[]) => {
     const isCloseInTime = message.date - prevDate < moderateTimeGap;
     const isModerateInTime = message.date - prevDate < bigTimeGap;
 
-    console.log('isMod', isModerateInTime);
-
     if (!isModerateInTime) appendAsSeperate(message);
     else if (!isSenderTheSame) appendAsModerate(message);
     else if (isCloseInTime) appendAsClose(message);

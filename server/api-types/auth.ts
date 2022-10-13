@@ -1,3 +1,5 @@
+import type { ServerToClientMessage } from '../chat-socket/types';
+
 export interface SignUpBodyType {
   name: string;
   lastName: string;
@@ -11,6 +13,11 @@ export interface LogInBodyType {
   password: string;
 }
 
+export interface ContactType {
+  userId: string;
+  lastMessage: ServerToClientMessage;
+}
+
 export interface UserDBType {
   _id: string;
   passwordHash: string;
@@ -19,7 +26,7 @@ export interface UserDBType {
   lastName: string;
   email: string;
   following?: string[];
-  contacts?: string[];
+  contacts?: { [userId: string]: ContactType };
   avatarSrc?: string;
   coverSrc?: string;
   birthDate?: number;
@@ -33,7 +40,7 @@ export interface UserType {
   lastName: string;
   email: string;
   following?: string[];
-  contacts?: string[];
+  contacts?: { [userId: string]: ContactType };
   avatarSrc?: string;
   coverSrc?: string;
   birthDate?: number;

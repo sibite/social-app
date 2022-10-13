@@ -13,9 +13,6 @@ const Messages: React.FC<Props> = ({ profileId }) => {
   const messages = useAppSelector(
     (state) => state.messages.userEntities[profileId]?.messages.list ?? []
   );
-  const status = useAppSelector(
-    (state) => state.messages.userEntities[profileId]?.status ?? 'idle'
-  );
 
   const dispatch = useAppDispatch();
 

@@ -53,7 +53,14 @@ const createSocketIO = (httpServer: HttpServerType) => {
           await new Promise<any>((r, j) => {
             db.users.update(
               { _id: userId },
-              { $addToSet: { contacts: toId } },
+              {
+                $set: {
+                  [`contacts.${toId}`]: {
+                    userId: toId,
+                    lastMessage: newMessageRes,
+                  },
+                },
+              },
               {},
               numCallback(r, j)
             );
@@ -61,7 +68,14 @@ const createSocketIO = (httpServer: HttpServerType) => {
           await new Promise<any>((r, j) => {
             db.users.update(
               { _id: toId },
-              { $addToSet: { contacts: userId } },
+              {
+                $set: {
+                  [`contacts.${userId}`]: {
+                    userId,
+                    lastMessage: newMessageRes,
+                  },
+                },
+              },
               {},
               numCallback(r, j)
             );

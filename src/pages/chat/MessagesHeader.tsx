@@ -24,7 +24,7 @@ const ContactsHeader: React.FC<Props> = ({ profileId }) => {
         name={currentData.avatarSrc ? undefined : currentData.fullName}
       />
       <Heading as="h1" size="md">
-        {currentData.name}
+        {currentData.fullName}
       </Heading>
     </Flex>
   );
