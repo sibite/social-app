@@ -5,20 +5,21 @@ import {
   Heading,
   useColorModeValue,
 } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
+import { useGetProfileQuery } from '../../store/profile-api';
 
 interface Props {
-  name?: string;
-  avatarSrc?: string;
+  profileId: string;
   unread?: boolean;
   onSelect?: Function;
 }
 
 const Contacts: React.FC<Props> = ({
-  name = 'User',
-  avatarSrc,
+  profileId,
   unread = false,
   onSelect = () => null,
 }) => {
+  const { currentData: contact } = useGetProfileQuery(profileId);
   const bgColor = useColorModeValue('gray.100', 'gray.900');
   const activeColor = useColorModeValue('gray.200', 'gray.800');
 
@@ -49,15 +50,20 @@ const Contacts: React.FC<Props> = ({
   const clickHandler = () => onSelect();
 
   return (
-    <Flex sx={style} as="button" onClick={clickHandler}>
+    <Flex
+      as={Link}
+      sx={style}
+      onClick={clickHandler}
+      to={`/messages/${profileId}`}
+    >
       <Avatar
         size="md"
-        src={avatarSrc}
-        name={avatarSrc ? undefined : name}
+        src={contact?.avatarSrc}
+        name={contact?.avatarSrc ? undefined : contact?.fullName}
         mr={3}
       />
       <Heading as="h2" size="sm" sx={headingStyle}>
-        {name}
+        {contact?.fullName}
       </Heading>
       {unread && <Circle background="blue.400" size={3} />}
     </Flex>

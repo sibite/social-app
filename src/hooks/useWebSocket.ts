@@ -24,7 +24,6 @@ const useWebSocket = () => {
     socket.disconnect();
     socket.auth = { token };
     socket.connect();
-    console.log(token, socket.auth);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 

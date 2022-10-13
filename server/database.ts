@@ -1,9 +1,9 @@
 import Datastore from 'nedb';
 import path from 'path';
-import { UserType } from './api-types/auth';
+import { UserDBType } from './api-types/auth';
 
 const db = {
-  users: new Datastore<UserType>({
+  users: new Datastore<UserDBType>({
     filename: path.join(__dirname, '../database/users'),
     autoload: true,
   }),

@@ -1,7 +1,7 @@
 import { Avatar, HStack, VStack, Text } from '@chakra-ui/react';
 import dayjs from 'dayjs';
-import formatDateInformative from '../../../shared/formatDateInformative';
-import { useGetProfileQuery } from '../../../store/profile-api';
+import formatDateInformative from '../../shared/formatDateInformative';
+import { useGetProfileQuery } from '../../store/profile-api';
 import MessageBubble from './MessageBubble';
 import { FancyMessagesGroup } from './toFancyMessages';
 
@@ -62,7 +62,7 @@ const MessagesGroup: React.FC<Props> = ({ group, userId }) => {
           />
         )}
         <VStack
-          spacing="3px"
+          spacing="2px"
           alignItems={isDirectionTo ? 'flex-end' : 'flex-start'}
         >
           {BubblesJSX}

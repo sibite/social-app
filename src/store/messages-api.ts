@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { ServerToClientMessage } from '../../server/chat-socket/types';
 import prepareAuthHeader from './prepare-auth-header';
 
 export const messagesApi = createApi({
@@ -13,13 +14,7 @@ export const messagesApi = createApi({
       keepUnusedDataFor: 0,
     }),
     getMessages: builder.query<
-      {
-        _id: string;
-        fromId: string;
-        toId: string;
-        date: number;
-        content: string;
-      }[],
+      ServerToClientMessage[],
       { profileId: string; from: number; to: number }
     >({
       query: ({ profileId, from, to }) => `${profileId}/${from}-${to}`,

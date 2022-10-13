@@ -17,6 +17,7 @@ import { useGetAccountDataQuery } from '../../store/account-api';
 import { authActions } from '../../store/auth';
 import { feedApi } from '../../store/feed-api';
 import { useAppDispatch } from '../../store/hooks';
+import { messagesActions } from '../../store/messages';
 import { messagesApi } from '../../store/messages-api';
 import { profileApi } from '../../store/profile-api';
 import HeroIcon from '../chakra-ui/HeroIcon';
@@ -33,6 +34,7 @@ const NavBarAccount: React.FC<Props> = () => {
     dispatch(feedApi.util.resetApiState());
     dispatch(profileApi.util.resetApiState());
     dispatch(messagesApi.util.resetApiState());
+    dispatch(messagesActions.clearAll());
     dispatch(authActions.logOut());
     navigate('/login');
   };

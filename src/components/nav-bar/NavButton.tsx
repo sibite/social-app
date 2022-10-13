@@ -17,7 +17,7 @@ const NavButton: React.FC<Props> = ({ icon, route, children }) => {
   const isActive = useMatch(`${route}/*`);
 
   const activeBgColor = useColorModeValue('blue.50', 'gray.800');
-  const activeColor = 'blue.500';
+  const activeColor = useColorModeValue('blue.500', 'blue.300');
 
   const isTextShown = useBreakpointValue({ base: false, md: true });
 

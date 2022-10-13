@@ -11,6 +11,21 @@ export interface LogInBodyType {
   password: string;
 }
 
+export interface UserDBType {
+  _id: string;
+  passwordHash: string;
+  salt: string;
+  name: string;
+  lastName: string;
+  email: string;
+  following?: string[];
+  contacts?: string[];
+  avatarSrc?: string;
+  coverSrc?: string;
+  birthDate?: number;
+  description?: string;
+}
+
 export interface UserType {
   _id: string;
   fullName: string;
@@ -18,6 +33,7 @@ export interface UserType {
   lastName: string;
   email: string;
   following?: string[];
+  contacts?: string[];
   avatarSrc?: string;
   coverSrc?: string;
   birthDate?: number;

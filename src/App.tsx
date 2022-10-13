@@ -1,5 +1,6 @@
 import { ChakraProvider } from '@chakra-ui/react';
 import { Navigate, Route, Routes } from 'react-router-dom';
+import MessagesProvider from './components/messages/MessagesProvider';
 import ChatPage from './pages/chat/ChatPage';
 import FeedPage from './pages/feed/FeedPage';
 import LogInPage from './pages/log-in/LogInPage';
@@ -16,6 +17,7 @@ const App = () => {
 
   return (
     <ChakraProvider theme={theme}>
+      {isAuthenticated && <MessagesProvider />}
       <Routes>
         <Route path="*" element={<Navigate to={defaultPage} />} />
         <Route path="/sign-up" element={<SignUpPage />} />

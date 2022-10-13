@@ -1,15 +1,27 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
-import useMessages from '../../../hooks/useMessages';
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { messagesActions, messagesActionsThunks } from '../../store/messages';
 import MessageInput from './MessageInput';
 import MessageList from './MessageList';
-import toFancyMessages from './toFancyMessages';
 
 interface Props {
   profileId: string;
 }
 
 const Messages: React.FC<Props> = ({ profileId }) => {
-  const { messages } = useMessages(profileId);
+  const messages = useAppSelector(
+    (state) => state.messages.userEntities[profileId]?.messages.list ?? []
+  );
+  const status = useAppSelector(
+    (state) => state.messages.userEntities[profileId]?.status ?? 'idle'
+  );
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(messagesActionsThunks.fetchMoreMessages(profileId));
+  }, [profileId, dispatch]);
 
   return (
     <Flex w="full" h="full" direction="column" alignContent="stretch">

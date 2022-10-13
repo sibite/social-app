@@ -5,7 +5,7 @@ import Contacts from './Contacts';
 import LayoutBlock from './LayoutBlock';
 import MessagesHeader from './MessagesHeader';
 import UserDetails from './UserDetails';
-import Messages from './messages/Messages';
+import Messages from '../../components/messages/Messages';
 import NavBar from '../../components/nav-bar/NavBar';
 
 const ChatPage: React.FC = () => {

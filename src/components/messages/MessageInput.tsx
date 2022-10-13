@@ -1,9 +1,9 @@
 import { HStack, IconButton } from '@chakra-ui/react';
 import { ChevronDoubleRightIcon } from '@heroicons/react/outline';
 import React, { useRef, useState } from 'react';
-import HeroIcon from '../../../components/chakra-ui/HeroIcon';
-import AutoResizedTextArea from '../../../components/misc/AutoResizedTextArea';
-import useMessages from '../../../hooks/useMessages';
+import useMessagesSender from '../../hooks/useMessagesSender';
+import HeroIcon from '../chakra-ui/HeroIcon';
+import AutoResizedTextArea from '../misc/AutoResizedTextArea';
 
 interface Props {
   profileId: string;
@@ -11,7 +11,7 @@ interface Props {
 
 const MessagesInput: React.FC<Props> = ({ profileId }) => {
   const [message, setMessage] = useState('');
-  const { sendMessage } = useMessages(profileId);
+  const sendMessage = useMessagesSender(profileId);
   const textAreaRef = useRef<any>();
 
   const sendHandler = () => {

@@ -18,11 +18,13 @@ const getMessages: RequestHandler = async (req, res) => {
             { fromId: profileId, toId: userId },
           ],
         })
-        .sort({ date: 1 })
+        .sort({ date: -1 })
         .skip(+from)
         .limit(+to + 1 - +from)
         .exec(arrCallback(r, j));
     });
+
+    messages.reverse();
 
     res.status(200).send(messages);
   } catch (err) {

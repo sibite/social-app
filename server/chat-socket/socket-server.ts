@@ -1,12 +1,13 @@
 import type { Server as HttpServerType } from 'http';
 import { Server } from 'socket.io';
 import db from '../database';
-import { singleCallback } from '../shared/nedbPromises';
+import { numCallback, singleCallback } from '../shared/nedbPromises';
 import authenticateWS from './authenticateWS';
 import {
   ClientToServerEvents,
   InterServerEvents,
   ServerToClientEvents,
+  ServerToClientMessage,
   SocketData,
 } from './types';
 
@@ -41,12 +42,39 @@ const createSocketIO = (httpServer: HttpServerType) => {
         content,
       };
 
-      await new Promise<any>((r, j) => {
-        db.messages.insert(newMessage, singleCallback(r, j));
-      });
-      console.log('new message', { userId, toId });
-      socket.emit('new-message', newMessage);
-      io.in(toId).emit('new-message', newMessage);
+      try {
+        const newMessageRes = await new Promise<ServerToClientMessage>(
+          (r, j) => {
+            db.messages.insert(newMessage, singleCallback(r, j));
+          }
+        );
+
+        try {
+          await new Promise<any>((r, j) => {
+            db.users.update(
+              { _id: userId },
+              { $addToSet: { contacts: toId } },
+              {},
+              numCallback(r, j)
+            );
+          });
+          await new Promise<any>((r, j) => {
+            db.users.update(
+              { _id: toId },
+              { $addToSet: { contacts: userId } },
+              {},
+              numCallback(r, j)
+            );
+          });
+        } catch (err) {
+          console.error('Error when updating contacts');
+        }
+        console.log('new message', { userId, toId });
+        socket.emit('new-message', newMessageRes);
+        io.in(toId).emit('new-message', newMessageRes);
+      } catch (err) {
+        console.error(err);
+      }
     });
   });
 };
