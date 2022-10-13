@@ -4,6 +4,7 @@ import {
   IconButton,
   Image,
   LightMode,
+  useBreakpointValue,
   useColorModeValue,
 } from '@chakra-ui/react';
 import { PencilIcon } from '@heroicons/react/outline';
@@ -33,10 +34,13 @@ const ProfileCover: React.FC<Props> = ({
 
   const bgColor = useColorModeValue('gray.100', 'gray.800');
 
+  const ratio = useBreakpointValue({ base: 2, md: 3 });
+  const margin = useBreakpointValue({ base: 0, md: 4 }) ?? 4;
+
   const boxStyle = {
     width: '100%',
     bgColor,
-    borderBottomRadius: 'xl',
+    borderBottomRadius: useBreakpointValue({ base: 0, md: 'xl' }),
     position: 'relative',
   };
 
@@ -47,7 +51,11 @@ const ProfileCover: React.FC<Props> = ({
   };
 
   return (
-    <AspectRatio width="100%" ratio={3}>
+    <AspectRatio
+      width={`calc(100% - ${margin * 8}px)`}
+      ratio={ratio}
+      mx={margin}
+    >
       <Box sx={boxStyle}>
         {coverSrc && (
           <Image src={coverSrc} width="100%" height="100%" objectFit="cover" />

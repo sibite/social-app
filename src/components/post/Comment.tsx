@@ -19,7 +19,7 @@ interface Props {
   commentId: string;
   postId: string;
   avatarSrc?: string;
-  name: string;
+  fullName: string;
   dateString: string;
   isDeletable?: boolean;
   children: React.ReactNode;
@@ -29,7 +29,7 @@ const Comment: React.FC<Props> = ({
   commentId,
   postId,
   avatarSrc,
-  name,
+  fullName,
   dateString,
   isDeletable = false,
   children,
@@ -61,11 +61,15 @@ const Comment: React.FC<Props> = ({
 
   return (
     <Flex sx={style} gap={2}>
-      <Avatar name={avatarSrc ? undefined : name} src={avatarSrc} size="sm" />
+      <Avatar
+        name={avatarSrc ? undefined : fullName}
+        src={avatarSrc}
+        size="sm"
+      />
       <VStack align="flex-start">
         <Card sx={cardStyle} variant="flat" borderRadius="xl">
           <Heading as="span" size="xs">
-            {name}
+            {fullName}
           </Heading>
           <Text wordBreak="break-word" whiteSpace="pre-wrap">
             {children}

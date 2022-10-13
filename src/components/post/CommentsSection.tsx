@@ -83,7 +83,7 @@ const CommentsSection: React.FC<Props> = ({ postId, limitHeight }) => {
           postId={postId}
           commentId={comment._id}
           isDeletable={myId === comment.creatorId}
-          name={comment.fullName}
+          fullName={comment.fullName}
           avatarSrc={comment.avatarSrc}
           dateString={formatDateRelative(dayjs(comment.date))}
         >

@@ -166,43 +166,41 @@ const ProfilePage: React.FC<Props> = () => {
         borderBottom="1px solid"
         borderBottomColor={borderColor}
       >
-        <Container maxWidth="container.lg">
-          <Box width="100%">
-            <ProfileCover
-              coverSrc={coverSrc}
-              isEditing={isEditing}
-              isUploading={isUploading}
-              onChange={coverChangeHandler}
-            />
-            <ProfileAvatar
+        <Container maxWidth="container.lg" p={0}>
+          <ProfileCover
+            coverSrc={coverSrc}
+            isEditing={isEditing}
+            isUploading={isUploading}
+            onChange={coverChangeHandler}
+          />
+          <ProfileAvatar
+            name={profile?.fullName}
+            avatarSrc={avatarSrc}
+            isEditing={isEditing}
+            isUploading={isUploading}
+            onChange={avatarChangeHandler}
+          />
+          <VStack spacing={4} pt={6} px={4}>
+            <ProfileHeading
               name={profile?.fullName}
-              avatarSrc={avatarSrc}
+              description={description}
               isEditing={isEditing}
               isUploading={isUploading}
-              onChange={avatarChangeHandler}
+              onChange={descriptionChangeHandler}
             />
-            <VStack spacing={4} pt={6}>
-              <ProfileHeading
-                name={profile?.fullName}
-                description={description}
-                isEditing={isEditing}
-                isUploading={isUploading}
-                onChange={descriptionChangeHandler}
-              />
-              <ProfileTabBar
-                profileId={id}
-                isEditing={isEditing}
-                isUploading={isUploading}
-                isMine={isMine}
-                followed={profile?.isFollowed}
-                followingCount={profile?.following?.length || 0}
-                editOn={setIsEditing.on}
-                editOff={cancelEditing}
-                onSave={saveHandler}
-                toggleFollow={toggleFollowHandler}
-              />
-            </VStack>
-          </Box>
+            <ProfileTabBar
+              profileId={id}
+              isEditing={isEditing}
+              isUploading={isUploading}
+              isMine={isMine}
+              followed={profile?.isFollowed}
+              followingCount={profile?.following?.length || 0}
+              editOn={setIsEditing.on}
+              editOff={cancelEditing}
+              onSave={saveHandler}
+              toggleFollow={toggleFollowHandler}
+            />
+          </VStack>
         </Container>
       </Box>
       <Container maxWidth="container.lg" px={0}>

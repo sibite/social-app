@@ -14,7 +14,7 @@ const ContactsHeader: React.FC<Props> = ({ profileId }) => {
     px: 3,
   };
 
-  if (!currentData) return <span>Loading</span>;
+  if (!currentData) return null;
 
   return (
     <Flex alignItems="center" sx={style} gap={4}>

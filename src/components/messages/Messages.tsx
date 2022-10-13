@@ -1,7 +1,7 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { messagesActions, messagesActionsThunks } from '../../store/messages';
+import { messagesActionsThunks } from '../../store/messages';
 import MessageInput from './MessageInput';
 import MessageList from './MessageList';
 

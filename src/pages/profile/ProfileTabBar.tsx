@@ -72,7 +72,6 @@ const ProfileTabBar: React.FC<Props> = ({
       as={Link}
       to={`/messages/${profileId}`}
       leftIcon={<HeroIcon as={ChatAltIcon} />}
-      mx={2}
     >
       Chat
     </Button>
@@ -81,7 +80,6 @@ const ProfileTabBar: React.FC<Props> = ({
   const FollowButtonJSX = (
     <Button
       leftIcon={<HeroIcon as={UserAddIcon} />}
-      mx={2}
       colorScheme="twitter"
       onClick={followHandler}
     >
@@ -90,11 +88,7 @@ const ProfileTabBar: React.FC<Props> = ({
   );
 
   const UnfollowButtonJSX = (
-    <Button
-      leftIcon={<HeroIcon as={CheckIcon} />}
-      mx={2}
-      onClick={followHandler}
-    >
+    <Button leftIcon={<HeroIcon as={CheckIcon} />} onClick={followHandler}>
       Following
     </Button>
   );
@@ -102,7 +96,6 @@ const ProfileTabBar: React.FC<Props> = ({
   const EditButtonJSX = (
     <Button
       leftIcon={<HeroIcon as={PencilIcon} inButton />}
-      mx={2}
       onClick={editHandler}
     >
       Edit profile
@@ -110,11 +103,7 @@ const ProfileTabBar: React.FC<Props> = ({
   );
 
   const CancelButtonJSX = (
-    <Button
-      leftIcon={<HeroIcon as={XIcon} inButton />}
-      mx={2}
-      onClick={cancelHandler}
-    >
+    <Button leftIcon={<HeroIcon as={XIcon} inButton />} onClick={cancelHandler}>
       Cancel
     </Button>
   );
@@ -122,7 +111,7 @@ const ProfileTabBar: React.FC<Props> = ({
   const SaveButtonJSX = (
     <Button
       leftIcon={<HeroIcon as={CheckIcon} inButton />}
-      mx={2}
+      colorScheme="twitter"
       onClick={saveHandler}
       isLoading={isUploading}
       loadingText="Updating"
@@ -142,7 +131,7 @@ const ProfileTabBar: React.FC<Props> = ({
   return (
     <Flex sx={flexStyle}>
       <Tabs index={tabIndex}>
-        <TabList mt={2}>
+        <TabList mt={2} flexWrap="wrap">
           <Link to="feed">
             <Tab>Feed</Tab>
           </Link>
@@ -159,14 +148,14 @@ const ProfileTabBar: React.FC<Props> = ({
           </Link>
         </TabList>
       </Tabs>
-      <HStack pb={2}>
+      <Flex pb={2} gap={2} flexWrap="wrap">
         {!isMine && !followed && FollowButtonJSX}
         {!isMine && followed && UnfollowButtonJSX}
         {!isMine && ChatButtonJSX}
         {isMine && !isEditing && EditButtonJSX}
         {isMine && isEditing && !isUploading && CancelButtonJSX}
         {isMine && isEditing && SaveButtonJSX}
-      </HStack>
+      </Flex>
     </Flex>
   );
 };

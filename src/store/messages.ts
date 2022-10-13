@@ -6,6 +6,7 @@ import { ServerToClientMessage } from '../../server/chat-socket/types';
 interface UserWrapper {
   id: string;
   status: 'error' | 'loading' | 'idle';
+  count: number;
   messages: {
     entities: { [id: string]: ServerToClientMessage };
     ids: string[];
@@ -26,6 +27,7 @@ const numOfFetchedInOneReq = 5000000;
 const createInitialEntity = (userId: string): UserWrapper => ({
   id: userId,
   status: 'idle',
+  count: 0,
   messages: {
     entities: {},
     ids: [],
@@ -39,6 +41,7 @@ const initUser = (state: MessagesState, userId: string) => {
 };
 
 let isFetching = false;
+let dumpFetchSession = false;
 
 const fetchMoreMessages = createAsyncThunk<ServerToClientMessage[], string>(
   'messages/fetchMore',
@@ -51,6 +54,25 @@ const fetchMoreMessages = createAsyncThunk<ServerToClientMessage[], string>(
       state.messages.userEntities[userId] ?? createInitialEntity(userId);
     const from = user.messages.list.length;
     const to = from + numOfFetchedInOneReq - 1;
+    const request = await axios.get(`/api/messages/${userId}/${from}-${to}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    isFetching = false;
+    return request.data;
+  }
+);
+
+const refetchMessages = createAsyncThunk<ServerToClientMessage[], string>(
+  'messages/refetch',
+  async (userId: string, { getState }) => {
+    if (isFetching) dumpFetchSession = true;
+    isFetching = true;
+    const state = getState() as RootState;
+    const { token } = state.auth;
+    const user =
+      state.messages.userEntities[userId] ?? createInitialEntity(userId);
+    const from = 0;
+    const to = user.count - 1;
     const request = await axios.get(`/api/messages/${userId}/${from}-${to}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -76,6 +98,7 @@ export const messagesSlice = createSlice({
       userMessages.entities[message._id] = message;
       userMessages.ids.push(message._id);
       userMessages.list.push(message);
+      state.userEntities[userId].count += 1;
     },
     clearAll(state) {
       state.userEntities = {};
@@ -90,9 +113,32 @@ export const messagesSlice = createSlice({
       state.userEntities[action.meta.arg].status = 'error';
     });
     builder.addCase(fetchMoreMessages.fulfilled, (state, action) => {
+      if (dumpFetchSession) {
+        dumpFetchSession = false;
+        return;
+      }
       const user = state.userEntities[action.meta.arg];
       user.status = 'idle';
+      user.count += action.payload.length;
       user.messages.list = action.payload.concat(user.messages.list);
+      user.messages.ids = action.payload
+        .map((message) => message._id)
+        .concat(user.messages.ids);
+      action.payload.forEach((message) => {
+        user.messages.entities[message._id] = message;
+      });
+    });
+    builder.addCase(refetchMessages.pending, (state, action) => {
+      initUser(state, action.meta.arg);
+      state.userEntities[action.meta.arg].status = 'loading';
+    });
+    builder.addCase(refetchMessages.rejected, (state, action) => {
+      state.userEntities[action.meta.arg].status = 'error';
+    });
+    builder.addCase(refetchMessages.fulfilled, (state, action) => {
+      const user = state.userEntities[action.meta.arg];
+      user.status = 'idle';
+      user.messages.list = action.payload;
       user.messages.ids = action.payload
         .map((message) => message._id)
         .concat(user.messages.ids);
@@ -107,6 +153,6 @@ const messagesReducer = messagesSlice.reducer;
 
 export const messagesActions = messagesSlice.actions;
 
-export const messagesActionsThunks = { fetchMoreMessages };
+export const messagesActionsThunks = { fetchMoreMessages, refetchMessages };
 
 export default messagesReducer;

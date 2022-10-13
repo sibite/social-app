@@ -37,7 +37,7 @@ const getComments: RequestHandler = async (req, res) => {
       users[user._id] = {
         ...user,
         fullName: getFullName({ name: user.name, lastName: user.lastName }),
-        avatarSrc: getSrcUrl(user.avatarSrc || ''),
+        avatarSrc: user.avatarSrc && getSrcUrl(user.avatarSrc),
       };
     });
 

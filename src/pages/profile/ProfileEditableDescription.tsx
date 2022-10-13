@@ -57,9 +57,9 @@ const ProfileEditableDescription: React.FC<Props> = ({
   <Editable
     textAlign="center"
     width="100%"
-    px={4}
     defaultValue={description}
     isPreviewFocusable={false}
+    p={0}
   >
     <EditablePreview color={color} mb={2} whiteSpace="pre-line" width="100%" />
     <Input

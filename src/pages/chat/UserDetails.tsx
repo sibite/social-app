@@ -1,4 +1,4 @@
-import { Avatar, Heading, VStack } from '@chakra-ui/react';
+import { Avatar, Center, Heading, Spinner, VStack } from '@chakra-ui/react';
 import { useGetProfileQuery } from '../../store/profile-api';
 
 interface Props {
@@ -8,7 +8,12 @@ interface Props {
 const UserDetails: React.FC<Props> = ({ profileId }) => {
   const { currentData } = useGetProfileQuery(profileId);
 
-  if (!currentData) return <span>Loading</span>;
+  if (!currentData)
+    return (
+      <Center h="100%">
+        <Spinner />
+      </Center>
+    );
 
   return (
     <VStack w="full" spacing={6} p={8}>

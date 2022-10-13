@@ -1,4 +1,11 @@
-import { Flex, Grid, GridItem, useColorModeValue } from '@chakra-ui/react';
+import {
+  Center,
+  Flex,
+  Grid,
+  GridItem,
+  Text,
+  useColorModeValue,
+} from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
 import ContactsHeader from './ContactsHeader';
 import Contacts from './Contacts';
@@ -13,6 +20,14 @@ const ChatPageMD: React.FC = () => {
   const { id } = useParams();
   const { windowHeight } = useWindowDimensions();
   const bgColor = useColorModeValue('gray.200', 'gray.800');
+
+  const MessagesPlaceholderJSX = (
+    <Center h="100%">
+      <Text opacity="0.5">
+        Select a contact from the sidebar to start chatting
+      </Text>
+    </Center>
+  );
 
   return (
     <Flex
@@ -51,7 +66,9 @@ const ChatPageMD: React.FC = () => {
           <LayoutBlock>{id && <MessagesHeader profileId={id} />}</LayoutBlock>
         </GridItem>
         <GridItem area="messages">
-          <LayoutBlock>{id && <Messages profileId={id} />}</LayoutBlock>
+          <LayoutBlock>
+            {id ? <Messages profileId={id} /> : MessagesPlaceholderJSX}
+          </LayoutBlock>
         </GridItem>
         <GridItem area="user-details">
           <LayoutBlock>{id && <UserDetails profileId={id} />}</LayoutBlock>

@@ -1,27 +1,26 @@
-import { VStack } from '@chakra-ui/react';
-import { useEffect } from 'react';
+import { Center, Spinner, useBoolean, VStack } from '@chakra-ui/react';
 import { useGetAccountDataQuery } from '../../store/account-api';
-import { contactsActions } from '../../store/contacts';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useAppSelector } from '../../store/hooks';
 import Contact from './Contact';
+
+let isFetched;
 
 const Contacts: React.FC = () => {
   const contacts = useAppSelector((state) => state.contacts.contacts);
-  const { data } = useGetAccountDataQuery();
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    if (contacts.length !== 0) return;
-    const fetchedContacts = data?.contacts ?? {};
-    const contactsArr = Object.values(fetchedContacts);
-    dispatch(contactsActions.init(contactsArr));
-  }, [contacts.length, data, dispatch]);
+  const { isFetching } = useGetAccountDataQuery();
 
   const style = {
     w: 'full',
     h: 'full',
     p: 3,
   };
+
+  if (isFetching)
+    return (
+      <Center h="100%">
+        <Spinner />
+      </Center>
+    );
 
   return (
     <VStack sx={style} overflowY="auto">

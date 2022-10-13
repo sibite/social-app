@@ -25,13 +25,12 @@ const ProfileHeading: React.FC<Props> = ({
 
   return (
     <>
-      <Heading as="h1" size="lg">
+      <Heading as="h1" size="lg" textAlign="center">
         {name}
       </Heading>
       {(!isEditing || isUploading) && (
         <Text
           maxWidth="50ch"
-          px={4}
           textAlign="center"
           whiteSpace="pre-line"
           color={descriptionColor}
