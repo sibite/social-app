@@ -7,8 +7,9 @@ interface Props {
 const LayoutBlock: React.FC<Props> = ({ children }) => {
   const style = {
     bg: useColorModeValue('white', 'black'),
-    w: 'full',
-    h: 'full',
+    w: '100%',
+    h: '100%',
+    overflow: 'hidden',
   };
 
   return <Box sx={style}>{children}</Box>;

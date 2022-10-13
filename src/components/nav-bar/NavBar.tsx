@@ -16,6 +16,7 @@ const NavBar = forwardRef<HTMLDivElement>((_props, ref) => {
 
   const barStyle = {
     width: '100%',
+    flexShrink: 0,
     boxSizing: 'content-box',
     zIndex: 1000,
     pointerEvents: 'auto',

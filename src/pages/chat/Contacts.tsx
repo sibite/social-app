@@ -15,7 +15,7 @@ const Contacts: React.FC = () => {
     const fetchedContacts = data?.contacts ?? {};
     const contactsArr = Object.values(fetchedContacts);
     dispatch(contactsActions.init(contactsArr));
-  }, [data, dispatch]);
+  }, [contacts.length, data, dispatch]);
 
   const style = {
     w: 'full',
@@ -24,7 +24,7 @@ const Contacts: React.FC = () => {
   };
 
   return (
-    <VStack sx={style}>
+    <VStack sx={style} overflowY="auto">
       {contacts.map(({ userId, lastMessage }) => (
         <Contact profileId={userId} lastMessage={lastMessage} />
       ))}
