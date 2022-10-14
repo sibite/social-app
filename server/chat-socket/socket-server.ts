@@ -22,17 +22,11 @@ const createSocketIO = (httpServer: HttpServerType) => {
   io.use(authenticateWS);
 
   io.on('connection', (socket) => {
-    console.log('Client connected');
-
     const { userId } = socket.data;
 
     if (!userId) return;
 
     socket.join(userId);
-
-    socket.on('disconnect', () => {
-      console.log('Client disconnected');
-    });
 
     socket.on('new-message', async ({ toId, content }) => {
       const newMessage = {
@@ -83,8 +77,6 @@ const createSocketIO = (httpServer: HttpServerType) => {
         } catch (err) {
           console.error('Error when updating contacts');
         }
-        console.log('new message', { userId, toId });
-        // socket.emit('new-message', newMessageRes);
         io.in(userId).emit('new-message', newMessageRes);
         if (toId !== userId) io.in(toId).emit('new-message', newMessageRes);
       } catch (err) {

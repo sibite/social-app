@@ -19,7 +19,7 @@ export interface ContactType {
 }
 
 export interface UserDBType {
-  _id: string;
+  _id?: string;
   passwordHash: string;
   salt: string;
   name: string;

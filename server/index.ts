@@ -24,6 +24,11 @@ router.use('/messages', messagesRouter);
 
 app.use('/api', router);
 
+app.use(express.static(path.join(__dirname, '../public')));
+app.get('/*', (_req, res) => {
+  res.sendFile(path.join(__dirname, '../public', 'index.html'));
+});
+
 createSocketIO(httpServer);
 
 httpServer.listen(PORT, () =>

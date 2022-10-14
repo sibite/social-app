@@ -37,7 +37,6 @@ const logIn: RequestHandler = (req, res) => {
             .status(400)
             .send({ message: 'Invalid e-mail or password' });
 
-        console.log(user2, `access: ${ACCESS_TOKEN_SECRET}`);
         const token = jwt.sign(user2, ACCESS_TOKEN_SECRET);
         return res.status(200).send({
           userId: user2._id,

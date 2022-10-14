@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 import { RequestHandler } from 'express';
 import db from '../database';
-import { updateCallback, numCallback } from '../shared/nedbPromises';
+import { updateCallback, singleCallback } from '../shared/nedbPromises';
 
 const toggleFollow: RequestHandler = async (req, res) => {
   const { profileId } = req.params;
@@ -14,7 +14,7 @@ const toggleFollow: RequestHandler = async (req, res) => {
       db.users.findOne(
         { _id: userId },
         { following: 1 },
-        numCallback(resolve, reject)
+        singleCallback(resolve, reject)
       );
     });
 

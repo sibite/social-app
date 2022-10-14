@@ -15,8 +15,6 @@ const searchProfiles: RequestHandler = async (req, res) => {
   const regExString = `(${words.join('|')})`;
   const regExQuery = new RegExp(regExString, 'i');
 
-  console.log(regExQuery);
-
   try {
     const profiles = await new Promise<UserType[]>((r, j) => {
       db.users
