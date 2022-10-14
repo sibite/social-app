@@ -5,10 +5,15 @@ import PostSkeleton from './PostSkeleton';
 
 interface Props {
   posts: string[];
+  showPostCreator?: boolean;
   isLoading?: boolean;
 }
 
-const Feed: React.FC<Props> = ({ posts, isLoading = false }) => {
+const Feed: React.FC<Props> = ({
+  posts,
+  showPostCreator = true,
+  isLoading = false,
+}) => {
   const PostsJSX = (() => {
     if (isLoading)
       return (
@@ -24,7 +29,7 @@ const Feed: React.FC<Props> = ({ posts, isLoading = false }) => {
   return (
     <Container maxWidth="xl" py={10} px={0}>
       <VStack spacing={10}>
-        <NewPost />
+        {showPostCreator && <NewPost />}
         {PostsJSX}
       </VStack>
     </Container>

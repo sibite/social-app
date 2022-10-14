@@ -20,6 +20,7 @@ const LogInInputs: React.FC<Props> = ({ email, password, isError }) => {
     <FormControl isInvalid={email.showInvalidity}>
       <FormLabel>Your e-mail address</FormLabel>
       <Input
+        autoFocus
         type="email"
         placeholder="employee@company.org"
         value={email.value}

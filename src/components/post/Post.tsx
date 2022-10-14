@@ -5,10 +5,12 @@ import {
   Grid,
   Text,
   useBoolean,
+  useToast,
   VStack,
 } from '@chakra-ui/react';
 import { AnnotationIcon, HeartIcon, ShareIcon } from '@heroicons/react/outline';
 import { HeartIcon as HeartIconFilled } from '@heroicons/react/solid';
+import { useLocation, generatePath } from 'react-router-dom';
 import { PostIncomingType } from '../../../server/api-types/feed';
 import {
   useDeletePostMutation,
@@ -53,6 +55,7 @@ const Post: React.FC<Props> = ({
   const [removePost] = useDeletePostMutation();
   const [toggleLike] = useToggleLikeMutation();
   const [areCommentsShown, setAreCommentsShown] = useBoolean(false);
+  const toast = useToast();
 
   const myId = useAppSelector((state) => state.auth.userId);
 
@@ -60,6 +63,24 @@ const Post: React.FC<Props> = ({
     removePost({ postId, withMedia }).unwrap();
 
   const likeHandler = () => toggleLike(postId);
+
+  const shareHandler = async () => {
+    const url = `${window.location.host}/post/${postId}`;
+    try {
+      await navigator.clipboard.writeText(url);
+      toast({
+        title: 'Copied link to clipboard',
+        status: 'success',
+        duration: 3000,
+      });
+    } catch {
+      toast({
+        title: 'Could not copy the url to clipboard',
+        status: 'error',
+        duration: 4000,
+      });
+    }
+  };
 
   const liked = myId && likedBy.indexOf(myId) !== -1;
 
@@ -126,7 +147,11 @@ const Post: React.FC<Props> = ({
             Comments
           </Button>
         )}
-        <Button variant="ghost" leftIcon={<HeroIcon as={ShareIcon} />}>
+        <Button
+          variant="ghost"
+          leftIcon={<HeroIcon as={ShareIcon} />}
+          onClick={shareHandler}
+        >
           Share
         </Button>
       </Grid>

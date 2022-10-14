@@ -7,6 +7,7 @@ import LogInPage from './pages/log-in/LogInPage';
 import ProfilePage from './pages/profile/ProfilePage';
 import SearchPage from './pages/search/SearchPage';
 import SignUpPage from './pages/sign-up/SignUpPage';
+import SinglePostPage from './pages/single-post/SinglePostPage';
 import { useAppSelector } from './store/hooks';
 import theme from './theme';
 
@@ -30,6 +31,7 @@ const App = () => {
             <Route path="/profile/:id/*" element={<ProfilePage />} />
             <Route path="/profile" element={<Navigate to="me" />} />
             <Route path="/feed/*" element={<FeedPage />} />
+            <Route path="/post/:id" element={<SinglePostPage />} />
           </>
         )}
       </Routes>

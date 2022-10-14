@@ -208,7 +208,13 @@ const ProfilePage: React.FC<Props> = () => {
           <Route path="*" element={<Navigate to="feed" replace />} />
           <Route
             path="feed"
-            element={<Feed posts={posts} isLoading={!feedQuery.currentData} />}
+            element={
+              <Feed
+                posts={posts}
+                isLoading={!feedQuery.currentData}
+                showPostCreator={isMine}
+              />
+            }
           />
           <Route path="photos" element={<Gallery photos={[]} />} />
           <Route
