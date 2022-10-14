@@ -23,6 +23,7 @@ import PostMenu from './PostMenu';
 
 interface Props {
   postId: string;
+  creatorId?: string;
   avatarSrc?: string;
   media?: { _id: string; src: string }[];
   name: string;
@@ -37,6 +38,7 @@ interface Props {
 
 const Post: React.FC<Props> = ({
   postId,
+  creatorId,
   avatarSrc,
   name,
   dateString,
@@ -74,7 +76,12 @@ const Post: React.FC<Props> = ({
   return (
     <Flex sx={containerStyle} overflow="hidden">
       <VStack spacing={4} p={4} align="stretch">
-        <PostHeader avatarSrc={avatarSrc} name={name} dateString={dateString}>
+        <PostHeader
+          avatarSrc={avatarSrc}
+          name={name}
+          dateString={dateString}
+          profileId={creatorId}
+        >
           <PostMenu onDelete={deleteHandler} options={options} />
         </PostHeader>
         {content?.length && (

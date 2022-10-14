@@ -84,8 +84,9 @@ const createSocketIO = (httpServer: HttpServerType) => {
           console.error('Error when updating contacts');
         }
         console.log('new message', { userId, toId });
-        socket.emit('new-message', newMessageRes);
-        io.in(toId).emit('new-message', newMessageRes);
+        // socket.emit('new-message', newMessageRes);
+        io.in(userId).emit('new-message', newMessageRes);
+        if (toId !== userId) io.in(toId).emit('new-message', newMessageRes);
       } catch (err) {
         console.error(err);
       }

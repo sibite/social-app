@@ -8,13 +8,14 @@ interface Props {
 }
 
 const PostApiWrapper: React.FC<Props> = ({ postId }) => {
-  const { data, isError, isLoading } = useGetPostQuery(postId);
+  const { data } = useGetPostQuery(postId);
 
   if (!data) return null;
 
   return (
     <Post
       postId={postId}
+      creatorId={data.creatorId}
       dateString={formatDateRelative(dayjs(data.date))}
       name={data.fullName}
       content={data.content}

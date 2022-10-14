@@ -1,4 +1,15 @@
-import { Avatar, Center, Heading, Spinner, VStack } from '@chakra-ui/react';
+import {
+  Avatar,
+  Button,
+  Center,
+  Flex,
+  Heading,
+  Spinner,
+  VStack,
+} from '@chakra-ui/react';
+import { UserCircleIcon } from '@heroicons/react/outline';
+import { Link } from 'react-router-dom';
+import HeroIcon from '../../components/chakra-ui/HeroIcon';
 import { useGetProfileQuery } from '../../store/profile-api';
 
 interface Props {
@@ -25,6 +36,15 @@ const UserDetails: React.FC<Props> = ({ profileId }) => {
       <Heading as="h1" size="md">
         {currentData.fullName}
       </Heading>
+      <Flex gap={2} flexWrap="wrap" justifyContent="center">
+        <Button
+          as={Link}
+          to={`/profile/${profileId}`}
+          leftIcon={<HeroIcon as={UserCircleIcon} />}
+        >
+          View profile
+        </Button>
+      </Flex>
     </VStack>
   );
 };

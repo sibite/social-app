@@ -11,6 +11,7 @@ import {
 } from '@chakra-ui/react';
 import { TrashIcon } from '@heroicons/react/outline';
 import { memo } from 'react';
+import { Link } from 'react-router-dom';
 import { useDeleteCommentMutation } from '../../store/feed-api';
 import Card from '../chakra-ui/Card';
 import HeroIcon from '../chakra-ui/HeroIcon';
@@ -18,6 +19,7 @@ import HeroIcon from '../chakra-ui/HeroIcon';
 interface Props {
   commentId: string;
   postId: string;
+  profileId?: string;
   avatarSrc?: string;
   fullName: string;
   dateString: string;
@@ -28,6 +30,7 @@ interface Props {
 const Comment: React.FC<Props> = ({
   commentId,
   postId,
+  profileId,
   avatarSrc,
   fullName,
   dateString,
@@ -62,13 +65,19 @@ const Comment: React.FC<Props> = ({
   return (
     <Flex sx={style} gap={2}>
       <Avatar
+        as={Link}
+        to={profileId ? `/profile/${profileId}` : '#'}
         name={avatarSrc ? undefined : fullName}
         src={avatarSrc}
         size="sm"
       />
       <VStack align="flex-start">
         <Card sx={cardStyle} variant="flat" borderRadius="xl">
-          <Heading as="span" size="xs">
+          <Heading
+            size="xs"
+            as={Link}
+            to={profileId ? `/profile/${profileId}` : '#'}
+          >
             {fullName}
           </Heading>
           <Text wordBreak="break-word" whiteSpace="pre-wrap">

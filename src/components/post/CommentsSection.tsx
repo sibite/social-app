@@ -81,6 +81,7 @@ const CommentsSection: React.FC<Props> = ({ postId, limitHeight }) => {
         <Comment
           key={comment._id}
           postId={postId}
+          profileId={comment.creatorId}
           commentId={comment._id}
           isDeletable={myId === comment.creatorId}
           fullName={comment.fullName}
