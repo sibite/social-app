@@ -39,6 +39,7 @@ const getPost: RequestHandler = async (req, res) => {
       fullName: getFullName({ name, lastName }),
       avatarSrc: avatarSrc && getSrcUrl(avatarSrc),
       commentsCount,
+      mediaSrc: postRes.mediaSrc && getSrcUrl(postRes.mediaSrc),
       options: {
         delete: req.userId === postRes.creatorId,
         withMedia: postRes.type === 'post' && !postRes.mediaSrc,

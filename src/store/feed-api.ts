@@ -98,6 +98,13 @@ export const feedApi = createApi({
       }),
       providesTags: [{ type: 'Post', id: 'ALL' }],
     }),
+    getProfileMedia: builder.query<string[], string>({
+      query: (profileId) => ({
+        url: `media/${profileId}`,
+        method: 'GET',
+      }),
+      providesTags: [{ type: 'Post', id: 'ALL' }],
+    }),
     getPost: builder.query<PostIncomingType, string>({
       query: (postId) =>
         postId && {
@@ -131,5 +138,6 @@ export const {
   useGetCommentsQuery,
   useGetTotalFeedQuery,
   useGetProfileFeedQuery,
+  useGetProfileMediaQuery,
   useGetPostQuery,
 } = feedApi;

@@ -18,7 +18,6 @@ const createPost: RequestHandler = (req, res) => {
       (mediaWrapper) => ({
         ...mediaWrapper,
         likedBy: [],
-        comments: [],
         content: '',
         creatorId: req.userId,
       })

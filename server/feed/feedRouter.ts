@@ -11,6 +11,7 @@ import getProfileFeed from './getProfileFeed';
 import togglePostLike from './togglePostLike';
 import deleteComment from './deleteComment';
 import getTotalFeed from './getTotalFeed';
+import getProfileMedia from './getProfileMedia';
 
 const feedRouter = express.Router();
 
@@ -22,6 +23,7 @@ feedRouter.use(
 
 feedRouter.get('/total', authenticate, getTotalFeed);
 feedRouter.get('/:profileId', authenticate, getProfileFeed);
+feedRouter.get('/media/:profileId', authenticate, getProfileMedia);
 feedRouter.post('/', authenticate, createPost);
 feedRouter.get('/post/:postId', authenticate, getPost);
 feedRouter.delete('/post/:postId', authenticate, deletePost);

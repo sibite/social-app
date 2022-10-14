@@ -10,7 +10,6 @@ import {
 } from '@chakra-ui/react';
 import { AnnotationIcon, HeartIcon, ShareIcon } from '@heroicons/react/outline';
 import { HeartIcon as HeartIconFilled } from '@heroicons/react/solid';
-import { useLocation, generatePath } from 'react-router-dom';
 import { PostIncomingType } from '../../../server/api-types/feed';
 import {
   useDeletePostMutation,

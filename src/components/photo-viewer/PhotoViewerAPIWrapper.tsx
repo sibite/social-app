@@ -46,9 +46,11 @@ const PhotoViewerAPIWrapper: React.FC<Props> = ({
   let ContentJSX;
 
   useEffect(() => {
-    if (error && (error as FetchBaseQueryError).status === 404 && onPrev)
-      onPrev();
-  }, [error, onPrev]);
+    if (error && (error as FetchBaseQueryError).status === 404)
+      if (side === 0 && onClose) onClose();
+      else if (side === -1 && onNext) onNext();
+      else if (onPrev) onPrev();
+  }, [error, onPrev, onNext, onClose, side]);
 
   if ((isLoading || isFetching) && !currentData)
     ContentJSX = (

@@ -2,7 +2,6 @@ import {
   Box,
   Container,
   useBoolean,
-  useBreakpointValue,
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react';
@@ -20,7 +19,7 @@ import {
   useGetProfileQuery,
   useToggleFollowMutation,
 } from '../../store/profile-api';
-import Gallery from './Gallery';
+import Gallery from '../gallery/Gallery';
 import ProfileAvatar from './ProfileAvatar';
 import ProfileCover from './ProfileCover';
 import ProfileHeading from './ProfileHeading';
@@ -216,7 +215,7 @@ const ProfilePage: React.FC<Props> = () => {
               />
             }
           />
-          <Route path="photos" element={<Gallery photos={[]} />} />
+          <Route path="photos" element={<Gallery profileId={id} />} />
           <Route
             path="following"
             element={<Following followed={profile?.following || []} />}

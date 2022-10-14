@@ -1,16 +1,15 @@
 import { useSearchParams } from 'react-router-dom';
-import { useGetPostQuery } from '../../store/feed-api';
+import { useGetPostQuery, useGetProfileMediaQuery } from '../../store/feed-api';
 import PhotoViewerAPIWrapper from './PhotoViewerAPIWrapper';
 
 const getAdjustedIndex = (arr: any[], index: number) =>
   Math.max(0, Math.min(arr.length - 1, index));
 
-const PostWrapper: React.FC<{ postId: string }> = ({ postId }) => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const { data: parentPost } = useGetPostQuery(postId);
-
-  const mediaId = searchParams.get('mediaId');
-  const mediaList = (parentPost?.media ?? []).map((media) => media._id);
+const MediaListWrapper: React.FC<{ mediaList: string[]; mediaId: string }> = ({
+  mediaList,
+  mediaId,
+}) => {
+  const setSearchParams = useSearchParams()[1];
 
   const currentIndex = mediaId ? mediaList.indexOf(mediaId) : null;
 
@@ -49,25 +48,51 @@ const PostWrapper: React.FC<{ postId: string }> = ({ postId }) => {
     });
   };
 
-  if (mediaId)
-    return (
-      <PhotoViewerAPIWrapper
-        mediaId={mediaId}
-        onPrev={prevHandler}
-        onNext={nextHandler}
-        onClose={closeHandler}
-        side={side}
-      />
-    );
+  return (
+    <PhotoViewerAPIWrapper
+      mediaId={mediaId}
+      onPrev={prevHandler}
+      onNext={nextHandler}
+      onClose={closeHandler}
+      side={side}
+    />
+  );
+};
 
-  return null;
+const PostWrapper: React.FC<{ postId: string }> = ({ postId }) => {
+  const searchParams = useSearchParams()[0];
+  const { data: parentPost } = useGetPostQuery(postId);
+
+  const mediaId = searchParams.get('mediaId');
+  const mediaList = (parentPost?.media ?? []).map((media) => media._id);
+
+  if (!mediaId) return null;
+
+  return <MediaListWrapper mediaId={mediaId} mediaList={mediaList} />;
+};
+
+const ProfileMediaWrapper: React.FC<{ profileId: string }> = ({
+  profileId,
+}) => {
+  const searchParams = useSearchParams()[0];
+  const { data: mediaListFetched } = useGetProfileMediaQuery(profileId);
+
+  const mediaId = searchParams.get('mediaId');
+  const mediaList = mediaListFetched ?? [];
+
+  if (!mediaId) return null;
+
+  return <MediaListWrapper mediaId={mediaId} mediaList={mediaList} />;
 };
 
 const PhotoViewerWrapper: React.FC = () => {
   const [searchParams] = useSearchParams();
   const postId = searchParams.get('postId');
+  const profileId = searchParams.get('profileId');
 
   if (postId) return <PostWrapper postId={postId} />;
+
+  if (profileId) return <ProfileMediaWrapper profileId={profileId} />;
 
   return null;
 };
