@@ -2,11 +2,11 @@ import {
   Badge,
   Button,
   Flex,
-  Grid,
   Text,
   useBoolean,
   useBreakpointValue,
   useToast,
+  UseToastOptions,
   VStack,
 } from '@chakra-ui/react';
 import { AnnotationIcon, HeartIcon, ShareIcon } from '@heroicons/react/outline';
@@ -22,6 +22,7 @@ import CommentsSection from './CommentsSection';
 import PostHeader from './PostHeader';
 import PostMediaGroup from './PostMediaGroup';
 import PostMenu from './PostMenu';
+import SharePopover from './SharePopover';
 
 interface Props {
   postId: string;
@@ -59,26 +60,34 @@ const Post: React.FC<Props> = ({
 
   const myId = useAppSelector((state) => state.auth.userId);
 
+  const url = `${window.location.host}/post/${postId}`;
+
   const deleteHandler = (withMedia: boolean) =>
     removePost({ postId, withMedia }).unwrap();
 
   const likeHandler = () => toggleLike(postId);
 
   const shareHandler = async () => {
-    const url = `${window.location.host}/post/${postId}`;
+    const successToast: UseToastOptions = {
+      title: 'Copied link to clipboard',
+      status: 'success',
+      duration: 3000,
+    };
+
     try {
+      await (navigator.permissions.query as any)({
+        name: 'clipboard-write',
+      });
       await navigator.clipboard.writeText(url);
-      toast({
-        title: 'Copied link to clipboard',
-        status: 'success',
-        duration: 3000,
-      });
+      toast(successToast);
     } catch {
-      toast({
-        title: 'Could not copy the url to clipboard',
-        status: 'error',
-        duration: 4000,
-      });
+      if (!document.execCommand)
+        toast({
+          title: 'Could not copy the url to clipboard',
+          status: 'error',
+          duration: 4000,
+        });
+      else setTimeout(() => toast(successToast), 250);
     }
   };
 
@@ -149,14 +158,16 @@ const Post: React.FC<Props> = ({
             {isButtonTextShown && 'Comments'}
           </Button>
         )}
-        <Button
-          variant="ghost"
-          flexGrow={1}
-          leftIcon={<HeroIcon as={ShareIcon} />}
-          onClick={shareHandler}
-        >
-          {isButtonTextShown && 'Share'}
-        </Button>
+        <SharePopover url={url}>
+          <Button
+            variant="ghost"
+            flexGrow={1}
+            leftIcon={<HeroIcon as={ShareIcon} />}
+            onClick={shareHandler}
+          >
+            {isButtonTextShown && 'Share'}
+          </Button>
+        </SharePopover>
       </Flex>
       {(areCommentsShown || alwaysShowComments) && (
         <CommentsSection postId={postId} limitHeight={limitHeight} />
