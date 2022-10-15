@@ -1,11 +1,17 @@
-import { Avatar, Flex, Heading } from '@chakra-ui/react';
+import { Avatar, Flex, Heading, IconButton } from '@chakra-ui/react';
+import { InformationCircleIcon } from '@heroicons/react/outline';
+import HeroIcon from '../../components/chakra-ui/HeroIcon';
 import { useGetProfileQuery } from '../../store/profile-api';
 
 interface Props {
   profileId: string;
+  onToggleUserDetails: React.MouseEventHandler;
 }
 
-const ContactsHeader: React.FC<Props> = ({ profileId }) => {
+const ContactsHeader: React.FC<Props> = ({
+  profileId,
+  onToggleUserDetails,
+}) => {
   const { currentData } = useGetProfileQuery(profileId);
 
   const style = {
@@ -26,6 +32,12 @@ const ContactsHeader: React.FC<Props> = ({ profileId }) => {
       <Heading as="h1" size="md">
         {currentData.fullName}
       </Heading>
+      <IconButton
+        ml="auto"
+        aria-label="Toggle user details"
+        icon={<HeroIcon as={InformationCircleIcon} />}
+        onClick={onToggleUserDetails}
+      />
     </Flex>
   );
 };

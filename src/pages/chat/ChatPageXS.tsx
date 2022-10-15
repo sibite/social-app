@@ -5,16 +5,17 @@ import {
   useBreakpointValue,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import ContactsHeader from './ContactsHeader';
-import Contacts from './Contacts';
-import LayoutBlock from './LayoutBlock';
-import MessagesHeader from './MessagesHeader';
-import UserDetails from './UserDetails';
+import { useParams } from 'react-router-dom';
 import Messages from '../../components/messages/Messages';
 import NavBar from '../../components/nav-bar/NavBar';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
+import Contacts from './Contacts';
+import ContactsHeader from './ContactsHeader';
+import LayoutBlock from './LayoutBlock';
+import MessagesHeader from './MessagesHeader';
+import UserDetails from './UserDetails';
+import UserDetailsHeader from './UserDetailsHeader';
 
 const ChatPageXS: React.FC = () => {
   const [section, setSection] = useState<
@@ -22,6 +23,14 @@ const ChatPageXS: React.FC = () => {
   >('none');
   const { id } = useParams();
   const { windowHeight } = useWindowDimensions();
+
+  const userDetailsShowHandler = () => {
+    setSection('user-details');
+  };
+
+  const userDetailsHideHandler = () => {
+    setSection('messages');
+  };
 
   useEffect(() => {
     if (!id) setSection('contacts');
@@ -70,7 +79,12 @@ const ChatPageXS: React.FC = () => {
           <>
             <GridItem>
               <LayoutBlock>
-                {id && <MessagesHeader profileId={id} />}
+                {id && (
+                  <MessagesHeader
+                    profileId={id}
+                    onToggleUserDetails={userDetailsShowHandler}
+                  />
+                )}
               </LayoutBlock>
             </GridItem>
             <GridItem>
@@ -79,9 +93,18 @@ const ChatPageXS: React.FC = () => {
           </>
         )}
         {section === 'user-details' && (
-          <GridItem>
-            <LayoutBlock>{id && <UserDetails profileId={id} />}</LayoutBlock>
-          </GridItem>
+          <>
+            <GridItem>
+              <LayoutBlock>
+                <UserDetailsHeader
+                  onToggleUserDetails={userDetailsHideHandler}
+                />
+              </LayoutBlock>
+            </GridItem>
+            <GridItem>
+              <LayoutBlock>{id && <UserDetails profileId={id} />}</LayoutBlock>
+            </GridItem>
+          </>
         )}
       </Grid>
     </Flex>
