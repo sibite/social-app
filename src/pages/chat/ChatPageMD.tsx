@@ -20,7 +20,7 @@ import useWindowDimensions from '../../hooks/useWindowDimensions';
 const ChatPageMD: React.FC = () => {
   const { id } = useParams();
   const { windowHeight } = useWindowDimensions();
-  const [showUserDetails, setShowUserDetails] = useBoolean(false);
+  const [showUserDetails, setShowUserDetails] = useBoolean(true);
 
   const gridStyle = {
     gridTemplateAreas: `"contacts-header messages-header user-details"

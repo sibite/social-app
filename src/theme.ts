@@ -4,6 +4,7 @@ import Button from './theme/Button';
 import Card from './theme/Card';
 import colors from './theme/colors';
 import Link from './theme/Link';
+import Textarea from './theme/Textarea';
 import Tooltip from './theme/Tooltip';
 
 const config: ThemeConfig = {
@@ -23,6 +24,7 @@ const theme = extendTheme({
     Link,
     Card,
     Tooltip,
+    Textarea,
   },
 });
 

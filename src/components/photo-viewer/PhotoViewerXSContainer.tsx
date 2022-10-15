@@ -21,13 +21,13 @@ const PhotoViewerXSContainer: React.FC<Props> = ({
   onClose,
   side,
 }) => {
-  const { windowHeight, windowWidth } = useWindowDimensions();
+  const { windowHeight } = useWindowDimensions();
 
   const photoHeight = '300px';
 
   const style = {
     flexDirection: 'column',
-    bgColor: useColorModeValue('white', 'gray.700'),
+    bgColor: useColorModeValue('white', 'gray.800'),
     height: `${windowHeight - 61}px`,
     width: '100%',
     overflowY: 'auto',

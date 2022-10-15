@@ -54,7 +54,7 @@ const NewPost: React.FC = () => {
     event.preventDefault();
 
     const queryArg: CreatePostType = {
-      content: description,
+      content: description.trim(),
       media: files.map((wrapper) => wrapper.file),
     };
 

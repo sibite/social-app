@@ -6,7 +6,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import Messages from '../../components/messages/Messages';
 import NavBar from '../../components/nav-bar/NavBar';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
@@ -22,10 +22,15 @@ const ChatPageXS: React.FC = () => {
     'contacts' | 'messages' | 'user-details' | 'none'
   >('none');
   const { id } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { windowHeight } = useWindowDimensions();
 
   const userDetailsShowHandler = () => {
-    setSection('user-details');
+    setSearchParams((prev) => {
+      if (searchParams.get('details') === '1') prev.delete('details');
+      else prev.set('details', '1');
+      return prev;
+    });
   };
 
   const userDetailsHideHandler = () => {
@@ -33,9 +38,10 @@ const ChatPageXS: React.FC = () => {
   };
 
   useEffect(() => {
-    if (!id) setSection('contacts');
-    else setSection('messages');
-  }, [id]);
+    if (searchParams.get('details') === '1') setSection('user-details');
+    else if (id) setSection('messages');
+    else setSection('contacts');
+  }, [id, searchParams]);
 
   const gridStyle = {
     gridTemplateRows: '60px 1fr',
