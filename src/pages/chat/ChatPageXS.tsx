@@ -1,4 +1,10 @@
-import { Flex, Grid, GridItem, useColorModeValue } from '@chakra-ui/react';
+import {
+  Flex,
+  Grid,
+  GridItem,
+  useBreakpointValue,
+  useColorModeValue,
+} from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import ContactsHeader from './ContactsHeader';
@@ -12,8 +18,8 @@ import useWindowDimensions from '../../hooks/useWindowDimensions';
 
 const ChatPageXS: React.FC = () => {
   const [section, setSection] = useState<
-    'contacts' | 'messages' | 'user-details'
-  >('contacts');
+    'contacts' | 'messages' | 'user-details' | 'none'
+  >('none');
   const { id } = useParams();
   const { windowHeight } = useWindowDimensions();
 
@@ -22,25 +28,30 @@ const ChatPageXS: React.FC = () => {
     else setSection('messages');
   }, [id]);
 
-  const bgColor = useColorModeValue('gray.200', 'gray.800');
+  const gridStyle = {
+    gridTemplateRows: '60px 1fr',
+    gridTemplateColumns: '100%',
+    width: '100%',
+    flexGrow: 1,
+    overflow: 'hidden',
+    gap: '1px',
+    bgColor: useColorModeValue('gray.200', 'gray.800'),
+    '& > *': {
+      overflow: 'hidden',
+    },
+  };
+
+  const isMobile = useBreakpointValue({ base: true, md: false });
 
   return (
     <Flex
-      direction="column"
+      direction={isMobile ? 'column-reverse' : 'column'}
       width="100%"
       height={`${windowHeight}px`}
       overflow="hidden"
     >
       <NavBar />
-      <Grid
-        templateRows="60px 1fr"
-        templateColumns="100%"
-        w="100%"
-        flexGrow={1}
-        overflow="hidden"
-        gap="1px"
-        bg={bgColor}
-      >
+      <Grid sx={gridStyle}>
         {section === 'contacts' && (
           <>
             <GridItem>

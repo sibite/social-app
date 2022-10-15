@@ -5,6 +5,7 @@ import {
   Grid,
   Text,
   useBoolean,
+  useBreakpointValue,
   useToast,
   VStack,
 } from '@chakra-ui/react';
@@ -81,7 +82,10 @@ const Post: React.FC<Props> = ({
     }
   };
 
-  const liked = myId && likedBy.indexOf(myId) !== -1;
+  const isLiked = myId && likedBy.indexOf(myId) !== -1;
+
+  const isButtonTextShown =
+    useBreakpointValue({ base: false, xs: true }) || alwaysShowComments;
 
   const fontSize = content && content.length > 40 ? 'md' : 'xl';
 
@@ -111,15 +115,13 @@ const Post: React.FC<Props> = ({
         )}
       </VStack>
       {media.length !== 0 && <PostMediaGroup postId={postId} media={media} />}
-      <Grid
-        templateRows="1fr"
-        templateColumns={`repeat(${alwaysShowComments ? 2 : 3}, 1fr)`}
-      >
+      <Flex justifyContent="space-evenly">
         <Button
           variant="ghost"
-          colorScheme={liked ? 'red' : 'gray'}
+          flexGrow={1}
+          colorScheme={isLiked ? 'red' : 'gray'}
           onClick={likeHandler}
-          leftIcon={<HeroIcon as={liked ? HeartIconFilled : HeartIcon} />}
+          leftIcon={<HeroIcon as={isLiked ? HeartIconFilled : HeartIcon} />}
           rightIcon={
             likedBy.length ? (
               <Badge variant="subtle" colorScheme="blue">
@@ -128,11 +130,12 @@ const Post: React.FC<Props> = ({
             ) : undefined
           }
         >
-          Like
+          {isButtonTextShown && 'Like'}
         </Button>
         {!alwaysShowComments && (
           <Button
             variant="ghost"
+            flexGrow={1}
             leftIcon={<HeroIcon as={AnnotationIcon} />}
             rightIcon={
               commentsCount ? (
@@ -143,17 +146,18 @@ const Post: React.FC<Props> = ({
             }
             onClick={setAreCommentsShown.toggle}
           >
-            Comments
+            {isButtonTextShown && 'Comments'}
           </Button>
         )}
         <Button
           variant="ghost"
+          flexGrow={1}
           leftIcon={<HeroIcon as={ShareIcon} />}
           onClick={shareHandler}
         >
-          Share
+          {isButtonTextShown && 'Share'}
         </Button>
-      </Grid>
+      </Flex>
       {(areCommentsShown || alwaysShowComments) && (
         <CommentsSection postId={postId} limitHeight={limitHeight} />
       )}

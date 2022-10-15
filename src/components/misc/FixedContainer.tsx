@@ -1,13 +1,14 @@
 import { Flex } from '@chakra-ui/react';
-import { forwardRef } from 'react';
+import { CSSProperties, forwardRef } from 'react';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
 
 interface Props {
+  flexDirection?: CSSProperties['flexDirection'];
   children: React.ReactNode;
 }
 
 const FixedContainer = forwardRef<HTMLDivElement, Props>(
-  ({ children }, ref) => {
+  ({ flexDirection, children }, ref) => {
     const style = {
       width: '100%',
       height: `${useWindowDimensions().windowHeight}px`,
@@ -16,7 +17,7 @@ const FixedContainer = forwardRef<HTMLDivElement, Props>(
       zIndex: '1',
       top: '0',
       left: '0',
-      flexDirection: 'column',
+      flexDirection: flexDirection ?? 'column',
       alignItems: 'stretch',
     };
 

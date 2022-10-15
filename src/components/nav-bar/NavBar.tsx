@@ -13,6 +13,9 @@ import NavBarSearch from './NavBarSearch';
 const NavBar = forwardRef<HTMLDivElement>((_props, ref) => {
   const heightVal = 60;
   const height = `${heightVal}px`;
+  const borderColor = useColorModeValue('gray.200', 'gray.800');
+
+  const isMobile = useBreakpointValue({ base: true, md: false });
 
   const barStyle = {
     width: '100%',
@@ -21,8 +24,10 @@ const NavBar = forwardRef<HTMLDivElement>((_props, ref) => {
     zIndex: 1000,
     pointerEvents: 'auto',
     bgColor: useColorModeValue('white', 'black'),
-    borderBottom: '1px solid',
-    borderBottomColor: useColorModeValue('gray.200', 'gray.800'),
+    borderBottom: !isMobile ? '1px solid' : 'none',
+    borderBottomColor: !isMobile ? borderColor : 'none',
+    borderTop: isMobile ? '1px solid' : 'none',
+    borderTopColor: isMobile ? borderColor : 'none',
   };
 
   const variant = useBreakpointValue({ base: 'flex', lg: 'grid' });

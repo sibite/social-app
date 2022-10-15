@@ -27,7 +27,7 @@ const UserDetails: React.FC<Props> = ({ profileId }) => {
     );
 
   return (
-    <VStack w="full" spacing={6} p={8}>
+    <VStack boxSize="100%" spacing={6} p={8} overflowY="auto">
       <Avatar
         size="xl"
         src={currentData.avatarSrc}

@@ -4,7 +4,7 @@ import {
   Tooltip,
   useBoolean,
   useBreakpointValue,
-  useColorModeValue
+  useColorModeValue,
 } from '@chakra-ui/react';
 
 interface Props {
@@ -27,12 +27,17 @@ const MessageBubble: React.FC<Props> = ({
 
   const bgColor = useColorModeValue(lightBgColor, darkBgColor);
 
-  const style = {
+  const bubbleStyle = {
     py: '6px',
     px: '11px',
     borderRadius: 8,
     marginInlineStart: 0,
     bgColor,
+  };
+
+  const textStyle = {
+    whiteSpace: 'pre-wrap',
+    wordBreak: 'break-word',
   };
 
   const isDesktop = useBreakpointValue({ base: false, md: true });
@@ -46,16 +51,16 @@ const MessageBubble: React.FC<Props> = ({
         label={dateString}
         aria-label={`A tooltip (${dateString})`}
       >
-        <Box sx={style}>
-          <Text whiteSpace="pre-wrap">{children}</Text>
+        <Box sx={bubbleStyle}>
+          <Text sx={textStyle}>{children}</Text>
         </Box>
       </Tooltip>
     );
 
   return (
     <>
-      <Box sx={style} onClick={setIsExpanded.toggle}>
-        <Text whiteSpace="pre-wrap">{children}</Text>
+      <Box sx={bubbleStyle} onClick={setIsExpanded.toggle}>
+        <Text sx={textStyle}>{children}</Text>
       </Box>
       {isExpanded && (
         <Text fontSize="xs" opacity="0.7" px={1} onClick={setIsExpanded.toggle}>

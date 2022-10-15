@@ -26,12 +26,13 @@ const PhotoViewerXSContainer: React.FC<Props> = ({
   const photoHeight = '300px';
 
   const style = {
-    bgColor: 'gray.900',
     flexDirection: 'column',
+    bgColor: useColorModeValue('white', 'gray.700'),
     height: `${windowHeight - 61}px`,
     width: '100%',
     overflowY: 'auto',
     pointerEvents: 'auto',
+    overscrollBehavior: 'auto',
     position: 'relative',
     '& > img': {
       minHeight: photoHeight,

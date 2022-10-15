@@ -1,4 +1,4 @@
-import { Center, CircularProgress } from '@chakra-ui/react';
+import { Center, CircularProgress, useColorModeValue } from '@chakra-ui/react';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import dayjs from 'dayjs';
 import { useEffect } from 'react';
@@ -52,14 +52,17 @@ const PhotoViewerAPIWrapper: React.FC<Props> = ({
       else if (onPrev) onPrev();
   }, [error, onPrev, onNext, onClose, side]);
 
+  const spinnerColor = useColorModeValue('gray.700', 'gray.200');
+  const trackColor = useColorModeValue('gray.300', 'gray.600');
+
   if ((isLoading || isFetching) && !currentData)
     ContentJSX = (
-      <Center>
+      <Center height="100%">
         <CircularProgress
           margin={4}
           isIndeterminate
-          trackColor="gray.700"
-          color="white"
+          color={spinnerColor}
+          trackColor={trackColor}
         />
       </Center>
     );

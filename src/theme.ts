@@ -12,6 +12,9 @@ const config: ThemeConfig = {
 };
 
 const theme = extendTheme({
+  breakpoints: {
+    xs: '25em',
+  },
   config,
   colors,
   components: {

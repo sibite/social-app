@@ -16,7 +16,6 @@ const PhotoSideContent: React.FC<Props> = ({
 }) => (
   <Card
     variant="unstyled"
-    height="100%"
     minWidth="180px"
     maxWidth={useBreakpointValue({ base: 'none', md: '420px' })}
   >

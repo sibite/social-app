@@ -19,7 +19,25 @@ import useWindowDimensions from '../../hooks/useWindowDimensions';
 const ChatPageMD: React.FC = () => {
   const { id } = useParams();
   const { windowHeight } = useWindowDimensions();
-  const bgColor = useColorModeValue('gray.200', 'gray.800');
+
+  const gridStyle = {
+    gridTemplateAreas: `"contacts-header messages-header user-details"
+    "contacts        messages        user-details"`,
+    gridTemplateRows: '60px 1fr',
+    gridTemplateColumns: {
+      md: '90px 1fr 300px',
+      lg: '360px 1fr 340px',
+      '2xl': '420px 1fr 420px',
+    },
+    width: '100%',
+    flexGrow: 1,
+    overflow: 'hidden',
+    gap: '1px',
+    bgColor: useColorModeValue('gray.200', 'gray.800'),
+    '& > *': {
+      overflow: 'hidden',
+    },
+  };
 
   const MessagesPlaceholderJSX = (
     <Center h="100%">
@@ -37,21 +55,7 @@ const ChatPageMD: React.FC = () => {
       overflow="hidden"
     >
       <NavBar />
-      <Grid
-        templateAreas={`"contacts-header messages-header user-details"
-                        "contacts        messages        user-details"`}
-        templateRows="60px 1fr"
-        templateColumns={{
-          md: '90px 1fr 300px',
-          lg: '360px 1fr 340px',
-          '2xl': '420px 1fr 420px',
-        }}
-        w="100%"
-        flexGrow={1}
-        overflow="hidden"
-        gap="1px"
-        bg={bgColor}
-      >
+      <Grid sx={gridStyle}>
         <GridItem area="contacts-header">
           <LayoutBlock>
             <ContactsHeader />

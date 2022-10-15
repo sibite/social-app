@@ -1,4 +1,4 @@
-import { Box, Center, Flex, Grid } from '@chakra-ui/react';
+import { Box, Center, Flex, Grid, useColorModeValue } from '@chakra-ui/react';
 import React from 'react';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
 import Overlay from '../misc/Overlay';
@@ -25,7 +25,7 @@ const PhotoViewerMDContainer: React.FC<Props> = ({
 
   const style = {
     gridTemplate: '100% / auto auto',
-    bgColor: 'gray.900',
+    bgColor: useColorModeValue('white', 'gray.700'),
     '& > *': {
       maxHeight: 'inherit',
     },
