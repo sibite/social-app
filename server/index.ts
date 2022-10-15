@@ -4,11 +4,10 @@ import path from 'path';
 import accountRouter from './account/accountRouter';
 import authRouter from './auth/authRouter';
 import createSocketIO from './chat-socket/socket-server';
+import { PORT } from './env';
 import feedRouter from './feed/feedRouter';
 import messagesRouter from './messages/messagesRouter';
 import profileRouter from './profile/profileRouter';
-
-const PORT = 4000;
 
 const app = express();
 const router = express.Router();
