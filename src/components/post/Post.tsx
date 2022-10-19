@@ -19,6 +19,7 @@ import {
 } from '../../store/feed-api';
 import { useAppSelector } from '../../store/hooks';
 import HeroIcon from '../chakra-ui/HeroIcon';
+import InteractiveContent from '../misc/InteractiveContent';
 import CommentsSection from './CommentsSection';
 import PostHeader from './PostHeader';
 import PostMediaGroup from './PostMediaGroup';
@@ -61,7 +62,7 @@ const Post: React.FC<Props> = ({
 
   const toastPosition = useMobileModeValue('top', 'bottom');
   const myId = useAppSelector((state) => state.auth.userId);
-  const url = `${window.location.host}/post/${postId}`;
+  const url = `${window.location.origin}/post/${postId}`;
 
   const deleteHandler = (withMedia: boolean) =>
     removePost({ postId, withMedia }).unwrap();
@@ -122,7 +123,7 @@ const Post: React.FC<Props> = ({
         </PostHeader>
         {content?.length && (
           <Text fontSize={fontSize} whiteSpace="pre-wrap">
-            {content}
+            <InteractiveContent textContent={content} />
           </Text>
         )}
       </VStack>

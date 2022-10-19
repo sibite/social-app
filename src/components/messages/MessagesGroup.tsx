@@ -2,6 +2,7 @@ import { Avatar, HStack, VStack, Text } from '@chakra-ui/react';
 import dayjs from 'dayjs';
 import formatDateInformative from '../../shared/formatDateInformative';
 import { useGetProfileQuery } from '../../store/profile-api';
+import InteractiveContent from '../misc/InteractiveContent';
 import MessageBubble from './MessageBubble';
 import { FancyMessagesGroup } from './toFancyMessages';
 
@@ -29,7 +30,7 @@ const MessagesGroup: React.FC<Props> = ({ group, userId }) => {
         tooltipPlacement={isDirectionTo ? 'left' : 'right'}
         key={message._id}
       >
-        {message.content}
+        <InteractiveContent textContent={message.content} />
       </MessageBubble>
     );
   });

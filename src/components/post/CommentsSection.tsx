@@ -20,6 +20,7 @@ import {
 import { useAppSelector } from '../../store/hooks';
 import HeroIcon from '../chakra-ui/HeroIcon';
 import AutoResizedTextArea from '../misc/AutoResizedTextArea';
+import InteractiveContent from '../misc/InteractiveContent';
 import Comment from './Comment';
 
 interface Props {
@@ -88,7 +89,7 @@ const CommentsSection: React.FC<Props> = ({ postId, limitHeight }) => {
           avatarSrc={comment.avatarSrc}
           dateString={formatDateRelative(dayjs(comment.date))}
         >
-          {comment.content}
+          <InteractiveContent textContent={comment.content} />
         </Comment>
       )),
     [comments, postId, myId]
