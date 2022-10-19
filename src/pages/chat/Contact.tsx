@@ -10,7 +10,7 @@ import {
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { ServerToClientMessage } from '../../../server/chat-socket/types';
+import { ServerToClientMessage } from '../../../server/chat-socket/socket-types';
 import formatDateRelativeShort from '../../shared/formatDateRelativeShort';
 import { useAppSelector } from '../../store/hooks';
 import { useGetProfileQuery } from '../../store/profile-api';
@@ -37,7 +37,13 @@ const Contacts: React.FC<Props> = ({
   let lastMessageContent;
   if (lastMessage) {
     const prefix = lastMessage.fromId === myId ? 'You: ' : '';
-    lastMessageContent = prefix + lastMessage.content;
+    if (lastMessage.deleted)
+      lastMessageContent = (
+        <span>
+          {prefix} <i>Message deleted</i>
+        </span>
+      );
+    else lastMessageContent = prefix + lastMessage.content;
   }
 
   useEffect(() => {
@@ -77,10 +83,12 @@ const Contacts: React.FC<Props> = ({
   const headingStyle = {
     fontWeight: unread ? 'bold' : 'medium',
     flexGrow: '1',
+    maxWidth: '100%',
+    lineHeight: 'unset',
     textAlign: 'left',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
-    overflow: 'hidden',
+    overflowX: 'hidden',
   };
 
   const clickHandler = () => onSelect();
@@ -100,7 +108,7 @@ const Contacts: React.FC<Props> = ({
         mr={3}
       />
       <VStack
-        spacing={1}
+        spacing={0}
         alignItems="flex-start"
         overflow="hidden"
         flexGrow="1"

@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { ServerToClientMessage } from '../../server/chat-socket/types';
+import { ServerToClientMessage } from '../../server/chat-socket/socket-types';
 import prepareAuthHeader from './prepare-auth-header';
 
 export const messagesApi = createApi({

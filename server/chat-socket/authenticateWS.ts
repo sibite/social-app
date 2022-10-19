@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { ACCESS_TOKEN_SECRET } from '../env';
-import { AppSocket } from './types';
+import { AppSocket } from './socket-types';
 
 const authenticateWS = (socket: AppSocket, next: (error?: any) => any) => {
   // eslint-disable-next-line prefer-destructuring

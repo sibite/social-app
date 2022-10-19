@@ -1,4 +1,4 @@
-import { ServerToClientMessage } from '../../../server/chat-socket/types';
+import { ServerToClientMessage } from '../../../server/chat-socket/socket-types';
 
 export interface FancyMessagesGroup {
   date?: number;

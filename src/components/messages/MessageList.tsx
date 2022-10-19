@@ -1,5 +1,5 @@
 import { Flex } from '@chakra-ui/react';
-import { ServerToClientMessage } from '../../../server/chat-socket/types';
+import { ServerToClientMessage } from '../../../server/chat-socket/socket-types';
 import { useAppSelector } from '../../store/hooks';
 import MessagesGroup from './MessagesGroup';
 import toFancyMessages from './toFancyMessages';

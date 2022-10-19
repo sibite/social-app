@@ -11,7 +11,7 @@ interface Props {
 
 const MessagesInput: React.FC<Props> = ({ profileId }) => {
   const [message, setMessage] = useState('');
-  const sendMessage = useMessagesSender(profileId);
+  const { sendMessage } = useMessagesSender(profileId);
   const textAreaRef = useRef<any>();
 
   const sendHandler = () => {

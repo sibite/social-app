@@ -1,9 +1,10 @@
-import { Avatar, HStack, VStack, Text } from '@chakra-ui/react';
+import { Avatar, HStack, VStack, Text, Flex } from '@chakra-ui/react';
 import dayjs from 'dayjs';
 import formatDateInformative from '../../shared/formatDateInformative';
 import { useGetProfileQuery } from '../../store/profile-api';
 import InteractiveContent from '../misc/InteractiveContent';
 import MessageBubble from './MessageBubble';
+import MessageMenu from './MessageMenu';
 import { FancyMessagesGroup } from './toFancyMessages';
 
 interface Props {
@@ -20,18 +21,29 @@ const MessagesGroup: React.FC<Props> = ({ group, userId }) => {
   const direction = userId === fromId ? 'to' : 'from';
   const isDirectionTo = direction === 'to';
 
+  const containerStyle = {
+    '&:hover .toolbar': {
+      opacity: 1,
+    },
+  };
+
   const BubblesJSX = group.messages.map((message) => {
     const dateString = formatDateInformative(dayjs(message.date));
 
     return (
-      <MessageBubble
-        colored={!isDirectionTo}
-        dateString={dateString}
-        tooltipPlacement={isDirectionTo ? 'left' : 'right'}
-        key={message._id}
-      >
-        <InteractiveContent textContent={message.content} />
-      </MessageBubble>
+      <Flex sx={containerStyle} gap={2} key={message._id}>
+        {isDirectionTo && !message.deleted && (
+          <MessageMenu profileId={message.toId} messageId={message._id} />
+        )}
+        <MessageBubble
+          colored={!isDirectionTo}
+          isDeleted={message.deleted}
+          dateString={dateString}
+          tooltipPlacement={isDirectionTo ? 'left' : 'right'}
+        >
+          <InteractiveContent textContent={message.content} />
+        </MessageBubble>
+      </Flex>
     );
   });
 

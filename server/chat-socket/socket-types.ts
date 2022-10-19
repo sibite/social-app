@@ -6,14 +6,17 @@ export interface ServerToClientMessage {
   toId: string;
   date: number;
   content: string;
+  deleted?: boolean;
 }
 
 export interface ServerToClientEvents {
   'new-message': (message: ServerToClientMessage) => void;
+  'update-message': (message: ServerToClientMessage) => void;
 }
 
 export interface ClientToServerEvents {
   'new-message': (message: { toId: string; content: string }) => void;
+  'delete-message': (messageId: string) => void;
 }
 
 export interface InterServerEvents {}

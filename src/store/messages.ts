@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import type { RootState } from '.';
-import { ServerToClientMessage } from '../../server/chat-socket/types';
+import { ServerToClientMessage } from '../../server/chat-socket/socket-types';
 
 interface UserWrapper {
   id: string;
@@ -99,6 +99,22 @@ export const messagesSlice = createSlice({
       userMessages.ids.push(message._id);
       userMessages.list.push(message);
       state.userEntities[userId].count += 1;
+    },
+    updateMessage(
+      state,
+      action: {
+        type: string;
+        payload: { userId: string; message: ServerToClientMessage };
+      }
+    ) {
+      const { userId, message } = action.payload;
+      initUser(state, userId);
+      const userMessages = state.userEntities[userId].messages;
+      const indexOfMessage = userMessages.ids.indexOf(message._id);
+      if (indexOfMessage === -1) return state;
+      userMessages.entities[message._id] = message;
+      userMessages.list[indexOfMessage] = message;
+      return state;
     },
     clearAll(state) {
       state.userEntities = {};

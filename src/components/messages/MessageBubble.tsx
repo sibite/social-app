@@ -9,6 +9,7 @@ import {
 
 interface Props {
   colored?: boolean;
+  isDeleted?: boolean;
   tooltipPlacement?: 'left' | 'right';
   dateString?: string;
   children: React.ReactNode;
@@ -16,6 +17,7 @@ interface Props {
 
 const MessageBubble: React.FC<Props> = ({
   colored,
+  isDeleted,
   tooltipPlacement,
   dateString,
   children,
@@ -25,7 +27,9 @@ const MessageBubble: React.FC<Props> = ({
   const darkBgColor = colored ? 'blue.700' : 'gray.700';
   const lightBgColor = colored ? 'blue.100' : 'gray.200';
 
-  const bgColor = useColorModeValue(lightBgColor, darkBgColor);
+  const normalBgColor = useColorModeValue(lightBgColor, darkBgColor);
+  const deletedBgColor = useColorModeValue('gray.100', 'gray.800');
+  const bgColor = isDeleted ? deletedBgColor : normalBgColor;
 
   const bubbleStyle = {
     py: '6px',
@@ -42,6 +46,12 @@ const MessageBubble: React.FC<Props> = ({
 
   const isDesktop = useBreakpointValue({ base: false, md: true });
 
+  const ContentJSX = !isDeleted ? (
+    <Text sx={textStyle}>{children}</Text>
+  ) : (
+    <Text opacity="0.5">Message deleted</Text>
+  );
+
   if (isDesktop)
     return (
       <Tooltip
@@ -51,16 +61,14 @@ const MessageBubble: React.FC<Props> = ({
         label={dateString}
         aria-label={`A tooltip (${dateString})`}
       >
-        <Box sx={bubbleStyle}>
-          <Text sx={textStyle}>{children}</Text>
-        </Box>
+        <Box sx={bubbleStyle}>{ContentJSX}</Box>
       </Tooltip>
     );
 
   return (
     <>
       <Box sx={bubbleStyle} onClick={setIsExpanded.toggle}>
-        <Text sx={textStyle}>{children}</Text>
+        {ContentJSX}
       </Box>
       {isExpanded && (
         <Text fontSize="xs" opacity="0.7" px={1} onClick={setIsExpanded.toggle}>

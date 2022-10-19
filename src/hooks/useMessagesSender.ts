@@ -17,7 +17,15 @@ const useMessageSender = (profileId: string) => {
     [profileId]
   );
 
-  return sendMessage;
+  const deleteMessage = useCallback(
+    (id: string) => {
+      socket.emit('delete-message', id);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
+
+  return { sendMessage, deleteMessage };
 };
 
 export default useMessageSender;

@@ -1,4 +1,4 @@
-import type { ServerToClientMessage } from '../chat-socket/types';
+import type { ServerToClientMessage } from '../chat-socket/socket-types';
 
 export interface SignUpBodyType {
   name: string;
