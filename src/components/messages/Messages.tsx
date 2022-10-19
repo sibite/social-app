@@ -1,5 +1,5 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { messagesActionsThunks } from '../../store/messages';
 import MessageInput from './MessageInput';
@@ -10,20 +10,29 @@ interface Props {
 }
 
 const Messages: React.FC<Props> = ({ profileId }) => {
-  const messages = useAppSelector(
-    (state) => state.messages.userEntities[profileId]?.messages.list ?? []
+  const userEntity = useAppSelector(
+    (state) => state.messages.userEntities[profileId]
   );
+
+  const { status, isComplete } = userEntity ?? {};
+
+  const messagesList = userEntity?.messages.list ?? [];
 
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
+  const fetchMoreMessages = useCallback(() => {
     dispatch(messagesActionsThunks.fetchMoreMessages(profileId));
-  }, [profileId, dispatch]);
+  }, [dispatch, profileId]);
 
   return (
     <Flex w="full" h="full" direction="column" alignContent="stretch">
       <Box flexGrow="1" position="relative">
-        <MessageList messages={messages} />
+        <MessageList
+          isLoading={status === 'loading'}
+          isComplete={isComplete}
+          messages={messagesList}
+          fetchMoreMessages={fetchMoreMessages}
+        />
       </Box>
       <Text fontSize="xs" pl="2" pt="1" opacity="0.4">
         Stored messages are not encrypted

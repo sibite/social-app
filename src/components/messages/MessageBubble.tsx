@@ -5,12 +5,15 @@ import {
   useBoolean,
   useBreakpointValue,
   useColorModeValue,
+  VStack,
 } from '@chakra-ui/react';
+import { useContext } from 'react';
+import PortalRefContext from '../../store/ref-context';
 
 interface Props {
   colored?: boolean;
   isDeleted?: boolean;
-  tooltipPlacement?: 'left' | 'right';
+  isDirectionTo?: boolean;
   dateString?: string;
   children: React.ReactNode;
 }
@@ -18,11 +21,15 @@ interface Props {
 const MessageBubble: React.FC<Props> = ({
   colored,
   isDeleted,
-  tooltipPlacement,
+  isDirectionTo,
   dateString,
   children,
 }) => {
   const [isExpanded, setIsExpanded] = useBoolean(false);
+  const portalRef = useContext(PortalRefContext);
+
+  const tooltipPlacement = isDirectionTo ? 'left' : 'right';
+  const alignItems = isDirectionTo ? 'flex-end' : 'flex-start';
 
   const darkBgColor = colored ? 'blue.700' : 'gray.700';
   const lightBgColor = colored ? 'blue.100' : 'gray.200';
@@ -57,6 +64,7 @@ const MessageBubble: React.FC<Props> = ({
       <Tooltip
         key="box"
         closeOnPointerDown={false}
+        portalProps={{ containerRef: portalRef }}
         placement={tooltipPlacement ?? 'auto'}
         label={dateString}
         aria-label={`A tooltip (${dateString})`}
@@ -66,7 +74,7 @@ const MessageBubble: React.FC<Props> = ({
     );
 
   return (
-    <>
+    <VStack spacing="2px" alignItems={alignItems}>
       <Box sx={bubbleStyle} onClick={setIsExpanded.toggle}>
         {ContentJSX}
       </Box>
@@ -75,7 +83,7 @@ const MessageBubble: React.FC<Props> = ({
           {dateString}
         </Text>
       )}
-    </>
+    </VStack>
   );
 };
 export default MessageBubble;

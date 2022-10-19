@@ -6,6 +6,7 @@ import { ServerToClientMessage } from '../../server/chat-socket/socket-types';
 interface UserWrapper {
   id: string;
   status: 'error' | 'loading' | 'idle';
+  isComplete: boolean;
   count: number;
   messages: {
     entities: { [id: string]: ServerToClientMessage };
@@ -22,11 +23,12 @@ const initialState: MessagesState = {
   userEntities: {},
 };
 
-const numOfFetchedInOneReq = 5000000;
+const numOfFetchedInOneReq = 50;
 
 const createInitialEntity = (userId: string): UserWrapper => ({
   id: userId,
   status: 'idle',
+  isComplete: false,
   count: 0,
   messages: {
     entities: {},
@@ -43,24 +45,25 @@ const initUser = (state: MessagesState, userId: string) => {
 let isFetching = false;
 let dumpFetchSession = false;
 
-const fetchMoreMessages = createAsyncThunk<ServerToClientMessage[], string>(
-  'messages/fetchMore',
-  async (userId: string, { getState }) => {
-    if (isFetching) return [];
-    isFetching = true;
-    const state = getState() as RootState;
-    const { token } = state.auth;
-    const user =
-      state.messages.userEntities[userId] ?? createInitialEntity(userId);
-    const from = user.messages.list.length;
-    const to = from + numOfFetchedInOneReq - 1;
-    const request = await axios.get(`/api/messages/${userId}/${from}-${to}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    isFetching = false;
-    return request.data;
-  }
-);
+const fetchMoreMessages = createAsyncThunk<
+  ServerToClientMessage[] | 'canceled',
+  string
+>('messages/fetchMore', async (userId: string, { getState }) => {
+  if (isFetching) return 'canceled';
+  const state = getState() as RootState;
+  const { token } = state.auth;
+  const user =
+    state.messages.userEntities[userId] ?? createInitialEntity(userId);
+  if (user.isComplete) return [];
+  isFetching = true;
+  const from = user.messages.list.length;
+  const to = from + numOfFetchedInOneReq - 1;
+  const request = await axios.get(`/api/messages/${userId}/${from}-${to}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  isFetching = false;
+  return request.data;
+});
 
 const refetchMessages = createAsyncThunk<ServerToClientMessage[], string>(
   'messages/refetch',
@@ -123,19 +126,21 @@ export const messagesSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchMoreMessages.pending, (state, action) => {
       initUser(state, action.meta.arg);
-      state.userEntities[action.meta.arg].status = 'loading';
+      if (!state.userEntities[action.meta.arg].isComplete)
+        state.userEntities[action.meta.arg].status = 'loading';
     });
     builder.addCase(fetchMoreMessages.rejected, (state, action) => {
       state.userEntities[action.meta.arg].status = 'error';
     });
     builder.addCase(fetchMoreMessages.fulfilled, (state, action) => {
-      if (dumpFetchSession) {
+      if (dumpFetchSession || action.payload === 'canceled') {
         dumpFetchSession = false;
         return;
       }
       const user = state.userEntities[action.meta.arg];
       user.status = 'idle';
       user.count += action.payload.length;
+      user.isComplete = action.payload.length === 0;
       user.messages.list = action.payload.concat(user.messages.list);
       user.messages.ids = action.payload
         .map((message) => message._id)

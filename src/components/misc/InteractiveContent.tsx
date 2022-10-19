@@ -23,11 +23,12 @@ const InteractiveContent: React.FC<Props> = ({ textContent }) => {
     const nextText = textContent.slice(index + url.length, nextMatch?.index);
 
     elements.push(
-      <Link href={url} target="_blank">
+      <Link href={url} target="_blank" key={`${i}link`}>
         {url}
       </Link>
     );
-    if (nextText.length) elements.push(<span>{nextText}</span>);
+    if (nextText.length)
+      elements.push(<span key={`${i}text`}>{nextText}</span>);
   }
 
   // eslint-disable-next-line react/jsx-no-useless-fragment

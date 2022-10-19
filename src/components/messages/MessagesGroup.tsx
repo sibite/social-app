@@ -1,10 +1,8 @@
-import { Avatar, HStack, VStack, Text, Flex } from '@chakra-ui/react';
+import { Avatar, HStack, Text, VStack } from '@chakra-ui/react';
 import dayjs from 'dayjs';
 import formatDateInformative from '../../shared/formatDateInformative';
 import { useGetProfileQuery } from '../../store/profile-api';
-import InteractiveContent from '../misc/InteractiveContent';
-import MessageBubble from './MessageBubble';
-import MessageMenu from './MessageMenu';
+import Message from './Message';
 import { FancyMessagesGroup } from './toFancyMessages';
 
 interface Props {
@@ -21,29 +19,19 @@ const MessagesGroup: React.FC<Props> = ({ group, userId }) => {
   const direction = userId === fromId ? 'to' : 'from';
   const isDirectionTo = direction === 'to';
 
-  const containerStyle = {
-    '&:hover .toolbar': {
-      opacity: 1,
-    },
-  };
-
-  const BubblesJSX = group.messages.map((message) => {
+  const MessagesJSX = group.messages.map((message) => {
     const dateString = formatDateInformative(dayjs(message.date));
 
     return (
-      <Flex sx={containerStyle} gap={2} key={message._id}>
-        {isDirectionTo && !message.deleted && (
-          <MessageMenu profileId={message.toId} messageId={message._id} />
-        )}
-        <MessageBubble
-          colored={!isDirectionTo}
-          isDeleted={message.deleted}
-          dateString={dateString}
-          tooltipPlacement={isDirectionTo ? 'left' : 'right'}
-        >
-          <InteractiveContent textContent={message.content} />
-        </MessageBubble>
-      </Flex>
+      <Message
+        key={message._id}
+        messageId={message._id}
+        content={message.content}
+        dateString={dateString}
+        isDeleted={message.deleted ?? false}
+        isDirectionTo={isDirectionTo}
+        toId={message.toId}
+      />
     );
   });
 
@@ -78,7 +66,7 @@ const MessagesGroup: React.FC<Props> = ({ group, userId }) => {
           spacing="2px"
           alignItems={isDirectionTo ? 'flex-end' : 'flex-start'}
         >
-          {BubblesJSX}
+          {MessagesJSX}
         </VStack>
       </HStack>
     </VStack>

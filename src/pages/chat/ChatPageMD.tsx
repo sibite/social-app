@@ -14,8 +14,8 @@ import LayoutBlock from './LayoutBlock';
 import MessagesHeader from './MessagesHeader';
 import UserDetails from './UserDetails';
 import Messages from '../../components/messages/Messages';
-import NavBar from '../../components/nav-bar/NavBar';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
+import PageContainer from '../../components/layout/PageContainer';
 
 const ChatPageMD: React.FC = () => {
   const { id } = useParams();
@@ -50,14 +50,8 @@ const ChatPageMD: React.FC = () => {
   );
 
   return (
-    <Flex
-      direction="column"
-      width="100%"
-      height={`${windowHeight}px`}
-      overflow="hidden"
-    >
-      <NavBar />
-      <Grid sx={gridStyle}>
+    <PageContainer overflow="hidden">
+      <Grid sx={gridStyle} height={`${windowHeight - 61}px`}>
         <GridItem area="contacts-header">
           <LayoutBlock>
             <ContactsHeader />
@@ -89,7 +83,7 @@ const ChatPageMD: React.FC = () => {
           </GridItem>
         )}
       </Grid>
-    </Flex>
+    </PageContainer>
   );
 };
 

@@ -25,7 +25,7 @@ const Contacts: React.FC = () => {
   return (
     <VStack sx={style} overflowY="auto">
       {contacts.map(({ userId, lastMessage }) => (
-        <Contact profileId={userId} lastMessage={lastMessage} />
+        <Contact profileId={userId} lastMessage={lastMessage} key={userId} />
       ))}
     </VStack>
   );
