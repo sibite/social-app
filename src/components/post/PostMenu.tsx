@@ -39,7 +39,7 @@ const PostMenu: React.FC<Props> = ({ onDelete, options }) => {
   const deleteHandler = async () => {
     try {
       setIsDeleting.on();
-      await onDelete(options.withMedia ? true : withMedia);
+      await onDelete(!!options.withMedia && withMedia);
     } finally {
       setIsDeleting.off();
       setWithMedia.on();

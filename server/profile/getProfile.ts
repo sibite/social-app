@@ -2,7 +2,7 @@
 import { RequestHandler } from 'express';
 import { UserType } from '../api-types/auth';
 import db from '../database';
-import getSrcUrl from '../shared/getSrcUrl';
+import getUserFileURL from '../shared/getUserFileURL';
 import { numCallback, singleCallback } from '../shared/nedbPromises';
 
 const getProfile: RequestHandler = async (req, res) => {
@@ -38,8 +38,8 @@ const getProfile: RequestHandler = async (req, res) => {
       ...profile,
       isFollowed,
       fullName: `${profile.name} ${profile.lastName}`,
-      avatarSrc: profile.avatarSrc && getSrcUrl(profile.avatarSrc),
-      coverSrc: profile.coverSrc && getSrcUrl(profile.coverSrc),
+      avatarSrc: getUserFileURL(profile.avatarSrc),
+      coverSrc: getUserFileURL(profile.coverSrc),
     };
 
     res.status(200).json(response);

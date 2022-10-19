@@ -3,6 +3,7 @@ import { UserDBType } from '../api-types/auth';
 import db from '../database';
 import getFullName from '../shared/getFullName';
 import getSrcUrl from '../shared/getSrcUrl';
+import getUserFileURL from '../shared/getUserFileURL';
 import { singleCallback } from '../shared/nedbPromises';
 
 const me = async (req: Request, res: Response, next: NextFunction) => {
@@ -27,8 +28,8 @@ const me = async (req: Request, res: Response, next: NextFunction) => {
     const account = {
       ...user,
       fullName: getFullName(user),
-      avatarSrc: user.avatarSrc && getSrcUrl(user.avatarSrc),
-      coverSrc: user.coverSrc && getSrcUrl(user.coverSrc),
+      avatarSrc: getUserFileURL(user.avatarSrc),
+      coverSrc: getUserFileURL(user.coverSrc),
     };
 
     res.status(200).send(account);

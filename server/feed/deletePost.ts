@@ -29,7 +29,7 @@ const deletePost: RequestHandler = async (req, res) => {
     let media;
     let toRemoveIds: string[];
 
-    if (!withMedia && post.type !== 'post') {
+    if (!withMedia && post.type === 'post') {
       media = [];
       toRemoveIds = [postId];
     } else if (post.mediaSrc) {
@@ -45,6 +45,8 @@ const deletePost: RequestHandler = async (req, res) => {
       });
       toRemoveIds = [...media.map(({ _id }) => _id), postId];
     }
+
+    console.log(media);
 
     await new Promise<number>((resolve, reject) => {
       db.feed.remove(
@@ -63,6 +65,7 @@ const deletePost: RequestHandler = async (req, res) => {
     });
 
     media.forEach(({ mediaSrc }) => {
+      console.log('removing image, ', path.join(__dirname, `../${mediaSrc}`));
       rmSync(path.join(__dirname, `../${mediaSrc}`));
     });
     res.status(200).send();

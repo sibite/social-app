@@ -52,6 +52,7 @@ const ProfileAvatar: React.FC<Props> = ({
   return (
     <Center width="100%" height="50px" position="relative">
       <Avatar
+        key={avatarSrc} // because Chakra UI shows transparent image if src was removed
         src={avatarSrc}
         size={['2xl', '2xl', '3xl']}
         name={avatarSrc ? undefined : name}

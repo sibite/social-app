@@ -19,7 +19,10 @@ import {
   useUploadAvatarMutation,
   useUploadCoverMutation,
 } from '../../store/account-api';
-import { useGetProfileFeedQuery } from '../../store/feed-api';
+import {
+  useGetProfileFeedQuery,
+  useGetProfileMediaQuery,
+} from '../../store/feed-api';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   profileApi,
@@ -77,6 +80,7 @@ const ProfilePage: React.FC<Props> = () => {
 
   const { currentData, isFetching, isLoading } = useGetProfileQuery(id);
   const feedQuery = useGetProfileFeedQuery(id);
+  const { refetch: refetchMediaFeed } = useGetProfileMediaQuery(id);
 
   const profile = currentData;
   const posts = feedQuery.currentData ?? [];
@@ -137,6 +141,9 @@ const ProfilePage: React.FC<Props> = () => {
           forceRefetch: true,
         })
       );
+      if (editingAvatar || editingCover) {
+        refetchMediaFeed();
+      }
       cancelEditing();
       toast(successToast);
     } catch (err) {

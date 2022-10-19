@@ -1,45 +1,49 @@
 import { RequestHandler } from 'express';
+import { PostDBType } from '../api-types/feed';
 import db from '../database';
+import { numCallback, singleCallback } from '../shared/nedbPromises';
 import saveImage from '../shared/saveImage';
 
 const putCover: RequestHandler = async (req, res) => {
-  saveImage(
-    req,
-    {
-      storagePath: `${req.userId}/covers`,
-      fieldKey: 'cover',
-      maxPixelSize: 2000,
-      quality: 97,
-      transform: (img, meta) => {
-        const aspectRatio = 3;
-        const targetWidth = Math.min(meta.width!, meta.height! * aspectRatio);
-        return img.extract({
-          width: Math.floor(targetWidth),
-          height: Math.floor(targetWidth / aspectRatio),
-          top: Math.floor((meta.height! - targetWidth / aspectRatio) / 2),
-          left: Math.floor((meta.width! - targetWidth) / 2),
-        });
-      },
-    },
-    (err, coverSrc) => {
-      if (err) {
-        res.status(err.code).send({ message: err.message });
-        return;
-      }
+  try {
+    const coverSrc = await new Promise<string>((resolve, reject) => {
+      saveImage(
+        req,
+        {
+          storagePath: `${req.userId}/covers`,
+          fieldKey: 'cover',
+          maxPixelSize: 2000,
+          quality: 97,
+        },
+        (err, coverSrcRes) =>
+          err || !coverSrcRes ? reject(err?.code) : resolve(coverSrcRes)
+      );
+    });
+
+    await new Promise<number>((r, j) => {
       db.users.update(
         { _id: req.userId },
         { $set: { coverSrc } },
         {},
-        (dbErr, numOfUpdated) => {
-          if (dbErr || !numOfUpdated) {
-            res.status(500).send({ message: 'Error when saving to database' });
-            return;
-          }
-          res.status(201).send();
-        }
+        numCallback(r, j)
       );
-    }
-  );
+    });
+
+    const newMedia: Partial<PostDBType> = {
+      creatorId: req.userId,
+      date: Date.now(),
+      mediaSrc: coverSrc,
+      type: 'media',
+    };
+
+    await new Promise((r, j) => {
+      db.feed.insert(newMedia, singleCallback(r, j));
+    });
+
+    res.status(201).send();
+  } catch (err) {
+    res.status(typeof err === 'number' ? err : 500).send();
+  }
 };
 
 export default putCover;

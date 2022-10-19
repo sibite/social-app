@@ -12,7 +12,7 @@ export const feedApi = createApi({
     baseUrl: '/api/feed',
     prepareHeaders: prepareAuthHeader,
   }),
-  tagTypes: ['Post', 'Comments'],
+  tagTypes: ['Feed', 'MediaFeed', 'Post', 'Comments'],
   endpoints: (builder) => ({
     createPost: builder.mutation<unknown, CreatePostType>({
       query: (payload) => {
@@ -30,7 +30,7 @@ export const feedApi = createApi({
           body: formData,
         };
       },
-      invalidatesTags: [{ type: 'Post', id: 'ALL' }],
+      invalidatesTags: [{ type: 'Feed' }],
     }),
     deletePost: builder.mutation<
       unknown,
@@ -42,7 +42,7 @@ export const feedApi = createApi({
         body: { withMedia },
       }),
       invalidatesTags: (_result, _err, arg) => [
-        { type: 'Post', id: 'ALL' },
+        { type: 'Feed' },
         { type: 'Post', id: arg.postId },
       ],
     }),
@@ -89,21 +89,24 @@ export const feedApi = createApi({
         url: 'total',
         method: 'GET',
       }),
-      providesTags: [{ type: 'Post', id: 'ALL' }],
+      providesTags: [{ type: 'Feed' }],
     }),
     getProfileFeed: builder.query<string[], string>({
       query: (profileId) => ({
         url: profileId,
         method: 'GET',
       }),
-      providesTags: [{ type: 'Post', id: 'ALL' }],
+      providesTags: (_result, _error, id) => [{ type: 'Feed', id }],
     }),
     getProfileMedia: builder.query<string[], string>({
       query: (profileId) => ({
         url: `media/${profileId}`,
         method: 'GET',
       }),
-      providesTags: [{ type: 'Post', id: 'ALL' }],
+      providesTags: (_result, _error, id) => [
+        { type: 'MediaFeed', id },
+        { type: 'Feed', id },
+      ],
     }),
     getPost: builder.query<PostIncomingType, string>({
       query: (postId) =>

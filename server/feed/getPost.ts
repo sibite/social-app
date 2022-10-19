@@ -3,6 +3,7 @@ import { PostDBType, PostIncomingType } from '../api-types/feed';
 import db from '../database';
 import getFullName from '../shared/getFullName';
 import getSrcUrl from '../shared/getSrcUrl';
+import getUserFileURL from '../shared/getUserFileURL';
 import {
   arrCallback,
   numCallback,
@@ -37,7 +38,7 @@ const getPost: RequestHandler = async (req, res) => {
     const post: Partial<PostIncomingType> = {
       ...postRes,
       fullName: getFullName({ name, lastName }),
-      avatarSrc: avatarSrc && getSrcUrl(avatarSrc),
+      avatarSrc: getUserFileURL(avatarSrc),
       commentsCount,
       mediaSrc: postRes.mediaSrc && getSrcUrl(postRes.mediaSrc),
       options: {
