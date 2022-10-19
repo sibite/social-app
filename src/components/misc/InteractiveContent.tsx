@@ -1,4 +1,4 @@
-import { Link, Text } from '@chakra-ui/react';
+import { Link } from '@chakra-ui/react';
 
 interface Props {
   textContent: string;
@@ -10,8 +10,6 @@ const InteractiveContent: React.FC<Props> = ({ textContent }) => {
   const matches = Array.from(textContent.matchAll(URLRegEx));
 
   const elements: React.ReactNode[] = [];
-
-  console.log(matches);
 
   if (matches.length === 0) return <span>{textContent}</span>;
 

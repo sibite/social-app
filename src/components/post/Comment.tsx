@@ -79,7 +79,12 @@ const Comment: React.FC<Props> = ({
         size="sm"
       />
       <VStack align="flex-start">
-        <Card sx={cardStyle} variant="flat" borderRadius="xl">
+        <Card
+          sx={cardStyle}
+          variant="flat"
+          borderRadius="xl"
+          alignItems="flex-start"
+        >
           <Heading
             size="xs"
             as={Link}

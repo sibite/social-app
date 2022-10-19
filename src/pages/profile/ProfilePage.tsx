@@ -3,6 +3,8 @@ import {
   Container,
   useBoolean,
   useColorModeValue,
+  useToast,
+  UseToastOptions,
   VStack,
 } from '@chakra-ui/react';
 import { useState } from 'react';
@@ -11,7 +13,12 @@ import Feed from '../../components/feed/Feed';
 import Following from '../../components/followers/Following';
 import PageContainer from '../../components/layout/PageContainer';
 import PhotoViewerWrapper from '../../components/photo-viewer/PhotoViewerWrapper';
-import { accountApi } from '../../store/account-api';
+import useMobileModeValue from '../../hooks/useIsMobile';
+import {
+  useUpdateDetailsMutation,
+  useUploadAvatarMutation,
+  useUploadCoverMutation,
+} from '../../store/account-api';
 import { useGetProfileFeedQuery } from '../../store/feed-api';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
@@ -31,9 +38,24 @@ interface Props {}
 const ProfilePage: React.FC<Props> = () => {
   const auth = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
+  const toast = useToast();
 
   const [isEditing, setIsEditing] = useBoolean(false);
   const [isUploading, setIsUploading] = useBoolean(false);
+
+  const errorToast: UseToastOptions = {
+    title: 'Something went wrong',
+    status: 'error',
+    duration: 4000,
+    position: useMobileModeValue('top', 'bottom'),
+  };
+
+  const successToast: UseToastOptions = {
+    title: 'Profile updated',
+    status: 'success',
+    duration: 2000,
+    position: useMobileModeValue('top', 'bottom'),
+  };
 
   const [editingAvatar, setEditingAvatar] = useState<Blob | null>();
   const [editingCover, setEditingCover] = useState<Blob | null>();
@@ -49,6 +71,10 @@ const ProfilePage: React.FC<Props> = () => {
   const isMine = id === auth.userId;
 
   const [toggleFollow] = useToggleFollowMutation();
+  const [uploadAvatar] = useUploadAvatarMutation();
+  const [uploadCover] = useUploadCoverMutation();
+  const [updateDetails] = useUpdateDetailsMutation();
+
   const { currentData, isFetching, isLoading } = useGetProfileQuery(id);
   const feedQuery = useGetProfileFeedQuery(id);
 
@@ -97,51 +123,25 @@ const ProfilePage: React.FC<Props> = () => {
     setIsUploading.on();
 
     try {
-      await new Promise<void>((resolve, reject) => {
-        const requests = [];
-        if (editingAvatar) {
-          requests.push(
-            dispatch(accountApi.endpoints.uploadAvatar.initiate(editingAvatar))
-          );
-        }
-        if (editingCover) {
-          requests.push(
-            dispatch(accountApi.endpoints.uploadCover.initiate(editingCover))
-          );
-        }
-        if (typeof editingDescription === 'string') {
-          requests.push(
-            dispatch(
-              accountApi.endpoints.patchDetails.initiate({
-                description: editingDescription,
-              })
-            )
-          );
-        }
-        let count = requests.length;
-        if (count === 0) resolve();
-        requests.forEach((request) => {
-          request.then(() => {
-            count -= 1;
-            if (count === 0) resolve();
-          });
-        });
-      });
-    } catch (err) {
-      setIsUploading.off();
-    }
+      const requests = [
+        editingAvatar ? uploadAvatar(editingAvatar).unwrap() : Promise.resolve,
+        editingCover ? uploadCover(editingCover).unwrap() : Promise.resolve,
+        editingDescription
+          ? updateDetails({ description: editingDescription }).unwrap()
+          : Promise.resolve,
+      ];
 
-    dispatch(
-      accountApi.endpoints.getAccountData.initiate(undefined, {
-        forceRefetch: true,
-      })
-    );
-    await dispatch(
-      profileApi.endpoints.getProfile.initiate(id, {
-        forceRefetch: true,
-      })
-    );
-    cancelEditing();
+      await Promise.all(requests);
+      await dispatch(
+        profileApi.endpoints.getProfile.initiate(id, {
+          forceRefetch: true,
+        })
+      );
+      cancelEditing();
+      toast(successToast);
+    } catch (err) {
+      toast(errorToast);
+    }
     setIsUploading.off();
   };
 

@@ -1,4 +1,5 @@
 import { Center, Heading, Text, useColorModeValue } from '@chakra-ui/react';
+import InteractiveContent from '../../components/misc/InteractiveContent';
 import ProfileEditableDescription from './ProfileEditableDescription';
 
 interface Props {
@@ -11,7 +12,7 @@ interface Props {
 
 const ProfileHeading: React.FC<Props> = ({
   name,
-  description,
+  description = '',
   isEditing,
   isUploading = false,
   onChange,
@@ -35,7 +36,7 @@ const ProfileHeading: React.FC<Props> = ({
           whiteSpace="pre-line"
           color={descriptionColor}
         >
-          {description}
+          <InteractiveContent textContent={description} />
         </Text>
       )}
       {isEditing && !isUploading && (

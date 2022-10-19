@@ -8,12 +8,14 @@ export const accountApi = createApi({
     baseUrl: '/api/account/',
     prepareHeaders: prepareAuthHeader,
   }),
+  tagTypes: ['Account'],
   endpoints: (builder) => ({
     getAccountData: builder.query<UserType, void>({
       query: () => 'me',
       keepUnusedDataFor: 0,
+      providesTags: ['Account'],
     }),
-    uploadAvatar: builder.query<void, Blob>({
+    uploadAvatar: builder.mutation<void, Blob>({
       query: (file) => {
         const formdata = new FormData();
         formdata.append('avatar', file);
@@ -23,8 +25,9 @@ export const accountApi = createApi({
           body: formdata,
         };
       },
+      invalidatesTags: ['Account'],
     }),
-    uploadCover: builder.query<any, Blob>({
+    uploadCover: builder.mutation<any, Blob>({
       query: (file) => {
         const formdata = new FormData();
         formdata.append('cover', file);
@@ -34,15 +37,22 @@ export const accountApi = createApi({
           body: formdata,
         };
       },
+      invalidatesTags: ['Account'],
     }),
-    patchDetails: builder.query<any, Partial<UserType>>({
+    updateDetails: builder.mutation<any, Partial<UserType>>({
       query: (updatedData) => ({
         url: '',
         method: 'PATCH',
         body: updatedData,
       }),
+      invalidatesTags: ['Account'],
     }),
   }),
 });
 
-export const { useGetAccountDataQuery, useUploadAvatarQuery } = accountApi;
+export const {
+  useGetAccountDataQuery,
+  useUploadAvatarMutation,
+  useUploadCoverMutation,
+  useUpdateDetailsMutation,
+} = accountApi;
