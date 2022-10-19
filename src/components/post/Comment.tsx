@@ -1,3 +1,4 @@
+import { StarIcon } from '@chakra-ui/icons';
 import {
   Avatar,
   Box,
@@ -5,11 +6,16 @@ import {
   Heading,
   HStack,
   IconButton,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   Text,
   useColorModeValue,
+  useDisclosure,
   VStack,
 } from '@chakra-ui/react';
-import { TrashIcon } from '@heroicons/react/outline';
+import { DotsVerticalIcon, TrashIcon } from '@heroicons/react/outline';
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { useDeleteCommentMutation } from '../../store/feed-api';
@@ -38,6 +44,7 @@ const Comment: React.FC<Props> = ({
   children,
 }) => {
   const [deleteComment] = useDeleteCommentMutation();
+  const { onClose, onOpen, isOpen } = useDisclosure();
 
   const deleteHandler = () => {
     deleteComment({ postId, commentId });
@@ -54,7 +61,7 @@ const Comment: React.FC<Props> = ({
   const style = {
     minWidth: 0,
     '.toolbar': {
-      opacity: 0,
+      opacity: isOpen ? 1 : 0,
       transition: 'all 150ms',
     },
     '&:hover .toolbar': {
@@ -91,16 +98,26 @@ const Comment: React.FC<Props> = ({
         </Box>
       </VStack>
       {isDeletable && (
-        <HStack className="toolbar" alignSelf="center" mb={4}>
-          <IconButton
-            variant="ghost"
-            colorScheme="red"
-            size="sm"
-            aria-label="Delete comment"
-            icon={<HeroIcon as={TrashIcon} />}
-            onClick={deleteHandler}
-          />
-        </HStack>
+        <Box className="toolbar" alignSelf="center" mb={4}>
+          <Menu onOpen={onOpen} onClose={onClose}>
+            <MenuButton
+              as={IconButton}
+              aria-label="Comment menu"
+              icon={<HeroIcon as={DotsVerticalIcon} />}
+              variant="ghost"
+              size="sm"
+            />
+            <MenuList>
+              <MenuItem
+                aria-label="Delete comment"
+                icon={<HeroIcon as={TrashIcon} />}
+                onClick={deleteHandler}
+              >
+                Delete
+              </MenuItem>
+            </MenuList>
+          </Menu>
+        </Box>
       )}
     </Flex>
   );

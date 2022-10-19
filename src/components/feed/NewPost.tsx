@@ -74,10 +74,9 @@ const NewPost: React.FC = () => {
     padding: 4,
     bgColor: useColorModeValue('white', 'gray.900'),
     '&:hover': {
-      bgColor: useColorModeValue('white', 'gray.800'),
       boxShadow: useColorModeValue('0px 5px 10px rgba(0,0,0,0.08)', 'none'),
     },
-    transition: 'all 300ms',
+    transition: 'bos-shadow 300ms',
   };
 
   if (!isExpanded) {

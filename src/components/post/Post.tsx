@@ -12,6 +12,7 @@ import {
 import { AnnotationIcon, HeartIcon, ShareIcon } from '@heroicons/react/outline';
 import { HeartIcon as HeartIconFilled } from '@heroicons/react/solid';
 import { PostIncomingType } from '../../../server/api-types/feed';
+import useMobileModeValue from '../../hooks/useIsMobile';
 import {
   useDeletePostMutation,
   useToggleLikeMutation,
@@ -58,8 +59,8 @@ const Post: React.FC<Props> = ({
   const [areCommentsShown, setAreCommentsShown] = useBoolean(false);
   const toast = useToast();
 
+  const toastPosition = useMobileModeValue('top', 'bottom');
   const myId = useAppSelector((state) => state.auth.userId);
-
   const url = `${window.location.host}/post/${postId}`;
 
   const deleteHandler = (withMedia: boolean) =>
@@ -70,6 +71,7 @@ const Post: React.FC<Props> = ({
   const shareHandler = async () => {
     const successToast: UseToastOptions = {
       title: 'Copied link to clipboard',
+      position: toastPosition,
       status: 'success',
       duration: 3000,
     };
@@ -84,6 +86,7 @@ const Post: React.FC<Props> = ({
       if (!document.execCommand)
         toast({
           title: 'Could not copy the url to clipboard',
+          position: toastPosition,
           status: 'error',
           duration: 4000,
         });

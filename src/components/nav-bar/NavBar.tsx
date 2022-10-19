@@ -1,9 +1,8 @@
 import {
-  Box,
-  Grid,
-  useColorModeValue,
-  useBreakpointValue,
   Flex,
+  Grid,
+  useBreakpointValue,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import { forwardRef } from 'react';
 import NavBarAccount from './NavBarAccount';

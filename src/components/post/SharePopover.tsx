@@ -1,6 +1,4 @@
 import {
-  Text,
-  Button,
   Input,
   Popover,
   PopoverArrow,
@@ -9,6 +7,7 @@ import {
   PopoverContent,
   PopoverHeader,
   PopoverTrigger,
+  Text,
 } from '@chakra-ui/react';
 import { useRef } from 'react';
 
@@ -31,7 +30,7 @@ const SharePopover: React.FC<Props> = ({ url, children }) => {
   return (
     <Popover onOpen={openHandler}>
       <PopoverTrigger>{children}</PopoverTrigger>
-      <PopoverContent color="white" borderColor="blue.800">
+      <PopoverContent>
         <PopoverHeader pt={4} fontWeight="bold" border="0">
           <Text>Sharing link</Text>
         </PopoverHeader>
