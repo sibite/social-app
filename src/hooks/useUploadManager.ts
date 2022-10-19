@@ -53,6 +53,10 @@ function useUploadManager() {
     setNewRawFiles(newFiles);
   };
 
+  const addFiles = (newFiles: FileList) => {
+    setNewRawFiles(Array.from(newFiles));
+  };
+
   const removeFile = (removeId: number) => {
     setFiles((prev) => prev.filter(({ id }) => id !== removeId));
   };
@@ -66,6 +70,7 @@ function useUploadManager() {
     files,
     isLoading,
     changeHandler,
+    addFiles,
     removeFile,
     clearAll,
   };

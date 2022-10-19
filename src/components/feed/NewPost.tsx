@@ -40,6 +40,7 @@ const NewPost: React.FC = () => {
     files,
     isLoading: isLoadingFiles,
     changeHandler,
+    addFiles,
     removeFile,
     clearAll,
   } = useUploadManager();
@@ -48,6 +49,10 @@ const NewPost: React.FC = () => {
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     setDescription(event.currentTarget.value);
+  };
+
+  const pasteHandler = (event: React.ClipboardEvent) => {
+    addFiles(event.clipboardData.files);
   };
 
   const submitHandler = async (event: React.FormEvent) => {
@@ -114,6 +119,7 @@ const NewPost: React.FC = () => {
           autoFocus
           disabled={isLoading}
           onChange={descriptionChangeHandler}
+          onPaste={pasteHandler}
           defaultValue={description}
         />
         <ButtonGroup alignSelf="flex-end">

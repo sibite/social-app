@@ -1,5 +1,5 @@
 /* eslint-disable react/require-default-props */
-import { Box, VisuallyHiddenInput } from '@chakra-ui/react';
+import { Box, Input } from '@chakra-ui/react';
 import React, { useRef, useState } from 'react';
 
 interface Props {
@@ -30,7 +30,8 @@ const CustomFilePicker: React.FC<Props> = ({
   return (
     <Box onClick={openFileInput}>
       {children}
-      <VisuallyHiddenInput
+      <Input
+        display="none"
         type="file"
         key={key}
         multiple={multiple}
