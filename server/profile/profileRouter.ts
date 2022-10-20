@@ -6,7 +6,7 @@ import toggleFollow from './toggleFollow';
 
 const profileRouter = express.Router();
 
-profileRouter.get('/:profileId', authenticate, getProfile);
+profileRouter.get('/:profileId', getProfile);
 profileRouter.get('/search/:query', searchProfiles);
 profileRouter.patch('/follow/:profileId', authenticate, toggleFollow);
 

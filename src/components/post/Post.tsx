@@ -12,6 +12,7 @@ import {
 import { AnnotationIcon, HeartIcon, ShareIcon } from '@heroicons/react/outline';
 import { HeartIcon as HeartIconFilled } from '@heroicons/react/solid';
 import { PostIncomingType } from '../../../server/api-types/feed';
+import useIsAuthenticated from '../../hooks/useIsAuthenticated';
 import useMobileModeValue from '../../hooks/useIsMobile';
 import {
   useDeletePostMutation,
@@ -58,9 +59,11 @@ const Post: React.FC<Props> = ({
   const [removePost] = useDeletePostMutation();
   const [toggleLike] = useToggleLikeMutation();
   const [areCommentsShown, setAreCommentsShown] = useBoolean(false);
-  const toast = useToast();
 
+  const toast = useToast();
   const toastPosition = useMobileModeValue('top', 'bottom');
+
+  const isAuthenticated = useIsAuthenticated();
   const myId = useAppSelector((state) => state.auth.userId);
   const url = `${window.location.origin}/post/${postId}`;
 
@@ -129,22 +132,24 @@ const Post: React.FC<Props> = ({
       </VStack>
       {media.length !== 0 && <PostMediaGroup postId={postId} media={media} />}
       <Flex justifyContent="space-evenly">
-        <Button
-          variant="ghost"
-          flexGrow={1}
-          colorScheme={isLiked ? 'red' : 'gray'}
-          onClick={likeHandler}
-          leftIcon={<HeroIcon as={isLiked ? HeartIconFilled : HeartIcon} />}
-          rightIcon={
-            likedBy.length ? (
-              <Badge variant="subtle" colorScheme="blue">
-                {likedBy.length}
-              </Badge>
-            ) : undefined
-          }
-        >
-          {isButtonTextShown && 'Like'}
-        </Button>
+        {isAuthenticated && (
+          <Button
+            variant="ghost"
+            flexGrow={1}
+            colorScheme={isLiked ? 'red' : 'gray'}
+            onClick={likeHandler}
+            leftIcon={<HeroIcon as={isLiked ? HeartIconFilled : HeartIcon} />}
+            rightIcon={
+              likedBy.length ? (
+                <Badge variant="subtle" colorScheme="blue">
+                  {likedBy.length}
+                </Badge>
+              ) : undefined
+            }
+          >
+            {isButtonTextShown && 'Like'}
+          </Button>
+        )}
         {!alwaysShowComments && (
           <Button
             variant="ghost"

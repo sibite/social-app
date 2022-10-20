@@ -9,7 +9,7 @@ const getProfile: RequestHandler = async (req, res) => {
   const { profileId } = req.params;
   const { userId } = req;
 
-  if (!(userId && profileId)) return res.status(501).send();
+  if (!profileId) return res.status(501).send();
 
   try {
     const profile = await new Promise<Partial<UserType>>((r, j) => {

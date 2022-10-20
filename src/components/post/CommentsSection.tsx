@@ -10,6 +10,7 @@ import {
 import { ChevronDoubleRightIcon } from '@heroicons/react/outline';
 import dayjs from 'dayjs';
 import { useCallback, useMemo, useRef, useState } from 'react';
+import useIsAuthenticated from '../../hooks/useIsAuthenticated';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
 import formatDateRelative from '../../shared/formatDateRelative';
 import { useGetAccountDataQuery } from '../../store/account-api';
@@ -33,6 +34,7 @@ const CommentsSection: React.FC<Props> = ({ postId, limitHeight }) => {
   const { data: account } = useGetAccountDataQuery();
   const [createComment, { isLoading: isSending }] = useCreateCommentMutation();
 
+  const isAuthenticated = useIsAuthenticated();
   const myId = useAppSelector((state) => state.auth.userId);
 
   const { windowHeight } = useWindowDimensions();
@@ -109,34 +111,36 @@ const CommentsSection: React.FC<Props> = ({ postId, limitHeight }) => {
         bgColor={bg}
         width="100%"
       >
-        <Flex
-          as="form"
-          width="100%"
-          bg={bg}
-          gap={2}
-          alignItems="center"
-          onSubmit={submitHandler}
-        >
-          <Avatar src={avatarSrc} name={fullName} size="sm" />
-          <AutoResizedTextArea
-            required
-            flexGrow="1"
-            placeholder="Enter new comment"
-            defaultValue={content}
-            onChange={newCommentChangeHandler}
-            onKeyPress={textAreaKeyPressHandler}
-            ref={newCommentRef}
-          />
-          <IconButton
-            icon={<HeroIcon as={ChevronDoubleRightIcon} />}
-            type="submit"
-            colorScheme="twitter"
-            aria-label="Submit comment"
-            alignSelf="flex-end"
-            isLoading={isSending}
-            disabled={content.length === 0 || isSending}
-          />
-        </Flex>
+        {isAuthenticated && (
+          <Flex
+            as="form"
+            width="100%"
+            bg={bg}
+            gap={2}
+            alignItems="center"
+            onSubmit={submitHandler}
+          >
+            <Avatar src={avatarSrc} name={fullName} size="sm" />
+            <AutoResizedTextArea
+              required
+              flexGrow="1"
+              placeholder="Enter new comment"
+              defaultValue={content}
+              onChange={newCommentChangeHandler}
+              onKeyPress={textAreaKeyPressHandler}
+              ref={newCommentRef}
+            />
+            <IconButton
+              icon={<HeroIcon as={ChevronDoubleRightIcon} />}
+              type="submit"
+              colorScheme="twitter"
+              aria-label="Submit comment"
+              alignSelf="flex-end"
+              isLoading={isSending}
+              disabled={content.length === 0 || isSending}
+            />
+          </Flex>
+        )}
         {CommentsJSX ||
           (isLoading && (
             <Center alignSelf="center">

@@ -22,14 +22,14 @@ feedRouter.use(
 );
 
 feedRouter.get('/total', authenticate, getTotalFeed);
-feedRouter.get('/:profileId', authenticate, getProfileFeed);
-feedRouter.get('/media/:profileId', authenticate, getProfileMedia);
+feedRouter.get('/:profileId', getProfileFeed);
+feedRouter.get('/media/:profileId', getProfileMedia);
 feedRouter.post('/', authenticate, createPost);
-feedRouter.get('/post/:postId', authenticate, getPost);
+feedRouter.get('/post/:postId', getPost);
 feedRouter.delete('/post/:postId', authenticate, deletePost);
 feedRouter.patch('/post/:postId/like', authenticate, togglePostLike);
 feedRouter.post('/comments/:postId', authenticate, createComment);
-feedRouter.get('/comments/:postId', authenticate, getComments);
+feedRouter.get('/comments/:postId', getComments);
 feedRouter.delete('/comments/:commentId', authenticate, deleteComment);
 
 export default feedRouter;

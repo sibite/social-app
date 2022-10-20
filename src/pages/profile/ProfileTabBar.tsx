@@ -1,12 +1,4 @@
-import {
-  Badge,
-  Button,
-  Flex,
-  HStack,
-  Tab,
-  TabList,
-  Tabs,
-} from '@chakra-ui/react';
+import { Badge, Button, Flex, Tab, TabList, Tabs } from '@chakra-ui/react';
 import {
   ChatAltIcon,
   CheckIcon,
@@ -17,6 +9,7 @@ import {
 import React from 'react';
 import { Link, useMatch, useResolvedPath } from 'react-router-dom';
 import HeroIcon from '../../components/chakra-ui/HeroIcon';
+import useIsAuthenticated from '../../hooks/useIsAuthenticated';
 
 interface Props {
   profileId: string;
@@ -50,6 +43,8 @@ const ProfileTabBar: React.FC<Props> = ({
   ];
   let tabIndex = matches.findIndex((obj) => !!obj);
   tabIndex = tabIndex === -1 ? 0 : tabIndex;
+
+  const isAuthenticated = useIsAuthenticated();
 
   const editHandler = (_event: React.MouseEvent) => {
     if (editOn) editOn();
@@ -149,12 +144,16 @@ const ProfileTabBar: React.FC<Props> = ({
         </TabList>
       </Tabs>
       <Flex pb={2} gap={2} flexWrap="wrap">
-        {!isMine && !followed && FollowButtonJSX}
-        {!isMine && followed && UnfollowButtonJSX}
-        {!isMine && ChatButtonJSX}
-        {isMine && !isEditing && EditButtonJSX}
-        {isMine && isEditing && !isUploading && CancelButtonJSX}
-        {isMine && isEditing && SaveButtonJSX}
+        {isAuthenticated && (
+          <>
+            {!isMine && !followed && FollowButtonJSX}
+            {!isMine && followed && UnfollowButtonJSX}
+            {!isMine && ChatButtonJSX}
+            {isMine && !isEditing && EditButtonJSX}
+            {isMine && isEditing && !isUploading && CancelButtonJSX}
+            {isMine && isEditing && SaveButtonJSX}
+          </>
+        )}
       </Flex>
     </Flex>
   );

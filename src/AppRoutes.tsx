@@ -1,4 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
+import useIsAuthenticated from './hooks/useIsAuthenticated';
 import ChatPage from './pages/chat/ChatPage';
 import FeedPage from './pages/feed/FeedPage';
 import LogInPage from './pages/log-in/LogInPage';
@@ -6,11 +7,9 @@ import ProfilePage from './pages/profile/ProfilePage';
 import SearchPage from './pages/search/SearchPage';
 import SignUpPage from './pages/sign-up/SignUpPage';
 import SinglePostPage from './pages/single-post/SinglePostPage';
-import { useAppSelector } from './store/hooks';
 
 const AppRoutes = () => {
-  const authState = useAppSelector((state) => state.auth);
-  const isAuthenticated = authState.token && authState.userId;
+  const isAuthenticated = useIsAuthenticated();
   const defaultPage = isAuthenticated ? '/feed' : '/login';
 
   return (

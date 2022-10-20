@@ -1,12 +1,11 @@
 import { ChakraProvider } from '@chakra-ui/react';
 import AppRoutes from './AppRoutes';
 import MessagesProvider from './components/messages/MessagesProvider';
-import { useAppSelector } from './store/hooks';
+import useIsAuthenticated from './hooks/useIsAuthenticated';
 import theme from './theme';
 
 const App = () => {
-  const authState = useAppSelector((state) => state.auth);
-  const isAuthenticated = authState.token && authState.userId;
+  const isAuthenticated = useIsAuthenticated();
 
   return (
     <ChakraProvider theme={theme}>
