@@ -1,6 +1,7 @@
 import { Center, Spinner, useBoolean, VStack } from '@chakra-ui/react';
 import { useGetAccountDataQuery } from '../../store/account-api';
 import { useAppSelector } from '../../store/hooks';
+import SearchItemSkeleton from '../search/SearchItemSkeleton';
 import Contact from './Contact';
 
 let isFetched;
@@ -17,9 +18,12 @@ const Contacts: React.FC = () => {
 
   if (isFetching)
     return (
-      <Center h="100%">
-        <Spinner />
-      </Center>
+      <VStack boxSize="100%" alignItems="stretch" p={4} spacing={6}>
+        <SearchItemSkeleton />
+        <SearchItemSkeleton />
+        <SearchItemSkeleton />
+        <SearchItemSkeleton />
+      </VStack>
     );
 
   return (

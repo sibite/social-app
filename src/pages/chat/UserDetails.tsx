@@ -32,6 +32,7 @@ const UserDetails: React.FC<Props> = ({ profileId }) => {
         size="xl"
         src={currentData.avatarSrc}
         name={currentData.avatarSrc ? undefined : currentData.fullName}
+        key={currentData.avatarSrc}
       />
       <Heading as="h1" size="md">
         {currentData.fullName}

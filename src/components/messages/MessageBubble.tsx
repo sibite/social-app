@@ -31,7 +31,7 @@ const MessageBubble: React.FC<Props> = ({
   const tooltipPlacement = isDirectionTo ? 'left' : 'right';
   const alignItems = isDirectionTo ? 'flex-end' : 'flex-start';
 
-  const darkBgColor = colored ? 'blue.700' : 'gray.700';
+  const darkBgColor = colored ? 'blue.600' : 'gray.700';
   const lightBgColor = colored ? 'blue.100' : 'gray.200';
 
   const normalBgColor = useColorModeValue(lightBgColor, darkBgColor);

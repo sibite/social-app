@@ -28,6 +28,7 @@ const ContactsHeader: React.FC<Props> = ({
         size="md"
         src={currentData.avatarSrc}
         name={currentData.avatarSrc ? undefined : currentData.fullName}
+        key={currentData.avatarSrc}
       />
       <Heading as="h1" size="md">
         {currentData.fullName}

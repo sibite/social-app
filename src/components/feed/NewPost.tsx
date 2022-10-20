@@ -81,7 +81,7 @@ const NewPost: React.FC = () => {
     '&:hover': {
       boxShadow: useColorModeValue('0px 5px 10px rgba(0,0,0,0.08)', 'none'),
     },
-    transition: 'bos-shadow 300ms',
+    transition: 'box-shadow 300ms',
   };
 
   if (!isExpanded) {

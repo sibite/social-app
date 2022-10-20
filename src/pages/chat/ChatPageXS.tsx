@@ -25,16 +25,12 @@ const ChatPageXS: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { windowHeight } = useWindowDimensions();
 
-  const userDetailsShowHandler = () => {
+  const userDetailsToggleHandler = () => {
     setSearchParams((prev) => {
       if (searchParams.get('details') === '1') prev.delete('details');
       else prev.set('details', '1');
       return prev;
     });
-  };
-
-  const userDetailsHideHandler = () => {
-    setSection('messages');
   };
 
   useEffect(() => {
@@ -88,7 +84,7 @@ const ChatPageXS: React.FC = () => {
                 {id && (
                   <MessagesHeader
                     profileId={id}
-                    onToggleUserDetails={userDetailsShowHandler}
+                    onToggleUserDetails={userDetailsToggleHandler}
                   />
                 )}
               </LayoutBlock>
@@ -103,7 +99,7 @@ const ChatPageXS: React.FC = () => {
             <GridItem>
               <LayoutBlock>
                 <UserDetailsHeader
-                  onToggleUserDetails={userDetailsHideHandler}
+                  onToggleUserDetails={userDetailsToggleHandler}
                 />
               </LayoutBlock>
             </GridItem>

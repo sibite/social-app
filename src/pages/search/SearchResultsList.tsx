@@ -1,4 +1,4 @@
-import { Flex } from '@chakra-ui/react';
+import { Flex, VStack } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
 import { useSearchProfilesQuery } from '../../store/profile-api';
 import SearchItem from './SearchItem';
@@ -14,11 +14,11 @@ const SearchResultsList: React.FC = () => {
 
   if (isFetching)
     return (
-      <>
+      <VStack alignItems="stretch" py={4} spacing={8}>
         <SearchItemSkeleton />
         <SearchItemSkeleton />
         <SearchItemSkeleton />
-      </>
+      </VStack>
     );
 
   return (

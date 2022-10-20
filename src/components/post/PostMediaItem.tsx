@@ -1,5 +1,6 @@
 import { AspectRatio, Box, Image } from '@chakra-ui/react';
 import { useAppDispatch } from '../../store/hooks';
+import ImageFallback from '../misc/ImageFallback';
 
 interface Props {
   mediaId: string;
@@ -24,6 +25,7 @@ const PostMediaItem: React.FC<Props> = ({
     <>
       <Image
         src={src}
+        fallback={<ImageFallback pad />}
         boxSize="100%"
         maxHeight="600px"
         objectFit="contain"
