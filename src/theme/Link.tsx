@@ -1,9 +1,9 @@
 import { StyleConfig } from '@chakra-ui/react';
 
 const Link: StyleConfig = {
-  baseStyle: {
-    color: 'blue.400',
-  },
+  baseStyle: ({ colorMode }) => ({
+    color: colorMode === 'light' ? 'blue.500' : 'blue.300',
+  }),
 };
 
 export default Link;

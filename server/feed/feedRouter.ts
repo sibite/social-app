@@ -1,6 +1,6 @@
 import express from 'express';
 import fileUpload from 'express-fileupload';
-import authenticate from '../auth/authenticate';
+import authenticate, { authenticateSoft } from '../auth/authenticate';
 import { FILE_SIZE_LIMIT } from '../env';
 import createComment from './createComment';
 import getComments from './getComments';
@@ -22,14 +22,14 @@ feedRouter.use(
 );
 
 feedRouter.get('/total', authenticate, getTotalFeed);
-feedRouter.get('/:profileId', getProfileFeed);
-feedRouter.get('/media/:profileId', getProfileMedia);
+feedRouter.get('/:profileId', authenticateSoft, getProfileFeed);
+feedRouter.get('/media/:profileId', authenticateSoft, getProfileMedia);
 feedRouter.post('/', authenticate, createPost);
-feedRouter.get('/post/:postId', getPost);
+feedRouter.get('/post/:postId', authenticateSoft, getPost);
 feedRouter.delete('/post/:postId', authenticate, deletePost);
 feedRouter.patch('/post/:postId/like', authenticate, togglePostLike);
 feedRouter.post('/comments/:postId', authenticate, createComment);
-feedRouter.get('/comments/:postId', getComments);
+feedRouter.get('/comments/:postId', authenticateSoft, getComments);
 feedRouter.delete('/comments/:commentId', authenticate, deleteComment);
 
 export default feedRouter;
