@@ -23,6 +23,8 @@ import { LogInBodyType } from '../../../server/api-types/auth';
 import { authActions } from '../../store/auth';
 import { useAppDispatch } from '../../store/hooks';
 import LogInInputs from './LogInInputs';
+import { feedApi } from '../../store/feed-api';
+import { profileApi } from '../../store/profile-api';
 
 const LogInPage: React.FC = () => {
   const navigate = useNavigate();
@@ -43,6 +45,8 @@ const LogInPage: React.FC = () => {
       const res = await axios.post('/api/auth/log-in', data);
       if (!res.data.user && !res.data.token) throw new Error();
       dispatch(authActions.logIn(res.data));
+      dispatch(feedApi.util.resetApiState());
+      dispatch(profileApi.util.resetApiState());
       navigate('/profile/me');
     } catch (error: any) {
       switch (error.response?.status) {

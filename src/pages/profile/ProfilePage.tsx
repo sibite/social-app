@@ -30,7 +30,7 @@ import {
   useToggleFollowMutation,
 } from '../../store/profile-api';
 import Gallery from '../gallery/Gallery';
-import ErrorPage from '../NotFoundPage';
+import ErrorPage from '../ErrorPage';
 import ProfileAvatar from './ProfileAvatar';
 import ProfileCover from './ProfileCover';
 import ProfileHeading from './ProfileHeading';

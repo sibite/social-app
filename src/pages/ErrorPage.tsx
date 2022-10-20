@@ -1,4 +1,4 @@
-import { Center, Heading, Text, VStack } from '@chakra-ui/react';
+import { Center, Heading, useColorModeValue, VStack } from '@chakra-ui/react';
 import PageContainer from '../components/layout/PageContainer';
 
 interface Props {

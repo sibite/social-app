@@ -6,6 +6,7 @@ import {
   Spinner,
   useColorModeValue,
 } from '@chakra-ui/react';
+import ImageFallback from '../../components/misc/ImageFallback';
 import { useGetPostQuery } from '../../store/feed-api';
 
 interface Props {
@@ -25,13 +26,10 @@ const GalleryItem: React.FC<Props> = ({ mediaId, onOpen }) => {
   return (
     <AspectRatio ratio={1} boxSize="100%" onClick={clickHandler}>
       <Box as="button" borderRadius="lg" bgColor={bgColor} overflow="hidden">
-        {isLoading && (
-          <Center boxSize="100%">
-            <Spinner />
-          </Center>
-        )}
+        {isLoading && <ImageFallback fill />}
         {mediaPost && (
           <Image
+            fallback={<ImageFallback fill />}
             src={mediaPost?.mediaSrc}
             borderRadius="md"
             boxSize="100%"

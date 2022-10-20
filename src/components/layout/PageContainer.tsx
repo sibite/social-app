@@ -1,4 +1,10 @@
-import { Box, BoxProps, Grid, useBreakpointValue } from '@chakra-ui/react';
+import {
+  Box,
+  BoxProps,
+  Grid,
+  useBreakpointValue,
+  useColorModeValue,
+} from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
 import PortalRefContext from '../../store/ref-context';
@@ -22,6 +28,7 @@ const PageContainer: React.FC<BoxProps> = ({ children, ...rest }) => {
     gridTemplate: '100% / 100%',
   };
 
+  const bg = useColorModeValue('white', 'black');
   const isMobile = useBreakpointValue({ base: true, md: false });
 
   return (
@@ -32,6 +39,7 @@ const PageContainer: React.FC<BoxProps> = ({ children, ...rest }) => {
       </FixedContainer>
       <Box
         width="100%"
+        bgColor={bg}
         minHeight={`${windowHeight - navBarHeight}px`}
         marginTop={!isMobile ? `${navBarHeight}px` : ''}
         marginBottom={isMobile ? `${navBarHeight}px` : ''}

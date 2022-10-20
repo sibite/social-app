@@ -1,5 +1,5 @@
-import { Center, Circle, Flex, Spinner, Text, VStack } from '@chakra-ui/react';
-import { useEffect, useRef } from 'react';
+import { Center, Flex, Spinner, Text } from '@chakra-ui/react';
+import { useCallback, useEffect, useRef } from 'react';
 import { ServerToClientMessage } from '../../../server/chat-socket/socket-types';
 import { useAppSelector } from '../../store/hooks';
 import MessagesGroup from './MessagesGroup';
@@ -33,11 +33,19 @@ const MessageList: React.FC<Props> = ({
     }
   };
 
-  useEffect(() => {
+  const checkForScroll = useCallback(() => {
     if (getScrollDiff(listRef.current!) < 10) {
       fetchMoreMessages();
     }
-  }, [messages.length, fetchMoreMessages]);
+  }, [fetchMoreMessages]);
+
+  useEffect(() => {
+    checkForScroll();
+    window.addEventListener('resize', checkForScroll);
+    return () => {
+      window.removeEventListener('resize', checkForScroll);
+    };
+  }, [messages.length, checkForScroll]);
 
   const style = {
     flexDirection: 'column-reverse',
