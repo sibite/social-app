@@ -100,7 +100,7 @@ const LogInPage: React.FC = () => {
         <LogInInputs email={email} password={password} isError={isError} />
         <Text my={0}>
           <span>Don&apos;t have an account? </span>
-          <Link as={RouterLink} to="/sign-up">
+          <Link as={RouterLink} to="/signup">
             Create one
           </Link>
         </Text>

@@ -30,6 +30,7 @@ import {
   useToggleFollowMutation,
 } from '../../store/profile-api';
 import Gallery from '../gallery/Gallery';
+import ErrorPage from '../NotFoundPage';
 import ProfileAvatar from './ProfileAvatar';
 import ProfileCover from './ProfileCover';
 import ProfileHeading from './ProfileHeading';
@@ -78,7 +79,8 @@ const ProfilePage: React.FC<Props> = () => {
   const [uploadCover] = useUploadCoverMutation();
   const [updateDetails] = useUpdateDetailsMutation();
 
-  const { currentData, isFetching, isLoading } = useGetProfileQuery(id);
+  const { currentData, isFetching, isLoading, isError, error } =
+    useGetProfileQuery(id);
   const feedQuery = useGetProfileFeedQuery(id);
   const { refetch: refetchMediaFeed } = useGetProfileMediaQuery(id);
 
@@ -155,6 +157,8 @@ const ProfilePage: React.FC<Props> = () => {
   const bg1 = useColorModeValue('gray.100', 'black');
   const bg2 = useColorModeValue('white', 'gray.900');
   const borderColor = useColorModeValue('gray.200', 'gray.800');
+
+  if (isError) return <ErrorPage status={(error as any)?.status} />;
 
   if ((isLoading || isFetching) && !currentData)
     return (
