@@ -21,7 +21,7 @@ import {
 import { useAppSelector } from '../../store/hooks';
 import HeroIcon from '../chakra-ui/HeroIcon';
 import InteractiveContent from '../misc/InteractiveContent';
-import CommentsSection from './CommentsSection';
+import CommentsSection from './comments/CommentsSection';
 import PostHeader from './PostHeader';
 import PostMediaGroup from './PostMediaGroup';
 import PostMenu from './PostMenu';

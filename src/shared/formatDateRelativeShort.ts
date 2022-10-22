@@ -12,7 +12,7 @@ const formats: DateFormatterFormats = {
   anytime: (date) => date.fromNow(true),
 };
 
-const formatDateRelative = (date: Dayjs): string =>
+const formatDateRelativeShort = (date: Dayjs): string =>
   dateFormatter(date, formats);
 
-export default formatDateRelative;
+export default formatDateRelativeShort;

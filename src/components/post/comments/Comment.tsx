@@ -3,51 +3,31 @@ import {
   Box,
   Flex,
   Heading,
-  IconButton,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
   Text,
   useColorModeValue,
-  useDisclosure,
   VStack,
 } from '@chakra-ui/react';
-import { DotsVerticalIcon, TrashIcon } from '@heroicons/react/outline';
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
-import { useDeleteCommentMutation } from '../../store/feed-api';
-import Card from '../chakra-ui/Card';
-import HeroIcon from '../chakra-ui/HeroIcon';
+import Card from '../../chakra-ui/Card';
 
 interface Props {
-  commentId: string;
-  postId: string;
   profileId?: string;
   avatarSrc?: string;
   fullName: string;
   dateString: string;
-  isDeletable?: boolean;
+  commentMenu?: React.ReactNode;
   children: React.ReactNode;
 }
 
 const Comment: React.FC<Props> = ({
-  commentId,
-  postId,
   profileId,
   avatarSrc,
   fullName,
   dateString,
-  isDeletable = false,
+  commentMenu,
   children,
 }) => {
-  const [deleteComment] = useDeleteCommentMutation();
-  const { onClose, onOpen, isOpen } = useDisclosure();
-
-  const deleteHandler = () => {
-    deleteComment({ postId, commentId });
-  };
-
   const nodeColor = useColorModeValue('gray.100', 'gray.700');
 
   const cardStyle = {
@@ -59,7 +39,6 @@ const Comment: React.FC<Props> = ({
   const style = {
     minWidth: 0,
     '.toolbar': {
-      opacity: isOpen ? 1 : 0,
       transition: 'all 150ms',
     },
     '&:hover .toolbar': {
@@ -100,28 +79,7 @@ const Comment: React.FC<Props> = ({
           </Text>
         </Box>
       </VStack>
-      {isDeletable && (
-        <Box className="toolbar" alignSelf="center" mb={4}>
-          <Menu onOpen={onOpen} onClose={onClose}>
-            <MenuButton
-              as={IconButton}
-              aria-label="Comment menu"
-              icon={<HeroIcon as={DotsVerticalIcon} />}
-              variant="ghost"
-              size="sm"
-            />
-            <MenuList>
-              <MenuItem
-                aria-label="Delete comment"
-                icon={<HeroIcon as={TrashIcon} />}
-                onClick={deleteHandler}
-              >
-                Delete
-              </MenuItem>
-            </MenuList>
-          </Menu>
-        </Box>
-      )}
+      {commentMenu}
     </Flex>
   );
 };
