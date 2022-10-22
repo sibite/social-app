@@ -8,8 +8,8 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { DotsVerticalIcon, TrashIcon } from '@heroicons/react/outline';
-import useMessageSender from '../../hooks/useMessagesSender';
-import HeroIcon from '../chakra-ui/HeroIcon';
+import useMessageSender from '../../../hooks/useMessagesSender';
+import HeroIcon from '../../chakra-ui/HeroIcon';
 import MessageDeleteDialog from './MessageDeleteDialog';
 
 interface Props {

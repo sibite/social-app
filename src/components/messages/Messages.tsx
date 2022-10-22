@@ -1,9 +1,9 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { messagesActionsThunks } from '../../store/messages';
 import MessageInput from './MessageInput';
-import MessageList from './MessageList';
+import MessagingContainer from './MessagingContainer';
 
 interface Props {
   profileId: string;
@@ -28,7 +28,7 @@ const Messages: React.FC<Props> = ({ profileId }) => {
   return (
     <Flex w="full" h="full" direction="column" alignContent="stretch">
       <Box flexGrow="1" position="relative">
-        <MessageList
+        <MessagingContainer
           isLoading={status === 'loading'}
           isComplete={isComplete}
           messages={messagesList}

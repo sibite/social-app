@@ -7,7 +7,7 @@ import {
 import { useParams } from 'react-router-dom';
 import FeedPost from '../../components/feed/FeedPost';
 import PageContainer from '../../components/layout/PageContainer';
-import PhotoViewerWrapper from '../../components/photo-viewer/PhotoViewerWrapper';
+import PhotoViewerWrapper from '../../components/photo-viewer/wrappers/PhotoViewerWrapper';
 
 const SinglePostPage: React.FC = () => {
   const { id } = useParams();

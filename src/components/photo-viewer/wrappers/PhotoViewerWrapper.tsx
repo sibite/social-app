@@ -1,5 +1,8 @@
 import { useSearchParams } from 'react-router-dom';
-import { useGetPostQuery, useGetProfileMediaQuery } from '../../store/feed-api';
+import {
+  useGetPostQuery,
+  useGetProfileMediaQuery,
+} from '../../../store/feed-api';
 import PhotoViewerAPIWrapper from './PhotoViewerAPIWrapper';
 
 const getAdjustedIndex = (arr: any[], index: number) =>

@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef } from 'react';
 import { ServerToClientMessage } from '../../../server/chat-socket/socket-types';
 import { useAppSelector } from '../../store/hooks';
 import { AwaitingMessage } from '../../store/messages';
-import MessagesGroup from './MessagesGroup';
+import MessagesGroup from './group/MessagesGroup';
 import toFancyMessages from './toFancyMessages';
 
 interface Props {
@@ -17,7 +17,7 @@ interface Props {
 const getScrollDiff = (el: Element) =>
   el.scrollHeight - (el.clientHeight - el.scrollTop);
 
-const MessageList: React.FC<Props> = ({
+const MessagingContainer: React.FC<Props> = ({
   messages,
   awaitingMessages = [],
   isLoading,
@@ -82,4 +82,4 @@ const MessageList: React.FC<Props> = ({
   );
 };
 
-export default MessageList;
+export default MessagingContainer;

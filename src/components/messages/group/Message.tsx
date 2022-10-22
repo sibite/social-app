@@ -1,6 +1,6 @@
 import { Box, Flex } from '@chakra-ui/react';
 import React from 'react';
-import InteractiveContent from '../misc/InteractiveContent';
+import InteractiveContent from '../../misc/InteractiveContent';
 import MessageBubble from './MessageBubble';
 import MessageMenu from './MessageMenu';
 

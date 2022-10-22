@@ -8,7 +8,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { useContext } from 'react';
-import PortalRefContext from '../../store/ref-context';
+import PortalRefContext from '../../../store/ref-context';
 
 interface Props {
   colored?: boolean;

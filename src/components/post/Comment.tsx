@@ -1,10 +1,8 @@
-import { StarIcon } from '@chakra-ui/icons';
 import {
   Avatar,
   Box,
   Flex,
   Heading,
-  HStack,
   IconButton,
   Menu,
   MenuButton,

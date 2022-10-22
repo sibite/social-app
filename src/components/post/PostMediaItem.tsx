@@ -1,5 +1,4 @@
 import { AspectRatio, Box, Image } from '@chakra-ui/react';
-import { useAppDispatch } from '../../store/hooks';
 import ImageFallback from '../misc/ImageFallback';
 
 interface Props {

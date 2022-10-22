@@ -12,7 +12,7 @@ import { Navigate, Route, Routes, useParams } from 'react-router-dom';
 import Feed from '../../components/feed/Feed';
 import FollowingTab from './following/FollowingTab';
 import PageContainer from '../../components/layout/PageContainer';
-import PhotoViewerWrapper from '../../components/photo-viewer/PhotoViewerWrapper';
+import PhotoViewerWrapper from '../../components/photo-viewer/wrappers/PhotoViewerWrapper';
 import useMobileModeValue from '../../hooks/useIsMobile';
 import {
   useUpdateDetailsMutation,

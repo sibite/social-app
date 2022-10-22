@@ -1,7 +1,7 @@
 import { Container, useColorModeValue } from '@chakra-ui/react';
 import Feed from '../../components/feed/Feed';
 import PageContainer from '../../components/layout/PageContainer';
-import PhotoViewerWrapper from '../../components/photo-viewer/PhotoViewerWrapper';
+import PhotoViewerWrapper from '../../components/photo-viewer/wrappers/PhotoViewerWrapper';
 import { useGetTotalFeedQuery } from '../../store/feed-api';
 
 interface Props {}
