@@ -3,6 +3,13 @@ import axios from 'axios';
 import type { RootState } from '.';
 import { ServerToClientMessage } from '../../server/chat-socket/socket-types';
 
+export interface AwaitingMessage {
+  ref: string;
+  fromId: string;
+  toId: string;
+  content: string;
+}
+
 interface UserWrapper {
   id: string;
   status: 'error' | 'loading' | 'idle';
@@ -13,6 +20,7 @@ interface UserWrapper {
     ids: string[];
     list: ServerToClientMessage[];
   };
+  awaitingMessages: AwaitingMessage[];
 }
 
 interface MessagesState {
@@ -35,6 +43,7 @@ const createInitialEntity = (userId: string): UserWrapper => ({
     ids: [],
     list: [],
   },
+  awaitingMessages: [],
 });
 
 const initUser = (state: MessagesState, userId: string) => {
@@ -50,17 +59,21 @@ const fetchMoreMessages = createAsyncThunk<
   string
 >('messages/fetchMore', async (userId: string, { getState }) => {
   if (isFetching) return 'canceled';
+
   const state = getState() as RootState;
   const { token } = state.auth;
   const user =
     state.messages.userEntities[userId] ?? createInitialEntity(userId);
+
   if (user.isComplete) return [];
   isFetching = true;
+
   const from = user.messages.list.length;
   const to = from + numOfFetchedInOneReq - 1;
   const request = await axios.get(`/api/messages/${userId}/${from}-${to}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
+
   isFetching = false;
   return request.data;
 });
@@ -70,15 +83,18 @@ const refetchMessages = createAsyncThunk<ServerToClientMessage[], string>(
   async (userId: string, { getState }) => {
     if (isFetching) dumpFetchSession = true;
     isFetching = true;
+
     const state = getState() as RootState;
     const { token } = state.auth;
     const user =
       state.messages.userEntities[userId] ?? createInitialEntity(userId);
     const from = 0;
     const to = user.count - 1;
+
     const request = await axios.get(`/api/messages/${userId}/${from}-${to}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
+
     isFetching = false;
     return request.data;
   }
@@ -97,10 +113,15 @@ export const messagesSlice = createSlice({
     ) {
       const { userId, message } = action.payload;
       initUser(state, userId);
-      const userMessages = state.userEntities[userId].messages;
-      userMessages.entities[message._id] = message;
-      userMessages.ids.push(message._id);
-      userMessages.list.push(message);
+      const { messages, awaitingMessages } = state.userEntities[userId];
+      messages.entities[message._id] = message;
+      messages.ids.push(message._id);
+      messages.list.push(message);
+
+      state.userEntities[userId].awaitingMessages = awaitingMessages.filter(
+        (awMessage) => awMessage.ref !== message.ref 
+      );
+
       state.userEntities[userId].count += 1;
     },
     updateMessage(
@@ -118,6 +139,23 @@ export const messagesSlice = createSlice({
       userMessages.entities[message._id] = message;
       userMessages.list[indexOfMessage] = message;
       return state;
+    },
+    awaitMessage(
+      state,
+      action: {
+        type: string;
+        payload: {
+          ref: string;
+          fromId: string;
+          toId: string;
+          content: string;
+        };
+      }
+    ) {
+      const { ref, toId, fromId, content } = action.payload;
+      initUser(state, toId);
+      const userEntity = state.userEntities[toId];
+      userEntity.awaitingMessages.push({ ref, content, fromId, toId });
     },
     clearAll(state) {
       state.userEntities = {};

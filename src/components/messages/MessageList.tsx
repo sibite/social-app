@@ -2,11 +2,13 @@ import { Center, Flex, Spinner, Text } from '@chakra-ui/react';
 import { useCallback, useEffect, useRef } from 'react';
 import { ServerToClientMessage } from '../../../server/chat-socket/socket-types';
 import { useAppSelector } from '../../store/hooks';
+import { AwaitingMessage } from '../../store/messages';
 import MessagesGroup from './MessagesGroup';
 import toFancyMessages from './toFancyMessages';
 
 interface Props {
   messages: ServerToClientMessage[];
+  awaitingMessages?: AwaitingMessage[];
   isLoading?: boolean;
   isComplete?: boolean;
   fetchMoreMessages: () => any;
@@ -17,12 +19,13 @@ const getScrollDiff = (el: Element) =>
 
 const MessageList: React.FC<Props> = ({
   messages,
+  awaitingMessages = [],
   isLoading,
   isComplete,
   fetchMoreMessages,
 }) => {
   const userId = useAppSelector((state) => state.auth.userId);
-  const fancyMessages = toFancyMessages(messages);
+  const fancyMessages = toFancyMessages(messages, awaitingMessages);
   const listRef = useRef<HTMLDivElement>(null);
 
   const scrollHandler = (event: React.UIEvent) => {
@@ -63,11 +66,7 @@ const MessageList: React.FC<Props> = ({
   return (
     <Flex sx={style} onScroll={scrollHandler} ref={listRef}>
       {fancyMessages.map((group) => (
-        <MessagesGroup
-          key={group.messages[0]._id}
-          group={group}
-          userId={userId}
-        />
+        <MessagesGroup key={group.id} group={group} userId={userId} />
       ))}
       <Center boxSize="100%" pt={5} pb={8}>
         {!isComplete && (

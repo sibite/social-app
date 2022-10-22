@@ -7,15 +7,21 @@ export interface ServerToClientMessage {
   date: number;
   content: string;
   deleted?: boolean;
+  ref?: string;
 }
 
 export interface ServerToClientEvents {
   'new-message': (message: ServerToClientMessage) => void;
+  'confirm-message-sent': (ref: string, toId: string) => void;
   'update-message': (message: ServerToClientMessage) => void;
 }
 
 export interface ClientToServerEvents {
-  'new-message': (message: { toId: string; content: string }) => void;
+  'new-message': (message: {
+    toId: string;
+    content: string;
+    ref: string;
+  }) => void;
   'delete-message': (messageId: string) => void;
 }
 

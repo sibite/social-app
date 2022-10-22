@@ -20,16 +20,31 @@ const MessagesGroup: React.FC<Props> = ({ group, userId }) => {
   const isDirectionTo = direction === 'to';
 
   const MessagesJSX = group.messages.map((message) => {
-    const dateString = formatDateInformative(dayjs(message.date));
+    if ('_id' in message) {
+      const dateString = formatDateInformative(dayjs(message.date));
+
+      return (
+        <Message
+          key={message._id}
+          messageId={message._id}
+          content={message.content}
+          dateString={dateString}
+          isDeleted={message.deleted ?? false}
+          isDirectionTo={isDirectionTo}
+          toId={message.toId}
+        />
+      );
+    }
+    const dateString = 'Sending...';
 
     return (
       <Message
-        key={message._id}
-        messageId={message._id}
+        key={message.ref}
         content={message.content}
         dateString={dateString}
-        isDeleted={message.deleted ?? false}
-        isDirectionTo={isDirectionTo}
+        isDeleted={false}
+        isSending
+        isDirectionTo
         toId={message.toId}
       />
     );

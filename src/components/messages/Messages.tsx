@@ -17,6 +17,7 @@ const Messages: React.FC<Props> = ({ profileId }) => {
   const { status, isComplete } = userEntity ?? {};
 
   const messagesList = userEntity?.messages.list ?? [];
+  const awaitingMessages = userEntity?.awaitingMessages ?? [];
 
   const dispatch = useAppDispatch();
 
@@ -31,6 +32,7 @@ const Messages: React.FC<Props> = ({ profileId }) => {
           isLoading={status === 'loading'}
           isComplete={isComplete}
           messages={messagesList}
+          awaitingMessages={awaitingMessages}
           fetchMoreMessages={fetchMoreMessages}
         />
       </Box>

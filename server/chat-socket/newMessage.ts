@@ -2,13 +2,18 @@ import db from '../database';
 import { numCallback, singleCallback } from '../shared/nedbPromises';
 import {
   AppServerIO,
+  AppSocket,
   ClientToServerEvents,
   ServerToClientMessage,
 } from './socket-types';
 
 const getNewMessageHandler =
-  (io: AppServerIO, userId: string): ClientToServerEvents['new-message'] =>
-  async ({ toId, content }) => {
+  (
+    io: AppServerIO,
+    socket: AppSocket,
+    userId: string
+  ): ClientToServerEvents['new-message'] =>
+  async ({ toId, content, ref }) => {
     const newMessage = {
       fromId: userId,
       toId,
@@ -55,7 +60,7 @@ const getNewMessageHandler =
       } catch (err) {
         console.error('Error when updating contacts');
       }
-      io.in(userId).emit('new-message', newMessageRes);
+      io.in(userId).emit('new-message', { ...newMessageRes, ref });
       if (toId !== userId) io.in(toId).emit('new-message', newMessageRes);
     } catch (err) {
       console.error(err);

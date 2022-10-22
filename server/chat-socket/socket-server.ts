@@ -27,8 +27,8 @@ const createSocketIO = (httpServer: HttpServerType) => {
 
     socket.join(userId);
 
-    socket.on('new-message', getNewMessageHandler(io, userId));
-    socket.on('delete-message', getDeleteMessageHandler(io, userId));
+    socket.on('new-message', getNewMessageHandler(io, socket, userId));
+    socket.on('delete-message', getDeleteMessageHandler(io, socket, userId));
   });
 };
 

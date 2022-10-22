@@ -13,6 +13,7 @@ import PortalRefContext from '../../store/ref-context';
 interface Props {
   colored?: boolean;
   isDeleted?: boolean;
+  isSending?: boolean;
   isDirectionTo?: boolean;
   dateString?: string;
   children: React.ReactNode;
@@ -21,6 +22,7 @@ interface Props {
 const MessageBubble: React.FC<Props> = ({
   colored,
   isDeleted,
+  isSending,
   isDirectionTo,
   dateString,
   children,
@@ -36,7 +38,7 @@ const MessageBubble: React.FC<Props> = ({
 
   const normalBgColor = useColorModeValue(lightBgColor, darkBgColor);
   const deletedBgColor = useColorModeValue('gray.100', 'gray.800');
-  const bgColor = isDeleted ? deletedBgColor : normalBgColor;
+  const bgColor = isDeleted || isSending ? deletedBgColor : normalBgColor;
 
   const bubbleStyle = {
     py: '6px',
@@ -49,6 +51,7 @@ const MessageBubble: React.FC<Props> = ({
   const textStyle = {
     whiteSpace: 'pre-wrap',
     wordBreak: 'break-word',
+    opacity: isDeleted || isSending ? 0.7 : 1,
   };
 
   const isDesktop = useBreakpointValue({ base: false, md: true });
@@ -56,7 +59,7 @@ const MessageBubble: React.FC<Props> = ({
   const ContentJSX = !isDeleted ? (
     <Text sx={textStyle}>{children}</Text>
   ) : (
-    <Text opacity="0.5">Message deleted</Text>
+    <Text sx={textStyle}>Message deleted</Text>
   );
 
   if (isDesktop)

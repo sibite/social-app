@@ -2,12 +2,17 @@ import db from '../database';
 import { numCallback, singleCallback } from '../shared/nedbPromises';
 import {
   AppServerIO,
+  AppSocket,
   ClientToServerEvents,
   ServerToClientMessage,
 } from './socket-types';
 
 const getDeleteMessageHandler =
-  (io: AppServerIO, userId: string): ClientToServerEvents['delete-message'] =>
+  (
+    io: AppServerIO,
+    socket: AppSocket,
+    userId: string
+  ): ClientToServerEvents['delete-message'] =>
   async (messageId) => {
     try {
       await new Promise<number>((r, j) => {

@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { ServerToClientMessage } from '../../../../server/chat-socket/socket-types';
 import useWebSocket from '../../../hooks/useWebSocket';
+import publisher from '../../../shared/publisher';
 import { contactsActions } from '../../../store/contacts';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { messagesActions } from '../../../store/messages';
@@ -17,6 +18,7 @@ const useNewMessageEventHandler = () => {
       const contactId = message.fromId === myId ? message.toId : message.fromId;
       dispatch(messagesActions.addMessage({ userId: contactId, message }));
       dispatch(contactsActions.update({ contactId, message }));
+      publisher.emit('new-message', message);
     };
 
     socket.on('new-message', newMessageHandler);
