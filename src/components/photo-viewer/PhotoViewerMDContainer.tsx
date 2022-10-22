@@ -1,6 +1,7 @@
 import { Box, Center, Flex, Grid, useColorModeValue } from '@chakra-ui/react';
 import React from 'react';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
+import { NAVBAR_TOTAL_HEIGHT } from '../../shared/navBarHeight';
 import Overlay from '../misc/Overlay';
 import CloseButton from './buttons/CloseButton';
 import LeftButton from './buttons/LeftButton';
@@ -29,7 +30,7 @@ const PhotoViewerMDContainer: React.FC<Props> = ({
     '& > *': {
       maxHeight: 'inherit',
     },
-    maxHeight: `${windowHeight - 61}px`,
+    maxHeight: `${windowHeight - NAVBAR_TOTAL_HEIGHT}px`,
     my: 0,
     mx: 14,
     pointerEvents: 'auto',

@@ -2,52 +2,42 @@ import {
   Alert,
   AlertIcon,
   AlertTitle,
-  Box,
-  Button,
-  ButtonGroup,
   Flex,
   Heading,
   IconButton,
-  Text,
   useBoolean,
-  useColorModeValue,
   VStack,
 } from '@chakra-ui/react';
-import {
-  ArrowRightIcon,
-  PhotographIcon,
-  XIcon,
-} from '@heroicons/react/outline';
+import { XIcon } from '@heroicons/react/outline';
 import { useRef, useState } from 'react';
-import { CreatePostType } from '../../../server/api-types/feed';
 import useUploadManager from '../../hooks/useUploadManager';
 import { useCreatePostMutation } from '../../store/feed-api';
 import Card from '../chakra-ui/Card';
 import HeroIcon from '../chakra-ui/HeroIcon';
 import AutoResizedTextArea from '../misc/AutoResizedTextArea';
-import CustomFilePicker from '../misc/CustomFilePicker';
 import Thumbnails from '../post/Thumbnails';
+import NewPostButtons from './NewPostButtons';
+import OpenNewPostButton from './OpenNewPostButton';
 
 const NewPost: React.FC = () => {
   const [isExpanded, setIsExpanded] = useBoolean(false);
   const [description, setDescription] = useState('');
+  const textAreaRef = useRef<any>();
 
   const [createPost, { isLoading, isError }] = useCreatePostMutation();
-
-  const textAreaRef = useRef<any>();
 
   const {
     files,
     isLoading: isLoadingFiles,
-    changeHandler,
+    changeHandler: filesChangeHandler,
     addFiles,
     removeFile,
     clearAll,
   } = useUploadManager();
 
-  const descriptionChangeHandler = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
+  const descriptionChangeHandler: React.ChangeEventHandler<
+    HTMLTextAreaElement
+  > = (event) => {
     setDescription(event.currentTarget.value);
   };
 
@@ -58,38 +48,18 @@ const NewPost: React.FC = () => {
   const submitHandler = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    const queryArg: CreatePostType = {
+    await createPost({
       content: description.trim(),
       media: files.map((wrapper) => wrapper.file),
-    };
-
-    await createPost(queryArg).unwrap();
+    }).unwrap();
 
     setDescription('');
     clearAll();
     setIsExpanded.off();
   };
 
-  const expandButtonStyle = {
-    width: '100%',
-    fontWeight: 'normal',
-    textAlign: 'left',
-    cursor: 'text',
-    borderRadius: 'lg',
-    padding: 4,
-    bgColor: useColorModeValue('white', 'gray.900'),
-    '&:hover': {
-      boxShadow: useColorModeValue('0px 5px 10px rgba(0,0,0,0.08)', 'none'),
-    },
-    transition: 'box-shadow 300ms',
-  };
-
   if (!isExpanded) {
-    return (
-      <Box as="button" sx={expandButtonStyle} onClick={setIsExpanded.on}>
-        <Text opacity={0.7}>Type what is on your mind...</Text>
-      </Box>
-    );
+    return <OpenNewPostButton onClick={setIsExpanded.on} />;
   }
 
   return (
@@ -122,36 +92,12 @@ const NewPost: React.FC = () => {
           onPaste={pasteHandler}
           defaultValue={description}
         />
-        <ButtonGroup alignSelf="flex-end">
-          <CustomFilePicker
-            onChange={changeHandler}
-            multiple
-            accept="image/png, image/jpeg, image/webp, image/gif"
-          >
-            <Button
-              leftIcon={<HeroIcon as={PhotographIcon} inButton />}
-              isLoading={isLoadingFiles}
-              disabled={isLoading || isLoadingFiles}
-              loadingText="Importing photos"
-            >
-              Import photos
-            </Button>
-          </CustomFilePicker>
-          <Button
-            leftIcon={<HeroIcon as={ArrowRightIcon} inButton />}
-            type="submit"
-            colorScheme="twitter"
-            disabled={
-              isLoading ||
-              isLoadingFiles ||
-              description.length + files.length === 0
-            }
-            isLoading={isLoading}
-            loadingText="Posting"
-          >
-            Post
-          </Button>
-        </ButtonGroup>
+        <NewPostButtons
+          isSending={isLoading}
+          isImportingFiles={isLoadingFiles}
+          isPostEmpty={description.length + files.length === 0}
+          filesChangeHandler={filesChangeHandler}
+        />
         {files.length && <Thumbnails files={files} onRemove={removeFile} />}
       </VStack>
     </Card>

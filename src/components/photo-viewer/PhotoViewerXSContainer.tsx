@@ -1,6 +1,7 @@
 import { Box, Flex, LightMode, useColorModeValue } from '@chakra-ui/react';
 import React from 'react';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
+import { NAVBAR_TOTAL_HEIGHT } from '../../shared/navBarHeight';
 import Overlay from '../misc/Overlay';
 import CloseButton from './buttons/CloseButton';
 import LeftButton from './buttons/LeftButton';
@@ -28,7 +29,7 @@ const PhotoViewerXSContainer: React.FC<Props> = ({
   const style = {
     flexDirection: 'column',
     bgColor: useColorModeValue('white', 'gray.800'),
-    height: `${windowHeight - 61}px`,
+    height: `${windowHeight - NAVBAR_TOTAL_HEIGHT}px`,
     width: '100%',
     overflowY: 'auto',
     pointerEvents: 'auto',

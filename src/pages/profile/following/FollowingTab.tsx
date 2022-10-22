@@ -1,13 +1,13 @@
 import { Badge, Heading, SimpleGrid, VStack } from '@chakra-ui/react';
-import ProfileCard from './ProfileCard';
+import FollowingItem from './FollowingItem';
 
 interface Props {
   followed: string[];
 }
 
-const Following: React.FC<Props> = ({ followed }) => {
+const FollowingTab: React.FC<Props> = ({ followed }) => {
   const ProfilesListJSX = followed.map((id) => (
-    <ProfileCard profileId={id} key={id} />
+    <FollowingItem profileId={id} key={id} />
   ));
 
   return (
@@ -24,4 +24,4 @@ const Following: React.FC<Props> = ({ followed }) => {
     </VStack>
   );
 };
-export default Following;
+export default FollowingTab;

@@ -16,6 +16,7 @@ import UserDetails from './UserDetails';
 import Messages from '../../components/messages/Messages';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
 import PageContainer from '../../components/layout/PageContainer';
+import { NAVBAR_TOTAL_HEIGHT } from '../../shared/navBarHeight';
 
 const ChatPageMD: React.FC = () => {
   const { id } = useParams();
@@ -51,7 +52,7 @@ const ChatPageMD: React.FC = () => {
 
   return (
     <PageContainer overflow="hidden">
-      <Grid sx={gridStyle} height={`${windowHeight - 61}px`}>
+      <Grid sx={gridStyle} height={`${windowHeight - NAVBAR_TOTAL_HEIGHT}px`}>
         <GridItem area="contacts-header">
           <LayoutBlock>
             <ContactsHeader />

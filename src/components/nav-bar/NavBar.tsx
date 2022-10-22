@@ -5,13 +5,13 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import { forwardRef } from 'react';
+import { NAVBAR_BORDER_HEIGHT, NAVBAR_HEIGHT } from '../../shared/navBarHeight';
 import NavBarAccount from './NavBarAccount';
 import NavBarButtons from './NavBarButtons';
 import NavBarSearch from './NavBarSearch';
 
 const NavBar = forwardRef<HTMLDivElement>((_props, ref) => {
-  const heightVal = 60;
-  const height = `${heightVal}px`;
+  const height = `${NAVBAR_HEIGHT}px`;
   const borderColor = useColorModeValue('gray.200', 'gray.800');
 
   const isMobile = useBreakpointValue({ base: true, md: false });
@@ -23,9 +23,9 @@ const NavBar = forwardRef<HTMLDivElement>((_props, ref) => {
     zIndex: 1000,
     pointerEvents: 'auto',
     bgColor: useColorModeValue('white', 'black'),
-    borderBottom: !isMobile ? '1px solid' : 'none',
+    borderBottom: !isMobile ? `${NAVBAR_BORDER_HEIGHT}px solid` : 'none',
     borderBottomColor: !isMobile ? borderColor : 'none',
-    borderTop: isMobile ? '1px solid' : 'none',
+    borderTop: isMobile ? `${NAVBAR_BORDER_HEIGHT}px solid` : 'none',
     borderTopColor: isMobile ? borderColor : 'none',
   };
 

@@ -13,6 +13,7 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 import useIsAuthenticated from '../../hooks/useIsAuthenticated';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
 import formatDateRelative from '../../shared/formatDateRelative';
+import { NAVBAR_TOTAL_HEIGHT } from '../../shared/navBarHeight';
 import { useGetAccountDataQuery } from '../../store/account-api';
 import {
   useCreateCommentMutation,
@@ -100,7 +101,11 @@ const CommentsSection: React.FC<Props> = ({ postId, limitHeight }) => {
   return (
     <Flex
       direction="column"
-      maxHeight={limitHeight ? `${windowHeight - 61 - 150}px` : undefined}
+      maxHeight={
+        limitHeight
+          ? `${windowHeight - NAVBAR_TOTAL_HEIGHT - 150}px`
+          : undefined
+      }
       overflowY={limitHeight ? 'auto' : undefined}
     >
       <VStack
