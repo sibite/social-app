@@ -8,6 +8,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { UserCircleIcon } from '@heroicons/react/outline';
+import { current } from '@reduxjs/toolkit';
 import { Link } from 'react-router-dom';
 import HeroIcon from '../../components/chakra-ui/HeroIcon';
 import { useGetProfileQuery } from '../../store/profile-api';
@@ -17,9 +18,9 @@ interface Props {
 }
 
 const UserDetails: React.FC<Props> = ({ profileId }) => {
-  const { currentData } = useGetProfileQuery(profileId);
+  const { currentData, isLoading } = useGetProfileQuery(profileId);
 
-  if (!currentData)
+  if (isLoading)
     return (
       <Center h="100%">
         <Spinner />
@@ -30,21 +31,23 @@ const UserDetails: React.FC<Props> = ({ profileId }) => {
     <VStack boxSize="100%" spacing={6} p={8} overflowY="auto">
       <Avatar
         size="xl"
-        src={currentData.avatarSrc}
-        name={currentData.avatarSrc ? undefined : currentData.fullName}
-        key={currentData.avatarSrc}
+        src={currentData?.avatarSrc}
+        name={currentData?.avatarSrc ? undefined : currentData?.fullName}
+        key={currentData?.avatarSrc}
       />
       <Heading as="h1" size="md">
-        {currentData.fullName}
+        {currentData?.fullName ?? 'User'}
       </Heading>
       <Flex gap={2} flexWrap="wrap" justifyContent="center">
-        <Button
-          as={Link}
-          to={`/profile/${profileId}`}
-          leftIcon={<HeroIcon as={UserCircleIcon} />}
-        >
-          View profile
-        </Button>
+        {currentData && (
+          <Button
+            as={Link}
+            to={`/profile/${profileId}`}
+            leftIcon={<HeroIcon as={UserCircleIcon} />}
+          >
+            View profile
+          </Button>
+        )}
       </Flex>
     </VStack>
   );

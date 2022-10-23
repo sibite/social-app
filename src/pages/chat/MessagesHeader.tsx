@@ -12,7 +12,7 @@ const ContactsHeader: React.FC<Props> = ({
   profileId,
   onToggleUserDetails,
 }) => {
-  const { currentData } = useGetProfileQuery(profileId);
+  const { currentData, isLoading } = useGetProfileQuery(profileId);
 
   const style = {
     w: 'full',
@@ -20,18 +20,18 @@ const ContactsHeader: React.FC<Props> = ({
     px: 3,
   };
 
-  if (!currentData) return null;
+  if (isLoading) return null;
 
   return (
     <Flex alignItems="center" sx={style} gap={4}>
       <Avatar
         size="md"
-        src={currentData.avatarSrc}
-        name={currentData.avatarSrc ? undefined : currentData.fullName}
-        key={currentData.avatarSrc}
+        src={currentData?.avatarSrc}
+        name={currentData?.avatarSrc ? undefined : currentData?.fullName}
+        key={currentData?.avatarSrc}
       />
       <Heading as="h1" size="md">
-        {currentData.fullName}
+        {currentData?.fullName ?? 'User'}
       </Heading>
       <IconButton
         ml="auto"

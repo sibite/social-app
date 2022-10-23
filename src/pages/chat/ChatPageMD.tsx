@@ -43,8 +43,8 @@ const ChatPageMD: React.FC = () => {
   };
 
   const MessagesPlaceholderJSX = (
-    <Center h="100%">
-      <Text opacity="0.5">
+    <Center h="100%" p={4}>
+      <Text opacity="0.5" textAlign="center">
         Select a contact from the sidebar to start chatting
       </Text>
     </Center>

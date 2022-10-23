@@ -17,8 +17,8 @@ const FollowingItem: React.FC<Props> = ({ profileId }) => {
 
   if (!profile)
     profile = {
-      avatarSrc: '',
-      description: 'Account not found',
+      avatarSrc: 'none',
+      fullName: 'User',
       isFollowed: true,
     };
 

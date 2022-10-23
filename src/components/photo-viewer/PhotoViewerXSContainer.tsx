@@ -24,7 +24,7 @@ const PhotoViewerXSContainer: React.FC<Props> = ({
 }) => {
   const { windowHeight } = useWindowDimensions();
 
-  const photoHeight = '300px';
+  const photoHeight = '420px';
 
   const style = {
     flexDirection: 'column',

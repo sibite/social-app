@@ -114,7 +114,7 @@ const Contacts: React.FC<Props> = ({
         flexGrow="1"
       >
         <Heading as="h2" size="sm" sx={headingStyle}>
-          {contact?.fullName}
+          {contact?.fullName ?? 'User'}
         </Heading>
         {lastMessageContent && (
           <Flex

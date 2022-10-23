@@ -12,11 +12,12 @@ import HeroIcon from '../chakra-ui/HeroIcon';
 
 interface Props {
   files: FileWrapper[];
+  disabled?: boolean;
   onRemove: (id: number) => any;
 }
 
-const Thumbnails: React.FC<Props> = ({ files, onRemove }) => (
-  <SimpleGrid columns={[3, 4, 5]} width="100%" spacing={2}>
+const Thumbnails: React.FC<Props> = ({ files, disabled, onRemove }) => (
+  <SimpleGrid columns={[3, 4, 5]} width="100%" spacing={[4, 2]}>
     {files.map(({ dataUrl, id }) => (
       <Box
         position="relative"
@@ -35,17 +36,19 @@ const Thumbnails: React.FC<Props> = ({ files, onRemove }) => (
           key={id}
           borderRadius="md"
         />
-        <Center boxSize="100%" position="absolute" top="0">
-          <LightMode>
-            <IconButton
-              colorScheme="translucent"
-              className="remove-button"
-              aria-label="Remove photo"
-              icon={<HeroIcon as={XIcon} />}
-              onClick={() => onRemove(id)}
-            />
-          </LightMode>
-        </Center>
+        {!disabled && (
+          <Center boxSize="100%" position="absolute" top="0">
+            <LightMode>
+              <IconButton
+                colorScheme="translucent"
+                className="remove-button"
+                aria-label="Remove photo"
+                icon={<HeroIcon as={XIcon} />}
+                onClick={() => onRemove(id)}
+              />
+            </LightMode>
+          </Center>
+        )}
       </Box>
     ))}
   </SimpleGrid>

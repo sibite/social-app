@@ -119,7 +119,7 @@ export const messagesSlice = createSlice({
       messages.list.push(message);
 
       state.userEntities[userId].awaitingMessages = awaitingMessages.filter(
-        (awMessage) => awMessage.ref !== message.ref 
+        (awMessage) => awMessage.ref !== message.ref
       );
 
       state.userEntities[userId].count += 1;
@@ -178,7 +178,7 @@ export const messagesSlice = createSlice({
       const user = state.userEntities[action.meta.arg];
       user.status = 'idle';
       user.count += action.payload.length;
-      user.isComplete = action.payload.length === 0;
+      user.isComplete = action.payload.length < numOfFetchedInOneReq;
       user.messages.list = action.payload.concat(user.messages.list);
       user.messages.ids = action.payload
         .map((message) => message._id)

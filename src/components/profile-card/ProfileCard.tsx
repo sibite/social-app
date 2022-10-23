@@ -9,7 +9,7 @@ type Props = {
 
 const ProfileCard: React.FC<Props> = ({ fullName, description, avatarSrc }) => (
   <Card variant="clickable" px={4} py={4} as="button" width="100%">
-    <Flex align="flex-start" gap={2}>
+    <Flex align="center" gap={2}>
       <Avatar name={avatarSrc ? undefined : fullName} src={avatarSrc} />
       <VStack
         align="flex-start"
