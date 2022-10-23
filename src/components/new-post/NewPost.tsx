@@ -15,7 +15,7 @@ import { useCreatePostMutation } from '../../store/feed-api';
 import Card from '../chakra-ui/Card';
 import HeroIcon from '../chakra-ui/HeroIcon';
 import AutoResizedTextArea from '../misc/AutoResizedTextArea';
-import Thumbnails from './Thumbnails';
+import NewPostThumbnails from './NewPostThumbnails';
 import NewPostButtons from './NewPostButtons';
 import OpenNewPostButton from './OpenNewPostButton';
 
@@ -99,7 +99,7 @@ const NewPost: React.FC = () => {
           filesChangeHandler={filesChangeHandler}
         />
         {files.length && (
-          <Thumbnails
+          <NewPostThumbnails
             files={files}
             onRemove={removeFile}
             disabled={isLoading || isLoadingFiles}

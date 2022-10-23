@@ -1,6 +1,6 @@
 import { Container, VStack } from '@chakra-ui/react';
 import FeedPost from './FeedPost';
-import NewPost from './NewPost';
+import NewPost from '../new-post/NewPost';
 import PostSkeleton from './PostSkeleton';
 
 interface Props {

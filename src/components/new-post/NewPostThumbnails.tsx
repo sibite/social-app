@@ -16,7 +16,7 @@ interface Props {
   onRemove: (id: number) => any;
 }
 
-const Thumbnails: React.FC<Props> = ({ files, disabled, onRemove }) => (
+const NewPostThumbnails: React.FC<Props> = ({ files, disabled, onRemove }) => (
   <SimpleGrid columns={[3, 4, 5]} width="100%" spacing={[4, 2]}>
     {files.map(({ dataUrl, id }) => (
       <Box
@@ -53,4 +53,4 @@ const Thumbnails: React.FC<Props> = ({ files, disabled, onRemove }) => (
     ))}
   </SimpleGrid>
 );
-export default Thumbnails;
+export default NewPostThumbnails;
