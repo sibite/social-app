@@ -3,7 +3,7 @@ import useWebSocket from '../../hooks/useWebSocket';
 import { useGetAccountDataQuery } from '../../store/account-api';
 import { contactsActions } from '../../store/contacts';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { messagesActionsThunks } from '../../store/messages';
+import { messagesActionsThunks } from '../../store/messages/messages';
 import useNewMessageEventHandler from './event-handlers/useNewMessageEventHandler';
 import useUpdateMessageEventHandler from './event-handlers/useUpdateMessageEventHandler';
 
@@ -11,6 +11,7 @@ const MessagesProvider: React.FC = () => {
   const socket = useWebSocket();
   const myId = useAppSelector((state) => state.auth.userId);
   const userEntities = useAppSelector((state) => state.messages.userEntities);
+  const profileIds = Object.keys(userEntities);
 
   useNewMessageEventHandler();
   useUpdateMessageEventHandler();
@@ -20,7 +21,7 @@ const MessagesProvider: React.FC = () => {
 
   useEffect(() => {
     const connectHandler = () => {
-      Object.keys(userEntities).forEach((id) => {
+      profileIds.forEach((id) => {
         dispatch(messagesActionsThunks.refetchMessages(id));
       });
     };
@@ -30,7 +31,7 @@ const MessagesProvider: React.FC = () => {
       socket.off('connect', connectHandler);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch]);
+  }, [dispatch, profileIds]);
 
   useEffect(() => {
     const fetchedContacts = data?.contacts ?? {};

@@ -18,7 +18,7 @@ import { authActions } from '../../store/auth';
 import { contactsActions } from '../../store/contacts';
 import { feedApi } from '../../store/feed-api';
 import { useAppDispatch } from '../../store/hooks';
-import { messagesActions } from '../../store/messages';
+import { messagesActions } from '../../store/messages/messages';
 import { profileApi } from '../../store/profile-api';
 import HeroIcon from '../chakra-ui/HeroIcon';
 

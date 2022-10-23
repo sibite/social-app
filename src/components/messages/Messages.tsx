@@ -1,7 +1,7 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
 import { useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { messagesActionsThunks } from '../../store/messages';
+import { messagesActionsThunks } from '../../store/messages/messages';
 import MessageInput from './MessageInput';
 import MessagingContainer from './MessagingContainer';
 

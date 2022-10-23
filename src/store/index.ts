@@ -4,7 +4,7 @@ import photoViewerReducer from './photo-viewer';
 import { profileApi } from './profile-api';
 import { accountApi } from './account-api';
 import { feedApi } from './feed-api';
-import messagesReducer from './messages';
+import messagesReducer from './messages/messages';
 import contactsReducer from './contacts';
 
 const store = configureStore({

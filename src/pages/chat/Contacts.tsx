@@ -1,10 +1,8 @@
-import { Center, Spinner, useBoolean, VStack } from '@chakra-ui/react';
+import { VStack } from '@chakra-ui/react';
+import ProfileCardSkeleton from '../../components/profile-card/ProfileCardSkeleton';
 import { useGetAccountDataQuery } from '../../store/account-api';
 import { useAppSelector } from '../../store/hooks';
-import ProfileCardSkeleton from '../../components/profile-card/ProfileCardSkeleton';
 import Contact from './Contact';
-
-let isFetched;
 
 const Contacts: React.FC = () => {
   const contacts = useAppSelector((state) => state.contacts.contacts);

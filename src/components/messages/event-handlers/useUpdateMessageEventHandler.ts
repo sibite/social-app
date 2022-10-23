@@ -3,7 +3,7 @@ import { ServerToClientMessage } from '../../../../server/chat-socket/socket-typ
 import useWebSocket from '../../../hooks/useWebSocket';
 import { contactsActions } from '../../../store/contacts';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { messagesActions } from '../../../store/messages';
+import { messagesActions } from '../../../store/messages/messages';
 
 const useUpdateMessageHandler = () => {
   const socket = useWebSocket();

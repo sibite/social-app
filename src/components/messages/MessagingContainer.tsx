@@ -2,7 +2,7 @@ import { Center, Flex, Spinner, Text } from '@chakra-ui/react';
 import { useCallback, useEffect, useRef } from 'react';
 import { ServerToClientMessage } from '../../../server/chat-socket/socket-types';
 import { useAppSelector } from '../../store/hooks';
-import { AwaitingMessage } from '../../store/messages';
+import { AwaitingMessage } from '../../store/messages/messages';
 import MessagesGroup from './group/MessagesGroup';
 import toFancyMessages from './toFancyMessages';
 

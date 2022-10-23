@@ -4,7 +4,7 @@ import useWebSocket from '../../../hooks/useWebSocket';
 import publisher from '../../../shared/publisher';
 import { contactsActions } from '../../../store/contacts';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { messagesActions } from '../../../store/messages';
+import { messagesActions } from '../../../store/messages/messages';
 
 const useNewMessageEventHandler = () => {
   const socket = useWebSocket();

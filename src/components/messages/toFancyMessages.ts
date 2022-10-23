@@ -1,5 +1,5 @@
 import { ServerToClientMessage } from '../../../server/chat-socket/socket-types';
-import { AwaitingMessage } from '../../store/messages';
+import { AwaitingMessage } from '../../store/messages/messages';
 
 export interface FancyMessagesGroup {
   date?: number;

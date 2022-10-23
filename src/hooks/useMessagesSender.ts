@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import publisher from '../shared/publisher';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { messagesActions } from '../store/messages';
+import { messagesActions } from '../store/messages/messages';
 import useWebSocket from './useWebSocket';
 
 const clientRef = Math.floor(Math.random() * 10e10)
