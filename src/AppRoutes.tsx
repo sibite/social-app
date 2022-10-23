@@ -8,9 +8,11 @@ import ProfilePage from './pages/profile/ProfilePage';
 import SearchPage from './pages/search/SearchPage';
 import SignUpPage from './pages/sign-up/SignUpPage';
 import SinglePostPage from './pages/single-post/SinglePostPage';
+import { useAppSelector } from './store/hooks';
 
 const AppRoutes = () => {
   const isAuthenticated = useIsAuthenticated();
+  const myId = useAppSelector((state) => state.auth.userId)!;
 
   return (
     <Routes>
@@ -19,11 +21,11 @@ const AppRoutes = () => {
       <Route path="/not-found" element={<ErrorPage status={404} />} />
       {isAuthenticated && (
         <>
-          <Route path="*" element={<Navigate to="/not-found" replace />} />
+          <Route path="*" element={<Navigate to="/feed" replace />} />
           <Route path="/search/:searchQuery" element={<SearchPage />} />
           <Route path="/messages/:id" element={<ChatPage />} />
           <Route path="/messages" element={<ChatPage />} />
-          <Route path="/profile" element={<Navigate to="me" />} />
+          <Route path="/profile" element={<Navigate to={myId} />} />
           <Route path="/feed/*" element={<FeedPage />} />
           <Route path="/signup" element={<Navigate to="/profile" />} />
           <Route path="/login" element={<Navigate to="/profile" />} />

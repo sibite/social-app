@@ -132,24 +132,24 @@ const Post: React.FC<Props> = ({
       </VStack>
       {media.length !== 0 && <PostMediaGroup postId={postId} media={media} />}
       <Flex justifyContent="space-evenly">
-        {isAuthenticated && (
-          <Button
-            variant="ghost"
-            flexGrow={1}
-            colorScheme={isLiked ? 'red' : 'gray'}
-            onClick={likeHandler}
-            leftIcon={<HeroIcon as={isLiked ? HeartIconFilled : HeartIcon} />}
-            rightIcon={
-              likedBy.length ? (
-                <Badge variant="subtle" colorScheme="blue">
-                  {likedBy.length}
-                </Badge>
-              ) : undefined
-            }
-          >
-            {isButtonTextShown && 'Like'}
-          </Button>
-        )}
+        <Button
+          variant="ghost"
+          flexGrow={1}
+          colorScheme={isLiked ? 'red' : 'gray'}
+          onClick={likeHandler}
+          disabled={!isAuthenticated}
+          leftIcon={<HeroIcon as={isLiked ? HeartIconFilled : HeartIcon} />}
+          rightIcon={
+            likedBy.length ? (
+              <Badge variant="subtle" colorScheme="blue">
+                {likedBy.length}
+              </Badge>
+            ) : undefined
+          }
+        >
+          {isButtonTextShown && 'Like'}
+        </Button>
+
         {!alwaysShowComments && (
           <Button
             variant="ghost"
