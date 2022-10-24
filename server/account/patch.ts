@@ -12,6 +12,8 @@ const patchableFields: (keyof UserDBType)[] = [
   'lastName',
 ];
 
+const softPatchableFields: (keyof UserDBType)[] = ['description'];
+
 const patch: RequestHandler = async (req, res) => {
   const updatedFields: Partial<UserDBType> = {};
 
@@ -22,9 +24,9 @@ const patch: RequestHandler = async (req, res) => {
       }
     );
     const actualPasswordHash = user.passwordHash;
-    const passwordHash = getPasswordHash(req.body.password, user.salt);
+    const passwordHash = getPasswordHash(req.body.password ?? '', user.salt);
 
-    if (actualPasswordHash !== passwordHash) return res.status(403).send();
+    const isAuthorized = actualPasswordHash === passwordHash;
 
     if (req.body.newPassword)
       updatedFields.passwordHash = getPasswordHash(
@@ -38,6 +40,12 @@ const patch: RequestHandler = async (req, res) => {
         updatedFields[fieldKey] = req.body[fieldKey];
       });
 
+    const isOnlySoft = (
+      Object.keys(updatedFields) as (keyof UserDBType)[]
+    ).every((field) => softPatchableFields.indexOf(field) !== -1);
+
+    if (!isAuthorized && !isOnlySoft) return res.status(403).send();
+
     await new Promise<number>((r, j) => {
       db.users.update(
         { _id: req.userId },
@@ -49,6 +57,7 @@ const patch: RequestHandler = async (req, res) => {
 
     res.status(200).send();
   } catch (err) {
+    console.log(err);
     res.status(typeof err === 'number' ? err : 500).send();
   }
 };
