@@ -1,22 +1,20 @@
 import {
   Center,
-  Flex,
   Grid,
-  GridItem,
   Text,
   useBoolean,
   useColorModeValue,
 } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
-import ContactsHeader from './ContactsHeader';
+import PageContainer from '../../components/layout/PageContainer';
+import Messages from '../../components/messages/Messages';
+import useWindowDimensions from '../../hooks/useWindowDimensions';
+import { NAVBAR_TOTAL_HEIGHT } from '../../shared/navBarHeight';
 import Contacts from './Contacts';
+import ContactsHeader from './ContactsHeader';
 import LayoutBlock from './LayoutBlock';
 import MessagesHeader from './MessagesHeader';
 import UserDetails from './UserDetails';
-import Messages from '../../components/messages/Messages';
-import useWindowDimensions from '../../hooks/useWindowDimensions';
-import PageContainer from '../../components/layout/PageContainer';
-import { NAVBAR_TOTAL_HEIGHT } from '../../shared/navBarHeight';
 
 const ChatPageMD: React.FC = () => {
   const { id } = useParams();
@@ -53,35 +51,27 @@ const ChatPageMD: React.FC = () => {
   return (
     <PageContainer overflow="hidden">
       <Grid sx={gridStyle} height={`${windowHeight - NAVBAR_TOTAL_HEIGHT}px`}>
-        <GridItem area="contacts-header">
-          <LayoutBlock>
-            <ContactsHeader />
-          </LayoutBlock>
-        </GridItem>
-        <GridItem area="contacts">
-          <LayoutBlock>
-            <Contacts />
-          </LayoutBlock>
-        </GridItem>
-        <GridItem area="messages-header">
-          <LayoutBlock>
-            {id && (
-              <MessagesHeader
-                profileId={id}
-                onToggleUserDetails={setShowUserDetails.toggle}
-              />
-            )}
-          </LayoutBlock>
-        </GridItem>
-        <GridItem area="messages">
-          <LayoutBlock>
-            {id ? <Messages profileId={id} /> : MessagesPlaceholderJSX}
-          </LayoutBlock>
-        </GridItem>
+        <LayoutBlock gridArea="contacts-header">
+          <ContactsHeader />
+        </LayoutBlock>
+        <LayoutBlock gridArea="contacts">
+          <Contacts />
+        </LayoutBlock>
+        <LayoutBlock gridArea="messages-header">
+          {id && (
+            <MessagesHeader
+              profileId={id}
+              onToggleUserDetails={setShowUserDetails.toggle}
+            />
+          )}
+        </LayoutBlock>
+        <LayoutBlock gridArea="messages">
+          {id ? <Messages profileId={id} /> : MessagesPlaceholderJSX}
+        </LayoutBlock>
         {showUserDetails && (
-          <GridItem area="user-details">
-            <LayoutBlock>{id && <UserDetails profileId={id} />}</LayoutBlock>
-          </GridItem>
+          <LayoutBlock gridArea="user-details">
+            {id && <UserDetails profileId={id} />}
+          </LayoutBlock>
         )}
       </Grid>
     </PageContainer>

@@ -46,6 +46,7 @@ const MessageBubble: React.FC<Props> = ({
     borderRadius: 8,
     marginInlineStart: 0,
     bgColor,
+    maxWidth: '70ch',
   };
 
   const textStyle = {

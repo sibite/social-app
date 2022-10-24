@@ -1,10 +1,11 @@
-import { Box, useColorModeValue } from '@chakra-ui/react';
+import { Box, GridItem, useColorModeValue } from '@chakra-ui/react';
 
 interface Props {
+  gridArea?: string;
   children?: React.ReactNode;
 }
 
-const LayoutBlock: React.FC<Props> = ({ children }) => {
+const LayoutBlock: React.FC<Props> = ({ children, gridArea }) => {
   const style = {
     bg: useColorModeValue('white', 'black'),
     w: '100%',
@@ -12,7 +13,11 @@ const LayoutBlock: React.FC<Props> = ({ children }) => {
     overflow: 'hidden',
   };
 
-  return <Box sx={style}>{children}</Box>;
+  return (
+    <GridItem area={gridArea}>
+      <Box sx={style}>{children}</Box>;
+    </GridItem>
+  );
 };
 
 export default LayoutBlock;
