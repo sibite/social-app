@@ -4,9 +4,10 @@ import {
   FormLabel,
   GridItem,
   Input,
-  Select,
   SimpleGrid,
 } from '@chakra-ui/react';
+import AppDateFormControl from '../../components/misc/AppDateFormControl';
+import AppFormControl from '../../components/misc/AppFormControl';
 import useDateInput from '../../hooks/useDateInput';
 import useInputControl from '../../hooks/useInputControl';
 
@@ -32,31 +33,21 @@ const SignUpForm: React.FC<Props> = ({
   repeatPassword,
 }) => {
   const FirstNameJSX = (
-    <FormControl isInvalid={firstName.showInvalidity}>
-      <FormLabel>First name</FormLabel>
-      <Input
-        type="text"
-        placeholder="Joseph"
-        value={firstName.value}
-        onChange={firstName.changeHandler}
-        onBlur={firstName.touchHandler}
-      />
-      <FormErrorMessage>{firstName.errorMessage}</FormErrorMessage>
-    </FormControl>
+    <AppFormControl
+      inputControl={firstName}
+      label="First name"
+      placeholder="Joseph"
+      isRequired
+    />
   );
 
   const LastNameJSX = (
-    <FormControl isInvalid={lastName.showInvalidity}>
-      <FormLabel>Last name</FormLabel>
-      <Input
-        type="text"
-        placeholder="Murphy"
-        value={lastName.value}
-        onChange={lastName.changeHandler}
-        onBlur={lastName.touchHandler}
-      />
-      <FormErrorMessage>{lastName.errorMessage}</FormErrorMessage>
-    </FormControl>
+    <AppFormControl
+      inputControl={lastName}
+      label="Last name"
+      placeholder="Murphy"
+      isRequired
+    />
   );
 
   const EmailJSX = (
@@ -76,80 +67,30 @@ const SignUpForm: React.FC<Props> = ({
   );
 
   const DateOfBirthJSX = (
-    <FormControl isInvalid={birthDate.showInvalidity}>
-      <FormLabel>Date of birth</FormLabel>
-      <SimpleGrid columns={5} spacing={5} minChildWidth="60px">
-        <GridItem colSpan={1}>
-          <Select
-            id="day"
-            placeholder="DD"
-            onBlur={birthDate.day.touchHandler}
-            onChange={birthDate.day.changeHandler}
-          >
-            {birthDate.day.options.map(([value, label]) => (
-              <option value={value} key={value}>
-                {label}
-              </option>
-            ))}
-          </Select>
-        </GridItem>
-        <GridItem colSpan={2}>
-          <Select
-            id="month"
-            placeholder="MMMM"
-            onBlur={birthDate.month.touchHandler}
-            onChange={birthDate.month.changeHandler}
-          >
-            {birthDate.month.options.map(([value, label]) => (
-              <option value={value} key={value}>
-                {label}
-              </option>
-            ))}
-          </Select>
-        </GridItem>
-        <GridItem colSpan={2}>
-          <Select
-            id="year"
-            placeholder="YYYY"
-            onBlur={birthDate.year.touchHandler}
-            onChange={birthDate.year.changeHandler}
-          >
-            {birthDate.year.options.map(([value, label]) => (
-              <option value={value} key={value}>
-                {label}
-              </option>
-            ))}
-          </Select>
-        </GridItem>
-      </SimpleGrid>
-      <FormErrorMessage>{birthDate.errorMessage}</FormErrorMessage>
-    </FormControl>
+    <AppDateFormControl
+      dateControl={birthDate}
+      label="Date of birth"
+      useDefaultValue={false}
+      isRequired
+    />
   );
 
   const PasswordJSX = (
-    <FormControl isInvalid={password.showInvalidity}>
-      <FormLabel>Password</FormLabel>
-      <Input
-        type="password"
-        value={password.value}
-        onChange={password.changeHandler}
-        onBlur={password.touchHandler}
-      />
-      <FormErrorMessage>{password.errorMessage}</FormErrorMessage>
-    </FormControl>
+    <AppFormControl
+      inputControl={password}
+      type="password"
+      label="Password"
+      isRequired
+    />
   );
 
   const RepeatPasswordJSX = (
-    <FormControl isInvalid={repeatPassword.showInvalidity}>
-      <FormLabel>Repeat password</FormLabel>
-      <Input
-        type="password"
-        value={repeatPassword.value}
-        onChange={repeatPassword.changeHandler}
-        onBlur={repeatPassword.touchHandler}
-      />
-      <FormErrorMessage>{repeatPassword.errorMessage}</FormErrorMessage>
-    </FormControl>
+    <AppFormControl
+      inputControl={repeatPassword}
+      type="password"
+      label="Repeat password"
+      isRequired
+    />
   );
 
   return (

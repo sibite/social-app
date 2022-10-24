@@ -12,21 +12,23 @@ interface Props {
   dateControl: ReturnType<typeof useDateInput>;
   label: string;
   isRequired?: React.ComponentProps<typeof FormControl>['isRequired'];
+  useDefaultValue?: boolean;
 }
 
 const AppDateFormControl: React.FC<Props> = ({
   dateControl,
   label,
   isRequired,
+  useDefaultValue = true,
 }) => (
   <FormControl isInvalid={dateControl.showInvalidity} isRequired={isRequired}>
     <FormLabel>{label}</FormLabel>
-    <SimpleGrid columns={5} spacing={5} minChildWidth="70px">
-      <GridItem colSpan={1}>
+    <SimpleGrid columns={11} spacing={5} minChildWidth="14px">
+      <GridItem colSpan={3}>
         <Select
           id="day"
           placeholder="DD"
-          defaultValue={dateControl.day.value}
+          defaultValue={useDefaultValue ? dateControl.day.value : undefined}
           onBlur={dateControl.day.touchHandler}
           onChange={dateControl.day.changeHandler}
         >
@@ -37,11 +39,11 @@ const AppDateFormControl: React.FC<Props> = ({
           ))}
         </Select>
       </GridItem>
-      <GridItem colSpan={2}>
+      <GridItem colSpan={4}>
         <Select
           id="month"
           placeholder="MMMM"
-          defaultValue={dateControl.month.value}
+          defaultValue={useDefaultValue ? dateControl.month.value : undefined}
           onBlur={dateControl.month.touchHandler}
           onChange={dateControl.month.changeHandler}
         >
@@ -52,11 +54,11 @@ const AppDateFormControl: React.FC<Props> = ({
           ))}
         </Select>
       </GridItem>
-      <GridItem colSpan={2}>
+      <GridItem colSpan={4}>
         <Select
           id="year"
           placeholder="YYYY"
-          defaultValue={dateControl.year.value}
+          defaultValue={useDefaultValue ? dateControl.year.value : undefined}
           onBlur={dateControl.year.touchHandler}
           onChange={dateControl.year.changeHandler}
         >
