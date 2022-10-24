@@ -7,9 +7,7 @@ import ThemeToggle from './ThemeToggle';
 interface Props {}
 
 const NavBarAccount: React.FC<Props> = () => {
-  const { data } = useGetAccountDataQuery();
-
-  const user = data;
+  const { data: user } = useGetAccountDataQuery();
 
   return (
     <Flex direction="row-reverse" alignItems="center" pr={4} gap={4}>

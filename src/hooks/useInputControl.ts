@@ -17,6 +17,10 @@ function useInputControl({
   const touchHandler = () => setIsTouched(true);
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) =>
     setValue(event.currentTarget.value);
+  const reset = () => {
+    setValue(initialValue);
+    setIsTouched(false);
+  };
 
   const isInvalid = !validator(value);
   const showInvalidity = isInvalid && isTouched;
@@ -29,6 +33,7 @@ function useInputControl({
     value,
     touchHandler,
     changeHandler,
+    reset,
   };
 }
 

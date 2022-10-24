@@ -6,6 +6,7 @@ import FeedPage from './pages/feed/FeedPage';
 import LogInPage from './pages/log-in/LogInPage';
 import ProfilePage from './pages/profile/ProfilePage';
 import SearchPage from './pages/search/SearchPage';
+import SettingsPage from './pages/settings/SettingsPage';
 import SignUpPage from './pages/sign-up/SignUpPage';
 import SinglePostPage from './pages/single-post/SinglePostPage';
 import { useAppSelector } from './store/hooks';
@@ -19,6 +20,7 @@ const AppRoutes = () => {
       <Route path="/profile/:id/*" element={<ProfilePage />} />
       <Route path="/post/:id" element={<SinglePostPage />} />
       <Route path="/not-found" element={<ErrorPage status={404} />} />
+      <Route path="/feed/*" element={<FeedPage />} />
       {isAuthenticated && (
         <>
           <Route path="*" element={<Navigate to="/feed" replace />} />
@@ -26,7 +28,7 @@ const AppRoutes = () => {
           <Route path="/messages/:id" element={<ChatPage />} />
           <Route path="/messages" element={<ChatPage />} />
           <Route path="/profile" element={<Navigate to={myId} />} />
-          <Route path="/feed/*" element={<FeedPage />} />
+          <Route path="/settings" element={<SettingsPage />} />
           <Route path="/signup" element={<Navigate to="/profile" />} />
           <Route path="/login" element={<Navigate to="/profile" />} />
         </>

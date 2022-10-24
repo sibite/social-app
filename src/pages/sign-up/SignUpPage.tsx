@@ -24,7 +24,7 @@ import {
   passwordOptions,
   repeatPasswordOptions,
 } from './form-controls';
-import SignUpInputs from './SignUpInputs';
+import SignUpForm from './SignUpForm';
 
 const SignUpPage: React.FC = () => {
   const navigate = useNavigate();
@@ -108,7 +108,7 @@ const SignUpPage: React.FC = () => {
             <AlertTitle>Internal server error</AlertTitle>
           </Alert>
         )}
-        <SignUpInputs
+        <SignUpForm
           firstName={firstName}
           lastName={lastName}
           email={email}

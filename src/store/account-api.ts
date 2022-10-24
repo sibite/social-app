@@ -2,6 +2,17 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { UserType } from '../../server/api-types/auth';
 import prepareAuthHeader from './prepare-auth-header';
 
+interface UpdateArgs
+  extends Partial<
+    Pick<
+      UserType,
+      'name' | 'fullName' | 'lastName' | 'birthDate' | 'description'
+    >
+  > {
+  password?: string;
+  newPassword?: string;
+}
+
 export const accountApi = createApi({
   reducerPath: 'accountApi',
   baseQuery: fetchBaseQuery({
@@ -39,7 +50,7 @@ export const accountApi = createApi({
       },
       invalidatesTags: ['Account'],
     }),
-    updateDetails: builder.mutation<any, Partial<UserType>>({
+    updateDetails: builder.mutation<any, UpdateArgs>({
       query: (updatedData) => ({
         url: '',
         method: 'PATCH',

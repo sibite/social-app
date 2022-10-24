@@ -22,7 +22,7 @@ interface Props {
   emailUsed: boolean;
 }
 
-const SignUpInputs: React.FC<Props> = ({
+const SignUpForm: React.FC<Props> = ({
   firstName,
   lastName,
   email,
@@ -78,7 +78,7 @@ const SignUpInputs: React.FC<Props> = ({
   const DateOfBirthJSX = (
     <FormControl isInvalid={birthDate.showInvalidity}>
       <FormLabel>Date of birth</FormLabel>
-      <SimpleGrid columns={4} spacing={5}>
+      <SimpleGrid columns={5} spacing={5} minChildWidth="60px">
         <GridItem colSpan={1}>
           <Select
             id="day"
@@ -107,7 +107,7 @@ const SignUpInputs: React.FC<Props> = ({
             ))}
           </Select>
         </GridItem>
-        <GridItem colSpan={1}>
+        <GridItem colSpan={2}>
           <Select
             id="year"
             placeholder="YYYY"
@@ -163,4 +163,4 @@ const SignUpInputs: React.FC<Props> = ({
     </SimpleGrid>
   );
 };
-export default SignUpInputs;
+export default SignUpForm;

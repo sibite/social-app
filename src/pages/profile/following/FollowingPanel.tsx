@@ -5,7 +5,7 @@ interface Props {
   followed: string[];
 }
 
-const FollowingTab: React.FC<Props> = ({ followed }) => {
+const FollowingPanel: React.FC<Props> = ({ followed }) => {
   const ProfilesListJSX = followed.map((id) => (
     <FollowingItem profileId={id} key={id} />
   ));
@@ -24,4 +24,4 @@ const FollowingTab: React.FC<Props> = ({ followed }) => {
     </VStack>
   );
 };
-export default FollowingTab;
+export default FollowingPanel;

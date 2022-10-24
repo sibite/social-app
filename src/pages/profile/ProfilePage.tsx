@@ -10,7 +10,7 @@ import {
 import { useState } from 'react';
 import { Navigate, Route, Routes, useParams } from 'react-router-dom';
 import Feed from '../../components/feed/Feed';
-import FollowingTab from './following/FollowingTab';
+import FollowingPanel from './following/FollowingPanel';
 import PageContainer from '../../components/layout/PageContainer';
 import PhotoViewerWrapper from '../../components/photo-viewer/wrappers/PhotoViewerWrapper';
 import useMobileModeValue from '../../hooks/useIsMobile';
@@ -229,7 +229,7 @@ const ProfilePage: React.FC<Props> = () => {
           <Route path="photos" element={<Gallery profileId={id} />} />
           <Route
             path="following"
-            element={<FollowingTab followed={profile?.following || []} />}
+            element={<FollowingPanel followed={profile?.following || []} />}
           />
         </Routes>
       </Container>

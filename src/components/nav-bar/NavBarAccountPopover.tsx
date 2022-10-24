@@ -12,7 +12,7 @@ import {
   Button,
 } from '@chakra-ui/react';
 import { CogIcon, LogoutIcon } from '@heroicons/react/outline';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { accountApi } from '../../store/account-api';
 import { authActions } from '../../store/auth';
 import { contactsActions } from '../../store/contacts';
@@ -65,6 +65,8 @@ const NavBarAccountPopover: React.FC<Props> = ({ user }) => {
         <PopoverBody>
           <Flex direction="column">
             <Button
+              as={Link}
+              to="/settings"
               leftIcon={<HeroIcon as={CogIcon} />}
               variant="ghost"
               justifyContent="flex-start"
