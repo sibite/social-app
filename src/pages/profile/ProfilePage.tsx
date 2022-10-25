@@ -29,7 +29,7 @@ import {
   useGetProfileQuery,
   useToggleFollowMutation,
 } from '../../store/profile-api';
-import Gallery from '../gallery/Gallery';
+import Gallery from './gallery/Gallery';
 import ErrorPage from '../ErrorPage';
 import ProfileAvatar from './ProfileAvatar';
 import ProfileCover from './ProfileCover';

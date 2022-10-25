@@ -1,6 +1,6 @@
 import { AspectRatio, Box, Image, useColorModeValue } from '@chakra-ui/react';
-import ImageFallback from '../../components/misc/ImageFallback';
-import { useGetPostQuery } from '../../store/feed-api';
+import ImageFallback from '../../../components/misc/ImageFallback';
+import { useGetPostQuery } from '../../../store/feed-api';
 
 interface Props {
   mediaId: string;

@@ -9,8 +9,8 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { useSearchParams } from 'react-router-dom';
-import { useGetProfileMediaQuery } from '../../store/feed-api';
-import { useGetProfileQuery } from '../../store/profile-api';
+import { useGetProfileMediaQuery } from '../../../store/feed-api';
+import { useGetProfileQuery } from '../../../store/profile-api';
 import GalleryItem from './GalleryItem';
 
 interface Props {

@@ -10,13 +10,16 @@ import HeroIcon from '../chakra-ui/HeroIcon';
 
 interface Props {
   profileId: string;
+  isFollowed: boolean;
 }
 
-const ProfileCardFollowButton: React.FC<Props> = ({ profileId }) => {
+const ProfileCardFollowButton: React.FC<Props> = ({
+  profileId,
+  isFollowed,
+}) => {
   const isAuthenticated = useIsAuthenticated();
   const myId = useAppSelector((state) => state.auth.userId);
   const toggleFollow = useToggleFollowMutation()[0];
-  const { data: profile } = useGetProfileQuery(profileId);
 
   if (!isAuthenticated || myId === profileId) return null;
 
@@ -48,6 +51,6 @@ const ProfileCardFollowButton: React.FC<Props> = ({ profileId }) => {
     </Tooltip>
   );
 
-  return profile?.isFollowed ? UnfollowButtonJSX : FollowButtonJSX;
+  return isFollowed ? UnfollowButtonJSX : FollowButtonJSX;
 };
 export default ProfileCardFollowButton;

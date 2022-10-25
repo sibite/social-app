@@ -11,9 +11,8 @@ interface Props {
 }
 
 const FollowingItem: React.FC<Props> = ({ profileId }) => {
-  const profileQuery = useGetProfileQuery(profileId);
-  const { isLoading } = profileQuery;
-  let profile = profileQuery.data;
+  const { data, isLoading } = useGetProfileQuery(profileId);
+  let profile = data;
 
   if (isLoading) return <ProfileCardSkeleton />;
 
@@ -32,7 +31,12 @@ const FollowingItem: React.FC<Props> = ({ profileId }) => {
         avatarSrc={avatarSrc}
         fullName={fullName}
         description={description}
-        rightButton={<ProfileCardFollowButton profileId={profileId} />}
+        rightButton={
+          <ProfileCardFollowButton
+            profileId={profileId}
+            isFollowed={profile.isFollowed}
+          />
+        }
       />
     </LinkBox>
   );
