@@ -83,10 +83,9 @@ export const messagesSlice = createSlice({
     builder.addCase(refetchMessages.fulfilled, (state, action) => {
       const user = state.userEntities[action.meta.arg];
       user.status = 'idle';
+      user.isComplete = false;
       user.messages.list = action.payload;
-      user.messages.ids = action.payload
-        .map((message) => message._id)
-        .concat(user.messages.ids);
+      user.messages.ids = action.payload.map((message) => message._id);
       action.payload.forEach((message) => {
         user.messages.entities[message._id] = message;
       });

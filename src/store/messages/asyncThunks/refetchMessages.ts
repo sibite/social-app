@@ -2,8 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import type { RootState } from '../..';
 import { ServerToClientMessage } from '../../../../server/chat-socket/socket-types';
-import createInitialEntity from '../createInitialEntity';
-import { fetchingStatus } from '../status';
+import { fetchingStatus, pageSize } from '../status';
 
 const refetchMessages = createAsyncThunk<ServerToClientMessage[], string>(
   'messages/refetch',
@@ -13,10 +12,8 @@ const refetchMessages = createAsyncThunk<ServerToClientMessage[], string>(
 
     const state = getState() as RootState;
     const { token } = state.auth;
-    const user =
-      state.messages.userEntities[userId] ?? createInitialEntity(userId);
     const from = 0;
-    const to = user.count - 1;
+    const to = pageSize - 1;
 
     try {
       const request = await axios.get(`/api/messages/${userId}/${from}-${to}`, {
