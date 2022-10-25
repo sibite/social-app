@@ -14,7 +14,7 @@ export const profileApi = createApi({
       query: (id) => String(id),
       providesTags: (_result, _err, arg) => [{ type: 'Profile', id: arg }],
     }),
-    searchProfiles: builder.query<UserPublicType[], string>({
+    searchProfiles: builder.query<string[], string>({
       query: (query) => `search/${query}`,
     }),
     toggleFollow: builder.mutation<{ invalidates: string }, string>({

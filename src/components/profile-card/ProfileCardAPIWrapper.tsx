@@ -1,16 +1,15 @@
 import { LinkBox } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
-import ProfileCard from '../../../components/profile-card/ProfileCard';
-import ProfileCardFollowButton from '../../../components/profile-card/ProfileCardFollowButton';
-import ProfileCardSkeleton from '../../../components/profile-card/ProfileCardSkeleton';
-import useIsAuthenticated from '../../../hooks/useIsAuthenticated';
-import { useGetProfileQuery } from '../../../store/profile-api';
+import ProfileCard from './ProfileCard';
+import ProfileCardFollowButton from './ProfileCardFollowButton';
+import ProfileCardSkeleton from './ProfileCardSkeleton';
+import { useGetProfileQuery } from '../../store/profile-api';
 
 interface Props {
   profileId: string;
 }
 
-const FollowingItem: React.FC<Props> = ({ profileId }) => {
+const ProfileCardAPIWrapper: React.FC<Props> = ({ profileId }) => {
   const { data, isLoading } = useGetProfileQuery(profileId);
   let profile = data;
 
@@ -41,4 +40,4 @@ const FollowingItem: React.FC<Props> = ({ profileId }) => {
     </LinkBox>
   );
 };
-export default FollowingItem;
+export default ProfileCardAPIWrapper;

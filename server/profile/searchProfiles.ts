@@ -2,9 +2,7 @@
 import { RequestHandler } from 'express';
 import { UserType } from '../api-types/auth';
 import db from '../database';
-import getFullName from '../shared/getFullName';
-import getSrcUrl from '../shared/getSrcUrl';
-import { arrCallback, singleCallback } from '../shared/nedbPromises';
+import { arrCallback } from '../shared/nedbPromises';
 
 const searchProfiles: RequestHandler = async (req, res) => {
   const { query } = req.params;
@@ -16,23 +14,6 @@ const searchProfiles: RequestHandler = async (req, res) => {
   const regExQuery = new RegExp(regExString, 'i');
 
   try {
-    let user;
-    let following: string[];
-
-    try {
-      user = await new Promise<Partial<UserType>>((r, j) => {
-        db.users.findOne(
-          { _id: req.userId },
-          {
-            following: 1,
-          },
-          singleCallback(r, j)
-        );
-      });
-    } finally {
-      following = user?.following ?? [];
-    }
-
     const profiles = await new Promise<UserType[]>((r, j) => {
       db.users
         .find(
@@ -43,21 +24,13 @@ const searchProfiles: RequestHandler = async (req, res) => {
               { description: regExQuery },
             ],
           },
-          { name: 1, lastName: 1, avatarSrc: 1, description: 1 }
+          { _id: 1 }
         )
         .limit(100)
         .exec(arrCallback(r, j));
     });
 
-    const resProfiles = profiles.map(
-      ({ _id, name, lastName, avatarSrc, description }) => ({
-        _id,
-        fullName: getFullName({ name, lastName }),
-        description,
-        isFollowed: following.indexOf(_id) !== -1,
-        avatarSrc: avatarSrc && getSrcUrl(avatarSrc),
-      })
-    );
+    const resProfiles = profiles.map((profile) => profile._id);
 
     res.status(200).json(resProfiles);
   } catch (err) {

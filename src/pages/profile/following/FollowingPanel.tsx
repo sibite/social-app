@@ -1,5 +1,5 @@
 import { Badge, Heading, SimpleGrid, VStack } from '@chakra-ui/react';
-import FollowingItem from './FollowingItem';
+import ProfileCardAPIWrapper from '../../../components/profile-card/ProfileCardAPIWrapper';
 
 interface Props {
   followed: string[];
@@ -7,7 +7,7 @@ interface Props {
 
 const FollowingPanel: React.FC<Props> = ({ followed }) => {
   const ProfilesListJSX = followed.map((id) => (
-    <FollowingItem profileId={id} key={id} />
+    <ProfileCardAPIWrapper profileId={id} key={id} />
   ));
 
   return (

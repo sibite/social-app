@@ -4,6 +4,7 @@ import { useSearchProfilesQuery } from '../../store/profile-api';
 import ProfileCard from '../../components/profile-card/ProfileCard';
 import ProfileCardSkeleton from '../../components/profile-card/ProfileCardSkeleton';
 import ProfileCardFollowButton from '../../components/profile-card/ProfileCardFollowButton';
+import ProfileCardAPIWrapper from '../../components/profile-card/ProfileCardAPIWrapper';
 
 const SearchResultsList: React.FC = () => {
   const { searchQuery } = useParams();
@@ -25,23 +26,9 @@ const SearchResultsList: React.FC = () => {
   return (
     <Flex direction="column" gap={4} py={4}>
       {currentData &&
-        currentData.map(
-          ({ _id, fullName, avatarSrc, description, isFollowed }) => (
-            <LinkBox key={_id} as={Link} to={`/profile/${_id}`}>
-              <ProfileCard
-                fullName={fullName}
-                avatarSrc={avatarSrc}
-                description={description}
-                rightButton={
-                  <ProfileCardFollowButton
-                    profileId={_id!}
-                    isFollowed={isFollowed}
-                  />
-                }
-              />
-            </LinkBox>
-          )
-        )}
+        currentData.map((id) => (
+          <ProfileCardAPIWrapper key={id} profileId={id} />
+        ))}
     </Flex>
   );
 };
