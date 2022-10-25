@@ -1,13 +1,20 @@
-import { Avatar, Text, Flex, Heading, VStack } from '@chakra-ui/react';
+import { Avatar, Flex, Heading, Text, VStack } from '@chakra-ui/react';
 import Card from '../chakra-ui/Card';
+import ProfileCardFollowButton from './ProfileCardFollowButton';
 
 type Props = {
   avatarSrc?: string;
   fullName?: string;
   description?: string;
+  rightButton?: React.ReactNode;
 };
 
-const ProfileCard: React.FC<Props> = ({ fullName, description, avatarSrc }) => (
+const ProfileCard: React.FC<Props> = ({
+  fullName,
+  description,
+  avatarSrc,
+  rightButton,
+}) => (
   <Card variant="clickable" px={4} py={4} as="button" width="100%">
     <Flex align="center" gap={2}>
       <Avatar name={avatarSrc ? undefined : fullName} src={avatarSrc} />
@@ -32,6 +39,7 @@ const ProfileCard: React.FC<Props> = ({ fullName, description, avatarSrc }) => (
           {description}
         </Text>
       </VStack>
+      {rightButton}
     </Flex>
   </Card>
 );

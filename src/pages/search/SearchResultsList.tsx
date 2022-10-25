@@ -3,6 +3,8 @@ import { Link, useParams } from 'react-router-dom';
 import { useSearchProfilesQuery } from '../../store/profile-api';
 import ProfileCard from '../../components/profile-card/ProfileCard';
 import ProfileCardSkeleton from '../../components/profile-card/ProfileCardSkeleton';
+import useIsAuthenticated from '../../hooks/useIsAuthenticated';
+import ProfileCardFollowButton from '../../components/profile-card/ProfileCardFollowButton';
 
 const SearchResultsList: React.FC = () => {
   const { searchQuery } = useParams();
@@ -30,6 +32,7 @@ const SearchResultsList: React.FC = () => {
               fullName={fullName}
               avatarSrc={avatarSrc}
               description={description}
+              rightButton={<ProfileCardFollowButton profileId={_id!} />}
             />
           </LinkBox>
         ))}
