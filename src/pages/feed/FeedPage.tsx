@@ -18,7 +18,11 @@ const FeedPage: React.FC<Props> = () => {
     <PageContainer bg={bg1}>
       <PhotoViewerWrapper />
       <Container maxWidth="container.lg" px={0}>
-        <Feed posts={posts} showPostCreator={isAuthenticated} />
+        <Feed
+          posts={posts}
+          showPostCreator={isAuthenticated}
+          isLoading={feedQuery.isLoading}
+        />
       </Container>
     </PageContainer>
   );

@@ -17,7 +17,7 @@ const ProfileHeading: React.FC<Props> = ({
   isUploading = false,
   onChange,
 }) => {
-  const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const changeHandler = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newDescription = event.currentTarget.value;
     if (onChange) onChange(newDescription);
   };

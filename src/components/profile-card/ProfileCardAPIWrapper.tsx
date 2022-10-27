@@ -4,6 +4,7 @@ import ProfileCard from './ProfileCard';
 import ProfileCardFollowButton from './ProfileCardFollowButton';
 import ProfileCardSkeleton from './ProfileCardSkeleton';
 import { useGetProfileQuery } from '../../store/profile-api';
+import { useGetAccountDataQuery } from '../../store/account-api';
 
 interface Props {
   profileId: string;
@@ -11,7 +12,12 @@ interface Props {
 
 const ProfileCardAPIWrapper: React.FC<Props> = ({ profileId }) => {
   const { data, isLoading } = useGetProfileQuery(profileId);
+  const { data: following } = useGetAccountDataQuery(undefined, {
+    selectFromResult: (result) => ({ data: result.data?.following ?? [] }),
+  });
+
   let profile = data;
+  const isFollowed = following.indexOf(profileId) !== -1;
 
   if (isLoading) return <ProfileCardSkeleton />;
 
@@ -19,7 +25,7 @@ const ProfileCardAPIWrapper: React.FC<Props> = ({ profileId }) => {
     profile = {
       avatarSrc: 'none',
       fullName: 'User',
-      isFollowed: true,
+      isFollowed,
     };
 
   const { fullName, avatarSrc, description } = profile;
@@ -31,10 +37,12 @@ const ProfileCardAPIWrapper: React.FC<Props> = ({ profileId }) => {
         fullName={fullName}
         description={description}
         rightButton={
-          <ProfileCardFollowButton
-            profileId={profileId}
-            isFollowed={profile.isFollowed}
-          />
+          data || profile.isFollowed ? (
+            <ProfileCardFollowButton
+              profileId={profileId}
+              isFollowed={profile.isFollowed}
+            />
+          ) : null
         }
       />
     </LinkBox>
