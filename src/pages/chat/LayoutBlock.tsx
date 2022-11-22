@@ -15,7 +15,7 @@ const LayoutBlock: React.FC<Props> = ({ children, gridArea }) => {
 
   return (
     <GridItem area={gridArea}>
-      <Box sx={style}>{children}</Box>;
+      <Box sx={style}>{children}</Box>
     </GridItem>
   );
 };

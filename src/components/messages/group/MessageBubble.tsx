@@ -66,8 +66,6 @@ const MessageBubble: React.FC<Props> = ({
   if (isDesktop)
     return (
       <Tooltip
-        key="box"
-        closeOnPointerDown={false}
         portalProps={{ containerRef: portalRef }}
         placement={tooltipPlacement ?? 'auto'}
         label={dateString}
