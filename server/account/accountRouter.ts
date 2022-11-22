@@ -1,7 +1,7 @@
 import express from 'express';
 import fileUpload from 'express-fileupload';
 import authenticate from '../auth/authenticate';
-import { FILE_SIZE_LIMIT } from '../env';
+import config from '../config/config';
 import putAvatar from './avatarPut';
 import putCover from './coverPut';
 import me from './me';
@@ -11,7 +11,7 @@ const accountRouter = express.Router();
 
 accountRouter.use(
   fileUpload({
-    limits: { fileSize: FILE_SIZE_LIMIT },
+    limits: { fileSize: config.FILE_SIZE_LIMIT },
   })
 );
 

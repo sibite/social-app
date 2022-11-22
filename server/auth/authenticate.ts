@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { ACCESS_TOKEN_SECRET } from '../env';
+import config from '../config/config';
 
 const getAuthenticateFn =
   (required: boolean) => (req: Request, res: Response, next: NextFunction) => {
@@ -17,7 +17,7 @@ const getAuthenticateFn =
       return;
     }
 
-    jwt.verify(token, ACCESS_TOKEN_SECRET, (err, user) => {
+    jwt.verify(token, config.ACCESS_TOKEN_SECRET, (err, user) => {
       if (err) {
         res.status(403).send();
         return;

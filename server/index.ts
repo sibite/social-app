@@ -4,7 +4,7 @@ import path from 'path';
 import accountRouter from './account/accountRouter';
 import authRouter from './auth/authRouter';
 import createSocketIO from './chat-socket/socket-server';
-import { PORT } from './env';
+import config from './config/config';
 import feedRouter from './feed/feedRouter';
 import messagesRouter from './messages/messagesRouter';
 import profileRouter from './profile/profileRouter';
@@ -21,7 +21,7 @@ router.use('/profile', profileRouter);
 router.use('/feed', feedRouter);
 router.use('/messages', messagesRouter);
 
-app.use('/api', router);
+app.use(config.API_URL, router);
 
 app.use(express.static(path.join(__dirname, '../public')));
 app.get('/*', (_req, res) => {
@@ -30,6 +30,6 @@ app.get('/*', (_req, res) => {
 
 createSocketIO(httpServer);
 
-httpServer.listen(PORT, () =>
-  console.log(`App running on http://localhost:${PORT}`)
+httpServer.listen(config.PORT, () =>
+  console.log(`App running on http://localhost:${config.PORT}`)
 );

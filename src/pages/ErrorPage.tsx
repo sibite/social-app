@@ -8,6 +8,7 @@ interface Props {
 const errorMessages: any = {
   404: 'Page not found',
   401: 'You are not authorized to view this page',
+  403: 'Access denied',
 };
 
 const ErrorPage: React.FC<Props> = ({ status = 0 }) => {

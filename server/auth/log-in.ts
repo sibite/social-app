@@ -2,7 +2,7 @@ import crypto from 'crypto';
 import { RequestHandler } from 'express';
 import jwt from 'jsonwebtoken';
 import db from '../database';
-import { ACCESS_TOKEN_SECRET } from '../env';
+import config from '../config/config';
 
 const logIn: RequestHandler = (req, res) => {
   const { email, password } = req.body;
@@ -37,7 +37,7 @@ const logIn: RequestHandler = (req, res) => {
             .status(400)
             .send({ message: 'Invalid e-mail or password' });
 
-        const token = jwt.sign(user2, ACCESS_TOKEN_SECRET);
+        const token = jwt.sign(user2, config.ACCESS_TOKEN_SECRET);
         return res.status(200).send({
           userId: user2._id,
           token,

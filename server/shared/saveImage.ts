@@ -2,7 +2,7 @@ import { Request } from 'express';
 import { UploadedFile } from 'express-fileupload';
 import path from 'path';
 import sharp, { Metadata, Sharp } from 'sharp';
-import { JPEG_QUALITY } from '../env';
+import config from '../config/config';
 import ensureDirExists from './directoryUtils';
 
 interface Options {
@@ -73,7 +73,7 @@ const saveImage = async (
 
     ensureDirExists(path.join(__dirname, dirPath));
     await imgObj
-      .jpeg({ quality: quality || JPEG_QUALITY })
+      .jpeg({ quality: quality || config.JPEG_QUALITY })
       .toFile(path.join(__dirname, filePath));
     const endTime = Date.now();
     console.log(`Saving image ${endTime - startTime}ms`);
