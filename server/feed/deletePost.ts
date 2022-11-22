@@ -26,24 +26,22 @@ const deletePost: RequestHandler = async (req, res) => {
       );
     });
 
-    let media;
-    let toRemoveIds: string[];
+    let media = [];
+    const toRemoveIds: string[] = [postId];
 
-    if (!withMedia && post.type === 'post') {
-      media = [];
-      toRemoveIds = [postId];
-    } else if (post.mediaSrc) {
-      media = [{ mediaSrc: post.mediaSrc }];
-      toRemoveIds = [postId];
-    } else {
-      media = await new Promise<any[]>((resolve, reject) => {
+    if (post.mediaSrc) {
+      media.push({ mediaSrc: post.mediaSrc });
+    }
+    if (withMedia) {
+      const postMedia = await new Promise<any[]>((resolve, reject) => {
         db.feed.find(
           { _id: { $in: post.mediaIds }, type: 'media' },
           { mediaSrc: 1 },
           arrCallback(resolve, reject)
         );
       });
-      toRemoveIds = [...media.map(({ _id }) => _id), postId];
+      media = postMedia.concat(media);
+      toRemoveIds.unshift(...postMedia.map(({ _id }) => _id));
     }
 
     await new Promise<number>((resolve, reject) => {
@@ -63,7 +61,8 @@ const deletePost: RequestHandler = async (req, res) => {
     });
 
     media.forEach(({ mediaSrc }) => {
-      rmSync(path.join(__dirname, `../${mediaSrc}`));
+      console.log(mediaSrc);
+      rmSync(path.join(__dirname, `../../database/uploads/${mediaSrc}`));
     });
     res.status(200).send();
   } catch (err) {

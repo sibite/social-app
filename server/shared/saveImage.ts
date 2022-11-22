@@ -67,18 +67,23 @@ const saveImage = async (
       }
     }
 
-    const dirPath = `../uploads/${storagePath}`;
-    const filePath = `${dirPath}/${Date.now()}_${image.md5}.jpg`;
-    const imageSource = `${filePath.slice(3)}`;
+    const fileName = `${Date.now()}_${image.md5}.jpg`;
+    const filePath = `${storagePath}/${fileName}`;
 
-    ensureDirExists(path.join(__dirname, dirPath));
+    const absDirPath = path.join(
+      __dirname,
+      `../../database/uploads/${storagePath}`
+    );
+    const absFilePath = path.join(absDirPath, fileName);
+
+    ensureDirExists(absDirPath);
     await imgObj
       .jpeg({ quality: quality || config.JPEG_QUALITY })
-      .toFile(path.join(__dirname, filePath));
+      .toFile(absFilePath);
     const endTime = Date.now();
     console.log(`Saving image ${endTime - startTime}ms`);
 
-    callback(undefined, imageSource);
+    callback(undefined, filePath);
   } catch (err) {
     callback({ code: 500, message: 'Error when compressing file' });
   }

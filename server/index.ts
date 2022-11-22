@@ -14,7 +14,10 @@ const router = express.Router();
 const httpServer = createServer(app);
 
 router.use(express.json());
-router.use('/uploads', express.static(path.join(__dirname, './uploads')));
+router.use(
+  '/uploads',
+  express.static(path.join(__dirname, '../database/uploads'))
+);
 router.use('/auth', authRouter);
 router.use('/account', accountRouter);
 router.use('/profile', profileRouter);
