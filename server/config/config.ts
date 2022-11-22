@@ -1,8 +1,14 @@
 import defaultConfig from './config.default';
 import ConfigType from './config.type';
 
-// eslint-disable-next-line global-require
-const productionConfig = require('./config.prod').default ?? {};
+const productionConfig = (() => {
+  try {
+    // eslint-disable-next-line global-require
+    return require('./config.prod')?.default;
+  } catch (error) {
+    return {};
+  }
+})();
 
 const keys: (keyof ConfigType)[] = [
   'ACCESS_TOKEN_SECRET',
