@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react';
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
-import Card from '../../chakra-ui/Card';
+import AppCard from '../../chakra-ui/AppCard';
 
 interface Props {
   profileId?: string;
@@ -56,7 +56,7 @@ const Comment: React.FC<Props> = ({
         size="sm"
       />
       <VStack align="flex-start">
-        <Card
+        <AppCard
           sx={cardStyle}
           variant="flat"
           borderRadius="xl"
@@ -72,7 +72,7 @@ const Comment: React.FC<Props> = ({
           <Text wordBreak="break-word" whiteSpace="pre-wrap">
             {children}
           </Text>
-        </Card>
+        </AppCard>
         <Box>
           <Text opacity={0.6} fontSize="xs" marginTop={-2}>
             {dateString}

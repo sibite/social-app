@@ -1,5 +1,5 @@
 import { useBreakpointValue } from '@chakra-ui/react';
-import Card from '../chakra-ui/Card';
+import AppCard from '../chakra-ui/AppCard';
 import Post from '../post/Post';
 
 type Props = Parameters<typeof Post>[0];
@@ -14,7 +14,7 @@ const PhotoSideContent: React.FC<Props> = ({
   commentsCount,
   options,
 }) => (
-  <Card
+  <AppCard
     variant="unstyled"
     minWidth="180px"
     maxWidth={useBreakpointValue({ base: 'none', md: '420px' })}
@@ -31,6 +31,6 @@ const PhotoSideContent: React.FC<Props> = ({
       limitHeight={useBreakpointValue({ base: false, md: true })}
       alwaysShowComments
     />
-  </Card>
+  </AppCard>
 );
 export default PhotoSideContent;

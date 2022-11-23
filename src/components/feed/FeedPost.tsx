@@ -1,6 +1,7 @@
 import { useGetPostQuery } from '../../store/feed-api';
-import Card from '../chakra-ui/Card';
+import AppCard from '../chakra-ui/AppCard';
 import PostApiWrapper from './PostApiWrapper';
+import PostError from './PostError';
 import PostSkeleton from './PostSkeleton';
 
 interface Props {
@@ -8,14 +9,16 @@ interface Props {
 }
 
 const FeedPost: React.FC<Props> = ({ postId }) => {
-  const { isLoading } = useGetPostQuery(postId);
+  const { isLoading, isError } = useGetPostQuery(postId);
 
   if (isLoading) return <PostSkeleton />;
 
+  if (isError) return <PostError postId={postId} />;
+
   return (
-    <Card width="100%" overflow="hidden" key={postId}>
+    <AppCard width="100%" key={postId}>
       <PostApiWrapper postId={postId} />
-    </Card>
+    </AppCard>
   );
 };
 export default FeedPost;

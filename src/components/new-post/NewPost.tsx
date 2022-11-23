@@ -12,7 +12,7 @@ import { XIcon } from '@heroicons/react/outline';
 import { useRef, useState } from 'react';
 import useUploadManager from '../../hooks/useUploadManager';
 import { useCreatePostMutation } from '../../store/feed-api';
-import Card from '../chakra-ui/Card';
+import AppCard from '../chakra-ui/AppCard';
 import HeroIcon from '../chakra-ui/HeroIcon';
 import AutoResizedTextArea from '../misc/AutoResizedTextArea';
 import NewPostThumbnails from './NewPostThumbnails';
@@ -63,7 +63,7 @@ const NewPost: React.FC = () => {
   }
 
   return (
-    <Card as="form" width="100%" p={4} onSubmit={submitHandler}>
+    <AppCard as="form" width="100%" p={4} onSubmit={submitHandler}>
       <VStack spacing={4} alignItems="flex-start">
         <Flex justify="space-between" alignItems="center" width="100%">
           <Heading as="h2" size="md">
@@ -106,7 +106,7 @@ const NewPost: React.FC = () => {
           />
         )}
       </VStack>
-    </Card>
+    </AppCard>
   );
 };
 export default NewPost;

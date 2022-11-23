@@ -27,7 +27,7 @@ const Feed: React.FC<Props> = ({
   })();
 
   return (
-    <Container maxWidth="xl" py={10} px={0}>
+    <Container maxWidth="xl" py={10} px={3}>
       <VStack spacing={10}>
         {showPostCreator && <NewPost />}
         {PostsJSX}

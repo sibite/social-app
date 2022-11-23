@@ -1,5 +1,5 @@
 import { Avatar, Flex, Heading, Text, VStack } from '@chakra-ui/react';
-import Card from '../chakra-ui/Card';
+import AppCard from '../chakra-ui/AppCard';
 import ProfileCardFollowButton from './ProfileCardFollowButton';
 
 type Props = {
@@ -15,7 +15,7 @@ const ProfileCard: React.FC<Props> = ({
   avatarSrc,
   rightButton,
 }) => (
-  <Card variant="clickable" px={4} py={4} as="button" width="100%">
+  <AppCard variant="clickable" px={4} py={4} as="button" width="100%">
     <Flex align="center" gap={2}>
       <Avatar name={avatarSrc ? undefined : fullName} src={avatarSrc} />
       <VStack
@@ -41,6 +41,6 @@ const ProfileCard: React.FC<Props> = ({
       </VStack>
       {rightButton}
     </Flex>
-  </Card>
+  </AppCard>
 );
 export default ProfileCard;

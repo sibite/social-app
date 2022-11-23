@@ -1,11 +1,12 @@
 import { StyleConfig } from '@chakra-ui/react';
 
-const Card: StyleConfig = {
+const AppCard: StyleConfig = {
   baseStyle: ({ colorMode }) => ({
     display: 'flex',
     flexDirection: 'column',
     background: colorMode === 'light' ? 'white' : 'gray.800',
     alignItems: 'stretch',
+    overflow: 'hidden',
   }),
   variants: {
     shaded: {
@@ -36,4 +37,4 @@ const Card: StyleConfig = {
   },
 };
 
-export default Card;
+export default AppCard;
