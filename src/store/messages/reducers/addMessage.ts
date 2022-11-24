@@ -12,15 +12,17 @@ const addMessage = (
   const { userId, message } = action.payload;
   initUser(state, userId);
   const { messages, awaitingMessages } = state.userEntities[userId];
-  messages.entities[message._id] = message;
-  messages.ids.push(message._id);
-  messages.list.push(message);
+  if (messages.entities[message._id] === undefined) {
+    messages.entities[message._id] = message;
+    messages.ids.push(message._id);
+    messages.list.push(message);
+
+    state.userEntities[userId].count += 1;
+  }
 
   state.userEntities[userId].awaitingMessages = awaitingMessages.filter(
     (awMessage) => awMessage.ref !== message.ref
   );
-
-  state.userEntities[userId].count += 1;
 };
 
 export default addMessage;
