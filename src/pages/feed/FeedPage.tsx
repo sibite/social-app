@@ -3,6 +3,7 @@ import Feed from '../../components/feed/Feed';
 import PageContainer from '../../components/layout/PageContainer';
 import PhotoViewerWrapper from '../../components/photo-viewer/wrappers/PhotoViewerWrapper';
 import useIsAuthenticated from '../../hooks/useIsAuthenticated';
+import useSetThemeColor from '../../hooks/useSetThemeColor';
 import { useGetTotalFeedQuery } from '../../store/feed-api';
 
 interface Props {}
@@ -13,6 +14,7 @@ const FeedPage: React.FC<Props> = () => {
   const isAuthenticated = useIsAuthenticated();
 
   const bg1 = useColorModeValue('gray.100', 'black');
+  useSetThemeColor(bg1);
 
   return (
     <PageContainer bg={bg1}>

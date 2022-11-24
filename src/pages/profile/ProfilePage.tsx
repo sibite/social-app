@@ -36,6 +36,7 @@ import ProfileCover from './ProfileCover';
 import ProfileHeading from './ProfileHeading';
 import ProfilePageSkeleton from './ProfilePageSkeleton';
 import ProfileTabBar from './ProfileTabBar';
+import useSetThemeColor from '../../hooks/useSetThemeColor';
 
 interface Props {}
 
@@ -157,6 +158,8 @@ const ProfilePage: React.FC<Props> = () => {
   const bg1 = useColorModeValue('gray.100', 'black');
   const bg2 = useColorModeValue('white', 'gray.900');
   const borderColor = useColorModeValue('gray.200', 'gray.800');
+
+  useSetThemeColor(bg2);
 
   if (isError) return <ErrorPage status={(error as any)?.status} />;
 

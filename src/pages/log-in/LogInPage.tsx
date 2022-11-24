@@ -3,6 +3,7 @@ import {
   AlertDescription,
   AlertIcon,
   AlertTitle,
+  Box,
   Button,
   Flex,
   Heading,
@@ -18,13 +19,15 @@ import {
   useNavigate,
   useSearchParams,
 } from 'react-router-dom';
-import useInputControl from '../../hooks/useInputControl';
 import { LogInBodyType } from '../../../server/api-types/auth';
+import ThemeToggle from '../../components/nav-bar/ThemeToggle';
+import useInputControl from '../../hooks/useInputControl';
+import useSetThemeColor from '../../hooks/useSetThemeColor';
 import { authActions } from '../../store/auth';
-import { useAppDispatch } from '../../store/hooks';
-import LogInInputs from './LogInInputs';
 import { feedApi } from '../../store/feed-api';
+import { useAppDispatch } from '../../store/hooks';
 import { profileApi } from '../../store/profile-api';
+import LogInInputs from './LogInInputs';
 
 const LogInPage: React.FC = () => {
   const navigate = useNavigate();
@@ -73,25 +76,38 @@ const LogInPage: React.FC = () => {
   };
 
   const bg1 = useColorModeValue('gray.100', 'black');
-  const bg2 = useColorModeValue('white', 'gray.900');
+  const bg2 = useColorModeValue('white', 'gray.800');
+
+  useSetThemeColor(bg1);
 
   const formStyle = {
     py: 8,
-    m: 'auto',
     p: 7,
     borderRadius: 8,
     w: ['100%', 460],
+    maxW: '100%',
     background: bg2,
   };
 
   return (
-    <Flex direction="row" h={['100vh']} justify="center" background={bg1}>
+    <Flex
+      direction="column"
+      minH={['100vh']}
+      justifyContent="center"
+      alignItems="center"
+      background={bg1}
+    >
+      <Box m={2}>
+        <ThemeToggle />
+      </Box>
+      <Heading as="h1" mb={8}>
+        Log in
+      </Heading>
       <VStack as="form" sx={formStyle} spacing={8} onSubmit={submitHandler}>
-        <Heading as="h1">Log in</Heading>
         {isInternalError && (
           <Alert status="error">
             <AlertIcon />
-            <AlertTitle>Internal server error</AlertTitle>
+            <AlertTitle>An error occured</AlertTitle>
           </Alert>
         )}
         {showSignUpAlert && (
@@ -108,7 +124,13 @@ const LogInPage: React.FC = () => {
             Create one
           </Link>
         </Text>
-        <Button as="button" type="submit" w="100%" isLoading={isLoading}>
+        <Button
+          as="button"
+          type="submit"
+          w="100%"
+          colorScheme="twitter"
+          isLoading={isLoading}
+        >
           Log in
         </Button>
       </VStack>

@@ -6,6 +6,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
+import useSetThemeColor from '../../hooks/useSetThemeColor';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
 import PortalRefContext from '../../store/ref-context';
 import FixedContainer from '../misc/FixedContainer';

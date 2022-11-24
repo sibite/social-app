@@ -1,5 +1,7 @@
+import { useColorModeValue } from '@chakra-ui/react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import useIsAuthenticated from './hooks/useIsAuthenticated';
+import useSetThemeColor from './hooks/useSetThemeColor';
 import ChatPage from './pages/chat/ChatPage';
 import ErrorPage from './pages/ErrorPage';
 import FeedPage from './pages/feed/FeedPage';
@@ -14,6 +16,7 @@ import { useAppSelector } from './store/hooks';
 const AppRoutes = () => {
   const isAuthenticated = useIsAuthenticated();
   const myId = useAppSelector((state) => state.auth.userId)!;
+  useSetThemeColor(useColorModeValue('white', 'black'));
 
   return (
     <Routes>
