@@ -1,13 +1,9 @@
-import {
-  Flex,
-  Grid,
-  useBreakpointValue,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import { Flex, Grid, useColorModeValue } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import Messages from '../../components/messages/Messages';
 import NavBar from '../../components/nav-bar/NavBar';
+import useMobileModeValue from '../../hooks/useIsMobile';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
 import Contacts from './Contacts';
 import ContactsHeader from './ContactsHeader';
@@ -51,11 +47,11 @@ const ChatPageXS: React.FC = () => {
     },
   };
 
-  const isMobile = useBreakpointValue({ base: true, md: false });
+  const flexDirection = useMobileModeValue('column-reverse', 'column');
 
   return (
     <Flex
-      direction={isMobile ? 'column-reverse' : 'column'}
+      direction={flexDirection}
       width="100%"
       height={`${windowHeight}px`}
       overflow="hidden"

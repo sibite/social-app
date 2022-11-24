@@ -3,6 +3,7 @@ import { useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { messagesActionsThunks } from '../../store/messages/messages';
 import MessageInput from './MessageInput';
+import MessagesOfflineAlert from './MessagesOfflineAlert';
 import MessagingContainer from './MessagingContainer';
 
 interface Props {
@@ -10,6 +11,7 @@ interface Props {
 }
 
 const Messages: React.FC<Props> = ({ profileId }) => {
+  const dispatch = useAppDispatch();
   const userEntity = useAppSelector(
     (state) => state.messages.userEntities[profileId]
   );
@@ -19,14 +21,13 @@ const Messages: React.FC<Props> = ({ profileId }) => {
   const messagesList = userEntity?.messages.list ?? [];
   const awaitingMessages = userEntity?.awaitingMessages ?? [];
 
-  const dispatch = useAppDispatch();
-
   const fetchMoreMessages = useCallback(() => {
     dispatch(messagesActionsThunks.fetchMoreMessages(profileId));
   }, [dispatch, profileId]);
 
   return (
     <Flex w="full" h="full" direction="column" alignContent="stretch">
+      <MessagesOfflineAlert />
       <Box flexGrow="1" position="relative">
         <MessagingContainer
           isLoading={status === 'loading'}

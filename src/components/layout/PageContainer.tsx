@@ -10,6 +10,7 @@ import useWindowDimensions from '../../hooks/useWindowDimensions';
 import PortalRefContext from '../../store/ref-context';
 import FixedContainer from '../misc/FixedContainer';
 import NavBar from '../nav-bar/NavBar';
+import OfflineAlert from './OfflineAlert';
 
 const PageContainer: React.FC<BoxProps> = ({ children, ...rest }) => {
   const [navBarHeight, setNavBarHeight] = useState(0);
@@ -26,6 +27,10 @@ const PageContainer: React.FC<BoxProps> = ({ children, ...rest }) => {
     pointerEvents: 'none',
     flexGrow: '1',
     gridTemplate: '100% / 100%',
+    position: 'relative',
+    '& > *': {
+      gridArea: '1 / 1',
+    },
   };
 
   const bg = useColorModeValue('white', 'black');
@@ -47,6 +52,7 @@ const PageContainer: React.FC<BoxProps> = ({ children, ...rest }) => {
         {...rest}
       >
         <PortalRefContext.Provider value={portalRef}>
+          <OfflineAlert />
           {children}
         </PortalRefContext.Provider>
       </Box>

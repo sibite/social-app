@@ -1,4 +1,4 @@
-import { Portal, useBreakpointValue } from '@chakra-ui/react';
+import { Box, Portal, useBreakpointValue } from '@chakra-ui/react';
 import { useContext, useEffect } from 'react';
 import useKeyPress from '../../../hooks/useKeyPress';
 import PortalRefContext from '../../../store/ref-context';
