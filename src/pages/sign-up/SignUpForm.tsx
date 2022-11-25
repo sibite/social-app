@@ -38,6 +38,7 @@ const SignUpForm: React.FC<Props> = ({
       label="First name"
       placeholder="Joseph"
       isRequired
+      autoFocus
     />
   );
 

@@ -12,6 +12,7 @@ interface Props {
   type?: React.ComponentProps<typeof Input>['type'];
   placeholder?: React.ComponentProps<typeof Input>['placeholder'];
   isRequired?: React.ComponentProps<typeof FormControl>['isRequired'];
+  autoFocus?: boolean;
 }
 
 const AppFormControl: React.FC<Props> = ({
@@ -20,6 +21,7 @@ const AppFormControl: React.FC<Props> = ({
   type = 'text',
   placeholder,
   isRequired,
+  autoFocus,
 }) => (
   <FormControl isInvalid={inputControl.showInvalidity} isRequired={isRequired}>
     <FormLabel>{label}</FormLabel>
@@ -29,6 +31,7 @@ const AppFormControl: React.FC<Props> = ({
       value={inputControl.value}
       onChange={inputControl.changeHandler}
       onBlur={inputControl.touchHandler}
+      autoFocus={autoFocus}
     />
     <FormErrorMessage>{inputControl.errorMessage}</FormErrorMessage>
   </FormControl>

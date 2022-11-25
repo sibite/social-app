@@ -5,6 +5,7 @@ import {
   Input,
   VStack,
 } from '@chakra-ui/react';
+import AppFormControl from '../../components/misc/AppFormControl';
 import useInputControl from '../../hooks/useInputControl';
 
 type Field = ReturnType<typeof useInputControl>;
@@ -17,35 +18,26 @@ interface Props {
 
 const LogInInputs: React.FC<Props> = ({ email, password, isError }) => {
   const EmailJSX = (
-    <FormControl isInvalid={email.showInvalidity}>
-      <FormLabel>Your e-mail address</FormLabel>
-      <Input
-        autoFocus
-        type="email"
-        placeholder="employee@company.org"
-        value={email.value}
-        onChange={email.changeHandler}
-      />
-    </FormControl>
+    <AppFormControl
+      inputControl={email}
+      label="Your e-mail address"
+      type="email"
+      placeholder="employee@company.org"
+      autoFocus
+    />
   );
 
   const PasswordJSX = (
-    <FormControl isInvalid={password.showInvalidity}>
-      <FormLabel>Password</FormLabel>
-      <Input
-        type="password"
-        value={password.value}
-        onChange={password.changeHandler}
-      />
-    </FormControl>
+    <AppFormControl inputControl={password} type="password" label="Password" />
   );
 
   return (
     <VStack spacing={5} width="full">
       <FormControl isInvalid={isError}>
-        <FormErrorMessage>Incorrect e-mail or password</FormErrorMessage>
+        <FormErrorMessage>Invalid e-mail or password</FormErrorMessage>
       </FormControl>
-      {[EmailJSX, PasswordJSX]}
+      {EmailJSX}
+      {PasswordJSX}
     </VStack>
   );
 };
