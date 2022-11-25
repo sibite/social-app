@@ -8,8 +8,6 @@ import {
 import { useParams } from 'react-router-dom';
 import PageContainer from '../../components/layout/PageContainer';
 import Messages from '../../components/messages/Messages';
-import useWindowDimensions from '../../hooks/useWindowDimensions';
-import { NAVBAR_TOTAL_HEIGHT } from '../../shared/navBarHeight';
 import Contacts from './Contacts';
 import ContactsHeader from './ContactsHeader';
 import LayoutBlock from './LayoutBlock';
@@ -18,7 +16,6 @@ import UserDetails from './UserDetails';
 
 const ChatPageMD: React.FC = () => {
   const { id } = useParams();
-  const { windowHeight } = useWindowDimensions();
   const [showUserDetails, setShowUserDetails] = useBoolean(true);
 
   const gridStyle = {
@@ -31,6 +28,7 @@ const ChatPageMD: React.FC = () => {
       '2xl': `420px 1fr ${showUserDetails ? 420 : 0}px`,
     },
     width: '100%',
+    height: '100%',
     flexGrow: 1,
     overflow: 'hidden',
     gap: '1px',
@@ -49,8 +47,8 @@ const ChatPageMD: React.FC = () => {
   );
 
   return (
-    <PageContainer overflow="hidden">
-      <Grid sx={gridStyle} height={`${windowHeight - NAVBAR_TOTAL_HEIGHT}px`}>
+    <PageContainer height="100%">
+      <Grid sx={gridStyle}>
         <LayoutBlock gridArea="contacts-header">
           <ContactsHeader />
         </LayoutBlock>

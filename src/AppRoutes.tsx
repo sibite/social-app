@@ -1,5 +1,6 @@
 import { useColorModeValue } from '@chakra-ui/react';
 import { Navigate, Route, Routes } from 'react-router-dom';
+import AppShell from './components/layout/AppShell';
 import useIsAuthenticated from './hooks/useIsAuthenticated';
 import useSetThemeColor from './hooks/useSetThemeColor';
 import ChatPage from './pages/chat/ChatPage';
@@ -20,22 +21,24 @@ const AppRoutes = () => {
 
   return (
     <Routes>
-      <Route path="/profile/:id/*" element={<ProfilePage />} />
-      <Route path="/post/:id" element={<SinglePostPage />} />
-      <Route path="/not-found" element={<ErrorPage status={404} />} />
-      <Route path="/feed/*" element={<FeedPage />} />
-      {isAuthenticated && (
-        <>
-          <Route path="*" element={<Navigate to="/feed" replace />} />
-          <Route path="/search/:searchQuery" element={<SearchPage />} />
-          <Route path="/messages/:id" element={<ChatPage />} />
-          <Route path="/messages" element={<ChatPage />} />
-          <Route path="/profile" element={<Navigate to={myId} />} />
-          <Route path="/settings" element={<SettingsPage />} />
-          <Route path="/signup" element={<Navigate to="/profile" />} />
-          <Route path="/login" element={<Navigate to="/profile" />} />
-        </>
-      )}
+      <Route element={<AppShell />}>
+        <Route path="/profile/:id/*" element={<ProfilePage />} />
+        <Route path="/post/:id" element={<SinglePostPage />} />
+        <Route path="/not-found" element={<ErrorPage status={404} />} />
+        <Route path="/feed/*" element={<FeedPage />} />
+        {isAuthenticated && (
+          <>
+            <Route path="*" element={<Navigate to="/feed" replace />} />
+            <Route path="/search/:searchQuery" element={<SearchPage />} />
+            <Route path="/messages/:id" element={<ChatPage />} />
+            <Route path="/messages" element={<ChatPage />} />
+            <Route path="/profile" element={<Navigate to={myId} />} />
+            <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/signup" element={<Navigate to="/profile" />} />
+            <Route path="/login" element={<Navigate to="/profile" />} />
+          </>
+        )}
+      </Route>
       {!isAuthenticated && (
         <>
           <Route path="*" element={<Navigate to="/login" replace />} />

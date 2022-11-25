@@ -1,10 +1,9 @@
 import { Flex, Grid, useColorModeValue } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
+import PageContainer from '../../components/layout/PageContainer';
 import Messages from '../../components/messages/Messages';
-import NavBar from '../../components/nav-bar/NavBar';
 import useMobileModeValue from '../../hooks/useIsMobile';
-import useWindowDimensions from '../../hooks/useWindowDimensions';
 import Contacts from './Contacts';
 import ContactsHeader from './ContactsHeader';
 import LayoutBlock from './LayoutBlock';
@@ -18,7 +17,6 @@ const ChatPageXS: React.FC = () => {
   >('none');
   const { id } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
-  const { windowHeight } = useWindowDimensions();
 
   const userDetailsToggleHandler = () => {
     setSearchParams((prev) => {
@@ -50,49 +48,50 @@ const ChatPageXS: React.FC = () => {
   const flexDirection = useMobileModeValue('column-reverse', 'column');
 
   return (
-    <Flex
-      direction={flexDirection}
-      width="100%"
-      height={`${windowHeight}px`}
-      overflow="hidden"
-    >
-      <NavBar />
-      <Grid sx={gridStyle}>
-        {section === 'contacts' && (
-          <>
-            <LayoutBlock>
-              <ContactsHeader />
-            </LayoutBlock>
-            <LayoutBlock>
-              <Contacts />
-            </LayoutBlock>
-          </>
-        )}
-        {section === 'messages' && (
-          <>
-            <LayoutBlock>
-              {id && (
-                <MessagesHeader
-                  profileId={id}
+    <PageContainer height="100%">
+      <Flex
+        direction={flexDirection}
+        width="100%"
+        height="100%"
+        overflow="hidden"
+      >
+        <Grid sx={gridStyle}>
+          {section === 'contacts' && (
+            <>
+              <LayoutBlock>
+                <ContactsHeader />
+              </LayoutBlock>
+              <LayoutBlock>
+                <Contacts />
+              </LayoutBlock>
+            </>
+          )}
+          {section === 'messages' && (
+            <>
+              <LayoutBlock>
+                {id && (
+                  <MessagesHeader
+                    profileId={id}
+                    onToggleUserDetails={userDetailsToggleHandler}
+                  />
+                )}
+              </LayoutBlock>
+              <LayoutBlock>{id && <Messages profileId={id} />}</LayoutBlock>
+            </>
+          )}
+          {section === 'user-details' && (
+            <>
+              <LayoutBlock>
+                <UserDetailsHeader
                   onToggleUserDetails={userDetailsToggleHandler}
                 />
-              )}
-            </LayoutBlock>
-            <LayoutBlock>{id && <Messages profileId={id} />}</LayoutBlock>
-          </>
-        )}
-        {section === 'user-details' && (
-          <>
-            <LayoutBlock>
-              <UserDetailsHeader
-                onToggleUserDetails={userDetailsToggleHandler}
-              />
-            </LayoutBlock>
-            <LayoutBlock>{id && <UserDetails profileId={id} />}</LayoutBlock>
-          </>
-        )}
-      </Grid>
-    </Flex>
+              </LayoutBlock>
+              <LayoutBlock>{id && <UserDetails profileId={id} />}</LayoutBlock>
+            </>
+          )}
+        </Grid>
+      </Flex>
+    </PageContainer>
   );
 };
 

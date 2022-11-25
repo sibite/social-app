@@ -1,6 +1,11 @@
-import { Badge, Container, Heading, useColorModeValue } from '@chakra-ui/react';
+import {
+  Badge,
+  Box,
+  Container,
+  Heading,
+  useColorModeValue,
+} from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
-import PageContainer from '../../components/layout/PageContainer';
 import { useSearchProfilesQuery } from '../../store/profile-api';
 import SearchResultsList from './SearchResultsList';
 
@@ -12,7 +17,7 @@ const SearchPage: React.FC = () => {
   const bg = useColorModeValue('gray.100', 'black');
 
   return (
-    <PageContainer bg={bg} py={8}>
+    <Box width="100%" minHeight="100%" bg={bg} py={8}>
       <Container maxWidth="xl">
         <Heading as="h1" size="md">
           Search results
@@ -29,7 +34,7 @@ const SearchPage: React.FC = () => {
         </Heading>
         <SearchResultsList />
       </Container>
-    </PageContainer>
+    </Box>
   );
 };
 export default SearchPage;

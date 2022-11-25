@@ -1,5 +1,10 @@
 import { Center } from '@chakra-ui/react';
 import { ChatAlt2Icon, HomeIcon, UserIcon } from '@heroicons/react/outline';
+import {
+  ChatAlt2Icon as ChatAlt2IconSolid,
+  HomeIcon as HomeIconSolid,
+  UserIcon as UserIconSolid,
+} from '@heroicons/react/solid';
 import useIsAuthenticated from '../../hooks/useIsAuthenticated';
 import { useAppSelector } from '../../store/hooks';
 import NavButton from './NavButton';
@@ -14,13 +19,21 @@ const NavBarButtons: React.FC<Props> = () => {
 
   return (
     <Center>
-      <NavButton icon={HomeIcon} route="/feed">
+      <NavButton icon={HomeIcon} activeIcon={HomeIconSolid} route="/feed">
         Feed
       </NavButton>
-      <NavButton icon={ChatAlt2Icon} route="/messages">
+      <NavButton
+        icon={ChatAlt2Icon}
+        activeIcon={ChatAlt2IconSolid}
+        route="/messages"
+      >
         Chats
       </NavButton>
-      <NavButton icon={UserIcon} route={`/profile/${myId}`}>
+      <NavButton
+        icon={UserIcon}
+        activeIcon={UserIconSolid}
+        route={`/profile/${myId}`}
+      >
         Me
       </NavButton>
     </Center>

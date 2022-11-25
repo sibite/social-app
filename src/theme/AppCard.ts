@@ -30,6 +30,7 @@ const AppCard: StyleConfig = {
     },
     unstyled: {
       display: 'block',
+      overflow: 'initial',
     },
   },
   defaultProps: {

@@ -10,19 +10,19 @@ import HeroIcon from '../chakra-ui/HeroIcon';
 interface Props {
   route: string;
   icon?: React.FC;
+  activeIcon?: React.FC;
   children: React.ReactNode;
 }
 
-const NavButton: React.FC<Props> = ({ icon, route, children }) => {
+const NavButton: React.FC<Props> = ({ icon, activeIcon, route, children }) => {
   const isActive = useMatch(`${route}/*`);
 
-  const activeBgColor = useColorModeValue('blue.50', 'gray.800');
-  const activeColor = useColorModeValue('blue.500', 'blue.300');
+  const activeColor = useColorModeValue('blue.500', 'blue.400');
 
   const isTextShown = useBreakpointValue({ base: false, md: true });
 
   const style = {
-    bgColor: isActive ? activeBgColor : 'default',
+    bgColor: 'default',
     height: 'calc(100% - 16px)',
     m: isTextShown ? 2 : 1,
     paddingRight: isTextShown ? undefined : 0,
@@ -35,19 +35,13 @@ const NavButton: React.FC<Props> = ({ icon, route, children }) => {
       to={route}
       variant="ghost"
       sx={style}
+      color={isActive ? activeColor : 'initial'}
+      transition="background 200ms"
       leftIcon={
-        <HeroIcon
-          as={icon}
-          inButton
-          color={isActive ? activeColor : 'initial'}
-        />
+        <HeroIcon as={isActive && activeIcon ? activeIcon : icon} inButton />
       }
     >
-      {isTextShown && (
-        <Text fontSize="md" color={isActive ? activeColor : 'initial'}>
-          {children}
-        </Text>
-      )}
+      {isTextShown && <Text fontSize="md">{children}</Text>}
     </Button>
   );
 };

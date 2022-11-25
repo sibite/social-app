@@ -1,5 +1,5 @@
-import { Box, Portal, useBreakpointValue } from '@chakra-ui/react';
-import { useContext, useEffect } from 'react';
+import { Portal, useBreakpointValue } from '@chakra-ui/react';
+import { useContext } from 'react';
 import useKeyPress from '../../../hooks/useKeyPress';
 import PortalRefContext from '../../../store/ref-context';
 import PhotoViewerMDContainer from '../PhotoViewerMDContainer';
@@ -21,13 +21,6 @@ const PhotoViewerContainerWrapper: React.FC<Props> = ({
   side,
 }) => {
   const portalRef = useContext(PortalRefContext);
-
-  useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.removeProperty('overflow');
-    };
-  });
 
   useKeyPress('ArrowLeft', onSlideLeft);
   useKeyPress('ArrowRight', onSlideRight);

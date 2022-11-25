@@ -10,6 +10,7 @@ import {
   PopoverContent,
   PopoverHeader,
   PopoverTrigger,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { CogIcon, LogoutIcon } from '@heroicons/react/outline';
 import { Link, useNavigate } from 'react-router-dom';
@@ -32,6 +33,7 @@ const NavBarAccountPopover: React.FC<Props> = ({ user }) => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { isOpen, onClose, onToggle } = useDisclosure();
 
   const logOutHandler = () => {
     dispatch(feedApi.util.resetApiState());
@@ -44,13 +46,14 @@ const NavBarAccountPopover: React.FC<Props> = ({ user }) => {
   };
 
   return (
-    <Popover>
+    <Popover isOpen={isOpen} onClose={onClose}>
       <PopoverTrigger>
         <Avatar
           as="button"
           name={avatarSrc ? undefined : fullName}
           src={avatarSrc}
           position="relative"
+          onClick={onToggle}
         >
           <AvatarConnectionStatus />
         </Avatar>
@@ -71,6 +74,7 @@ const NavBarAccountPopover: React.FC<Props> = ({ user }) => {
             <Button
               as={Link}
               to="/settings"
+              onClick={onClose}
               leftIcon={<HeroIcon as={CogIcon} />}
               variant="ghost"
               justifyContent="flex-start"
