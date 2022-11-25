@@ -1,6 +1,6 @@
 import { Avatar, Flex, IconButton, useColorModeValue } from '@chakra-ui/react';
 import { ChevronDoubleRightIcon } from '@heroicons/react/outline';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import useIsAuthenticated from '../../../hooks/useIsAuthenticated';
 import { useGetAccountDataQuery } from '../../../store/account-api';
 import { useCreateCommentMutation } from '../../../store/feed-api';
@@ -10,6 +10,8 @@ import AutoResizedTextArea from '../../misc/AutoResizedTextArea';
 interface Props {
   postId: string;
 }
+
+const savedInputs: { [key: string]: string } = { ZbXDgbimWjOZOJZv: 'TEST' };
 
 const CommentInput: React.FC<Props> = ({ postId }) => {
   const { data: account } = useGetAccountDataQuery();
@@ -23,6 +25,10 @@ const CommentInput: React.FC<Props> = ({ postId }) => {
   const fullName = account?.fullName;
   const avatarSrc = account?.avatarSrc;
 
+  useEffect(() => {
+    setContent(savedInputs[postId] ?? '');
+  }, [postId]);
+
   const sendComment = useCallback(() => {
     createComment({
       postId,
@@ -31,6 +37,7 @@ const CommentInput: React.FC<Props> = ({ postId }) => {
       .unwrap()
       .then(() => {
         setContent('');
+        delete savedInputs[postId];
         newCommentRef.current.clear();
       });
   }, [postId, content, createComment]);
@@ -48,6 +55,7 @@ const CommentInput: React.FC<Props> = ({ postId }) => {
     HTMLTextAreaElement
   > = (event) => {
     setContent(event.currentTarget.value);
+    savedInputs[postId] = event.currentTarget.value;
   };
 
   const textAreaKeyPressHandler: React.KeyboardEventHandler = (event) => {
@@ -71,7 +79,7 @@ const CommentInput: React.FC<Props> = ({ postId }) => {
         required
         flexGrow="1"
         placeholder="Enter new comment"
-        defaultValue={content}
+        value={content}
         onChange={newCommentChangeHandler}
         onKeyPress={textAreaKeyPressHandler}
         ref={newCommentRef}

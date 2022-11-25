@@ -4,7 +4,7 @@ import { UserType } from '../api-types/auth';
 import { CommentDBType, CommentIncomingType } from '../api-types/feed';
 import db from '../database';
 import getFullName from '../shared/getFullName';
-import getSrcUrl from '../shared/getSrcUrl';
+import getUserFileURL from '../shared/getUserFileURL';
 import { arrCallback } from '../shared/nedbPromises';
 
 type UserCustomType = Pick<
@@ -37,7 +37,7 @@ const getComments: RequestHandler = async (req, res) => {
       users[user._id] = {
         ...user,
         fullName: getFullName({ name: user.name, lastName: user.lastName }),
-        avatarSrc: user.avatarSrc && getSrcUrl(user.avatarSrc),
+        avatarSrc: getUserFileURL(user.avatarSrc),
       };
     });
 

@@ -1,15 +1,20 @@
 import { useEffect } from 'react';
 
-function useKeyPress(code: KeyboardEvent['code'], callback: Function) {
+function useKeyPress(
+  code: KeyboardEvent['code'],
+  callback: Function,
+  fireInsideInput: boolean = false
+) {
   useEffect(() => {
     const handler = (event: KeyboardEvent) => {
-      // event.preventDefault();
+      if (typeof (event.target as any).value === 'string' && !fireInsideInput)
+        return;
       if (event.code === code) callback();
     };
 
     document.addEventListener('keydown', handler);
     return () => document.removeEventListener('keydown', handler);
-  }, [code, callback]);
+  }, [code, callback, fireInsideInput]);
 }
 
 export default useKeyPress;

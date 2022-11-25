@@ -2,14 +2,12 @@ import { Textarea } from '@chakra-ui/react';
 import React, {
   forwardRef,
   useCallback,
+  useEffect,
   useImperativeHandle,
   useRef,
 } from 'react';
 
-interface Props extends React.ComponentProps<typeof Textarea> {
-  // eslint-disable-next-line react/require-default-props
-  // onChange?: React.ChangeEventHandler;
-}
+type Props = React.ComponentProps<typeof Textarea>;
 
 const AutoResizedTextArea = forwardRef<any, Props>(
   ({ onChange, ...rest }, ref) => {
@@ -18,8 +16,14 @@ const AutoResizedTextArea = forwardRef<any, Props>(
     const resize = useCallback(() => {
       const { style } = elRef.current!;
       style.removeProperty('height');
+      style.setProperty('overflow', 'hidden');
+      style.setProperty('overflowY', 'hidden');
       style.height = `${elRef.current!.scrollHeight + 2}px`;
+      style.removeProperty('overflowY');
+      style.removeProperty('overflow');
     }, [elRef]);
+
+    useEffect(() => resize(), [resize]);
 
     const changeHandler = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
       resize();
