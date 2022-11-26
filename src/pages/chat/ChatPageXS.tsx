@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import PageContainer from '../../components/layout/PageContainer';
 import Messages from '../../components/messages/Messages';
-import useMobileModeValue from '../../hooks/useIsMobile';
+import useMobileModeValue from '../../hooks/useMobileModeValue';
 import Contacts from './Contacts';
 import ContactsHeader from './ContactsHeader';
 import LayoutBlock from './LayoutBlock';

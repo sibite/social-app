@@ -9,7 +9,7 @@ import { AnnotationIcon, HeartIcon, ShareIcon } from '@heroicons/react/outline';
 import { HeartIcon as HeartIconFilled } from '@heroicons/react/solid';
 import { useCallback } from 'react';
 import useIsAuthenticated from '../../hooks/useIsAuthenticated';
-import useMobileModeValue from '../../hooks/useIsMobile';
+import useMobileModeValue from '../../hooks/useMobileModeValue';
 import { useToggleLikeMutation } from '../../store/feed-api';
 import HeroIcon from '../chakra-ui/HeroIcon';
 import share from './share';

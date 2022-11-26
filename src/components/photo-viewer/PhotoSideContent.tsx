@@ -6,6 +6,7 @@ type Props = Parameters<typeof Post>[0];
 
 const PhotoSideContent: React.FC<Props> = ({
   postId,
+  creatorId,
   avatarSrc,
   name,
   content,

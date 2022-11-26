@@ -1,6 +1,5 @@
-import { useBreakpointValue } from '@chakra-ui/react';
+import useMobileModeValue from './useMobileModeValue';
 
-const useMobileModeValue = <T extends any>(mobile: T, desktop: T) =>
-  useBreakpointValue({ base: mobile, md: desktop }) ?? desktop;
+const useIsMobile = () => useMobileModeValue(true, false);
 
-export default useMobileModeValue;
+export default useIsMobile;

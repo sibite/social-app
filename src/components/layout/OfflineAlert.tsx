@@ -8,7 +8,7 @@ import {
 } from '@chakra-ui/react';
 import { ExclamationIcon, XIcon } from '@heroicons/react/solid';
 import { useContext, useEffect } from 'react';
-import useMobileModeValue from '../../hooks/useIsMobile';
+import useMobileModeValue from '../../hooks/useMobileModeValue';
 import useNetworkStatus from '../../hooks/useNetworkStatus';
 import PortalRefContext from '../../store/ref-context';
 import HeroIcon from '../chakra-ui/HeroIcon';

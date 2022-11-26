@@ -10,10 +10,11 @@ import {
 import { useState } from 'react';
 import { Navigate, Route, Routes, useParams } from 'react-router-dom';
 import Feed from '../../components/feed/Feed';
-import FollowingPanel from './following/FollowingPanel';
 import PageContainer from '../../components/layout/PageContainer';
 import PhotoViewerWrapper from '../../components/photo-viewer/wrappers/PhotoViewerWrapper';
-import useMobileModeValue from '../../hooks/useIsMobile';
+import useIsMobile from '../../hooks/useIsMobile';
+import useMobileModeValue from '../../hooks/useMobileModeValue';
+import useSetThemeColor from '../../hooks/useSetThemeColor';
 import {
   useUpdateDetailsMutation,
   useUploadAvatarMutation,
@@ -29,14 +30,14 @@ import {
   useGetProfileQuery,
   useToggleFollowMutation,
 } from '../../store/profile-api';
-import Gallery from './gallery/Gallery';
 import ErrorPage from '../ErrorPage';
+import FollowingPanel from './following/FollowingPanel';
+import Gallery from './gallery/Gallery';
 import ProfileAvatar from './ProfileAvatar';
 import ProfileCover from './ProfileCover';
 import ProfileHeading from './ProfileHeading';
 import ProfilePageSkeleton from './ProfilePageSkeleton';
 import ProfileTabBar from './ProfileTabBar';
-import useSetThemeColor from '../../hooks/useSetThemeColor';
 
 interface Props {}
 
@@ -159,7 +160,7 @@ const ProfilePage: React.FC<Props> = () => {
   const bg2 = useColorModeValue('white', 'gray.900');
   const borderColor = useColorModeValue('gray.200', 'gray.800');
 
-  useSetThemeColor(bg2);
+  useSetThemeColor(bg2, useIsMobile());
 
   if (isError) return <ErrorPage status={(error as any)?.status} />;
 

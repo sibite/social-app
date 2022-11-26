@@ -80,6 +80,7 @@
       "src/service-worker.ts"
     ],
     "rules": {
+      "consistent-return": "off",
       "no-param-reassign": [
         "error",
         {

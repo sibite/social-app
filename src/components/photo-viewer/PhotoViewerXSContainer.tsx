@@ -1,5 +1,6 @@
 import { Box, Flex, useColorModeValue } from '@chakra-ui/react';
 import React from 'react';
+import useSetThemeColor from '../../hooks/useSetThemeColor';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
 import { NAVBAR_TOTAL_HEIGHT } from '../../shared/navBarHeight';
 import Overlay from '../misc/Overlay';
@@ -25,10 +26,12 @@ const PhotoViewerXSContainer: React.FC<Props> = ({
   const { windowHeight } = useWindowDimensions();
 
   const photoHeight = '420px';
+  const bgColor = useColorModeValue('white', 'gray.900');
+  useSetThemeColor(bgColor);
 
   const style = {
     flexDirection: 'column',
-    bgColor: useColorModeValue('white', 'gray.900'),
+    bgColor,
     height: `${windowHeight - NAVBAR_TOTAL_HEIGHT}px`,
     width: '100%',
     overflowY: 'auto',

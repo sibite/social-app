@@ -14,7 +14,7 @@ import AppDateFormControl from '../../components/misc/AppDateFormControl';
 import AppFormControl from '../../components/misc/AppFormControl';
 import useDateInput from '../../hooks/useDateInput';
 import useInputControl from '../../hooks/useInputControl';
-import useMobileModeValue from '../../hooks/useIsMobile';
+import useMobileModeValue from '../../hooks/useMobileModeValue';
 import passwordValidator from '../../shared/validators/password-validator';
 import {
   useGetAccountDataQuery,
