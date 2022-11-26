@@ -27,7 +27,6 @@ const Gallery: React.FC<Props> = ({ profileId }) => {
   const openMediaHandler = (mediaId: string) => {
     setSearchParams((prevSearchParams) => ({
       ...prevSearchParams,
-      profileId,
       mediaId,
     }));
   };

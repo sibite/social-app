@@ -1,11 +1,13 @@
-import { useSearchParams } from 'react-router-dom';
+import { useMatch, useParams, useSearchParams } from 'react-router-dom';
 import PostWrapper from './PostWrapper';
 import ProfileMediaWrapper from './ProfileMediaWrapper';
 
 const PhotoViewerWrapper: React.FC = () => {
   const [searchParams] = useSearchParams();
+  const { id: profileIdParam } = useParams();
+  const match = useMatch('/profile/*');
   const postId = searchParams.get('postId');
-  const profileId = searchParams.get('profileId');
+  const profileId = searchParams.get('profileId') || (match && profileIdParam);
 
   if (postId) return <PostWrapper postId={postId} />;
 

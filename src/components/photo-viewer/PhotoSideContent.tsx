@@ -23,6 +23,7 @@ const PhotoSideContent: React.FC<Props> = ({
   >
     <Post
       postId={postId}
+      creatorId={creatorId}
       options={options}
       avatarSrc={avatarSrc}
       name={name}

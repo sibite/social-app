@@ -45,6 +45,7 @@ const PhotoViewerAPIWrapper: React.FC<Props> = ({
     ContentJSX = <PhotoViewerLoading />;
   } else if (mediaPost) {
     const {
+      creatorId,
       media,
       fullName,
       avatarSrc,
@@ -60,6 +61,7 @@ const PhotoViewerAPIWrapper: React.FC<Props> = ({
         <PhotoContainer src={media[0].src!} />
         <PhotoSideContent
           postId={mediaId}
+          creatorId={creatorId}
           avatarSrc={avatarSrc}
           options={options}
           name={fullName}
