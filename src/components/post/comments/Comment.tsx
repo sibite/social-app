@@ -1,15 +1,8 @@
-import {
-  Avatar,
-  Box,
-  Flex,
-  Heading,
-  Text,
-  useColorModeValue,
-  VStack,
-} from '@chakra-ui/react';
-import { memo } from 'react';
+import { Avatar, Box, Flex, Heading, Text, VStack } from '@chakra-ui/react';
+import { memo, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import AppCard from '../../chakra-ui/AppCard';
+import PostContext from '../PostContext';
 
 interface Props {
   profileId?: string;
@@ -28,10 +21,10 @@ const Comment: React.FC<Props> = ({
   commentMenu,
   children,
 }) => {
-  const nodeColor = useColorModeValue('gray.100', 'gray.700');
+  const { commentColor } = useContext(PostContext);
 
   const cardStyle = {
-    bgColor: nodeColor,
+    bgColor: commentColor,
     py: 2,
     px: 3,
   };

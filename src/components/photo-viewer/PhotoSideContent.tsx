@@ -1,4 +1,4 @@
-import { useBreakpointValue } from '@chakra-ui/react';
+import { useBreakpointValue, useColorModeValue } from '@chakra-ui/react';
 import AppCard from '../chakra-ui/AppCard';
 import Post from '../post/Post';
 
@@ -17,6 +17,7 @@ const PhotoSideContent: React.FC<Props> = ({
   <AppCard
     variant="unstyled"
     minWidth="180px"
+    bgColor={useColorModeValue('white', 'gray.900')}
     maxWidth={useBreakpointValue({ base: 'none', md: '420px' })}
   >
     <Post
@@ -30,6 +31,7 @@ const PhotoSideContent: React.FC<Props> = ({
       commentsCount={commentsCount}
       limitHeight={useBreakpointValue({ base: false, md: true })}
       alwaysShowComments
+      commentColor={useColorModeValue('gray.100', 'gray.800')}
     />
   </AppCard>
 );

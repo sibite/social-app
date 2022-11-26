@@ -44,8 +44,6 @@ const CommentInput: React.FC<Props> = ({ postId }) => {
       });
   }, [postId, myToken, content, createComment]);
 
-  const bg = useColorModeValue('white', 'gray.800');
-
   if (!isAuthenticated) return null;
 
   const submitHandler = (event: React.FormEvent) => {
@@ -71,7 +69,6 @@ const CommentInput: React.FC<Props> = ({ postId }) => {
     <Flex
       as="form"
       width="100%"
-      bg={bg}
       gap={2}
       alignItems="center"
       onSubmit={submitHandler}

@@ -28,7 +28,7 @@ const PhotoViewerXSContainer: React.FC<Props> = ({
 
   const style = {
     flexDirection: 'column',
-    bgColor: useColorModeValue('white', 'gray.800'),
+    bgColor: useColorModeValue('white', 'gray.900'),
     height: `${windowHeight - NAVBAR_TOTAL_HEIGHT}px`,
     width: '100%',
     overflowY: 'auto',

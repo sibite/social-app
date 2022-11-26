@@ -26,7 +26,7 @@ const PhotoViewerMDContainer: React.FC<Props> = ({
 
   const style = {
     gridTemplate: '100% / 1fr auto',
-    bgColor: useColorModeValue('white', 'gray.700'),
+    bgColor: useColorModeValue('white', 'gray.900'),
     '& > *': {
       maxHeight: 'inherit',
     },

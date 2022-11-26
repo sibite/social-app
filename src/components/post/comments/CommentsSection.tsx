@@ -26,7 +26,6 @@ const CommentsSection: React.FC<Props> = ({ postId, limitHeight }) => {
     alignItems: 'flex-start',
     px: 4,
     py: 4,
-    bgColor: useColorModeValue('white', 'gray.800'),
     width: '100%',
   };
 
