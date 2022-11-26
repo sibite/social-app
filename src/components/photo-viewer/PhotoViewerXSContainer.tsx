@@ -35,7 +35,7 @@ const PhotoViewerXSContainer: React.FC<Props> = ({
     pointerEvents: 'auto',
     overscrollBehavior: 'auto',
     position: 'relative',
-    '& > img': {
+    '& > img, & .fallback': {
       minHeight: photoHeight,
       maxHeight: photoHeight,
     },

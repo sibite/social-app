@@ -14,7 +14,7 @@ export interface PostIncomingType extends Omit<PostDBType, 'mediaIds'> {
   avatarSrc: string;
   media: {
     _id: string;
-    src: string;
+    src?: string;
   }[];
   commentsCount: number;
   options: {

@@ -13,7 +13,7 @@ interface Props {
   postId: string;
   creatorId?: string;
   avatarSrc?: string;
-  media?: { _id: string; src: string }[];
+  media?: { _id: string; src?: string }[];
   name: string;
   content?: string;
   dateString: string;

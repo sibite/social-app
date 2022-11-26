@@ -23,7 +23,7 @@ const AutoResizedTextArea = forwardRef<any, Props>(
       style.removeProperty('overflow');
     }, [elRef]);
 
-    useEffect(() => resize(), [resize]);
+    useEffect(() => resize(), [resize, rest.value]);
 
     const changeHandler = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
       resize();

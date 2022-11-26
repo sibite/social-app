@@ -1,9 +1,10 @@
-import { AspectRatio, Box, Image } from '@chakra-ui/react';
+import { AspectRatio, Box, Image, useBoolean } from '@chakra-ui/react';
 import ImageFallback from '../misc/ImageFallback';
+import ImageWithFallback from '../misc/ImageWithFallback';
 
 interface Props {
   mediaId: string;
-  src: string;
+  src?: string;
   ratio?: number;
   leftItemsCount?: number;
   onClick?: (mediaId: string) => any;
@@ -22,9 +23,10 @@ const PostMediaItem: React.FC<Props> = ({
 
   const ImageJSX = (
     <>
-      <Image
+      <ImageWithFallback
+        key={src}
         src={src}
-        fallback={<ImageFallback pad />}
+        padFallback
         boxSize="100%"
         maxHeight="600px"
         objectFit="contain"

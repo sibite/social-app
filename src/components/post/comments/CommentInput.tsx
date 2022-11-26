@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import useIsAuthenticated from '../../../hooks/useIsAuthenticated';
 import { useGetAccountDataQuery } from '../../../store/account-api';
 import { useCreateCommentMutation } from '../../../store/feed-api';
+import { useAppSelector } from '../../../store/hooks';
 import HeroIcon from '../../chakra-ui/HeroIcon';
 import AutoResizedTextArea from '../../misc/AutoResizedTextArea';
 
@@ -18,6 +19,7 @@ const CommentInput: React.FC<Props> = ({ postId }) => {
   const [createComment, { isLoading: isSending }] = useCreateCommentMutation();
 
   const isAuthenticated = useIsAuthenticated();
+  const myToken = useAppSelector((state) => state.auth.token);
 
   const [content, setContent] = useState('');
   const newCommentRef = useRef<any>(null);
@@ -26,8 +28,8 @@ const CommentInput: React.FC<Props> = ({ postId }) => {
   const avatarSrc = account?.avatarSrc;
 
   useEffect(() => {
-    setContent(savedInputs[postId] ?? '');
-  }, [postId]);
+    setContent(savedInputs[myToken + postId] ?? '');
+  }, [myToken, postId]);
 
   const sendComment = useCallback(() => {
     createComment({
@@ -37,10 +39,10 @@ const CommentInput: React.FC<Props> = ({ postId }) => {
       .unwrap()
       .then(() => {
         setContent('');
-        delete savedInputs[postId];
+        delete savedInputs[myToken + postId];
         newCommentRef.current.clear();
       });
-  }, [postId, content, createComment]);
+  }, [postId, myToken, content, createComment]);
 
   const bg = useColorModeValue('white', 'gray.800');
 
@@ -55,7 +57,7 @@ const CommentInput: React.FC<Props> = ({ postId }) => {
     HTMLTextAreaElement
   > = (event) => {
     setContent(event.currentTarget.value);
-    savedInputs[postId] = event.currentTarget.value;
+    savedInputs[myToken + postId] = event.currentTarget.value;
   };
 
   const textAreaKeyPressHandler: React.KeyboardEventHandler = (event) => {

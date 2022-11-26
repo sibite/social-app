@@ -16,7 +16,9 @@ const httpServer = createServer(app);
 router.use(express.json());
 router.use(
   '/uploads',
-  express.static(path.join(__dirname, '../database/uploads'))
+  express.static(path.join(__dirname, '../database/uploads'), {
+    fallthrough: false,
+  })
 );
 router.use('/auth', authRouter);
 router.use('/account', accountRouter);

@@ -2,7 +2,6 @@ import { RequestHandler } from 'express';
 import { PostDBType, PostIncomingType } from '../api-types/feed';
 import db from '../database';
 import getFullName from '../shared/getFullName';
-import getSrcUrl from '../shared/getSrcUrl';
 import getUserFileURL from '../shared/getUserFileURL';
 import {
   arrCallback,
@@ -40,7 +39,7 @@ const getPost: RequestHandler = async (req, res) => {
       fullName: getFullName({ name, lastName }),
       avatarSrc: getUserFileURL(avatarSrc),
       commentsCount,
-      mediaSrc: postRes.mediaSrc && getSrcUrl(postRes.mediaSrc),
+      mediaSrc: getUserFileURL(postRes.mediaSrc),
       options: {
         delete: req.userId === postRes.creatorId,
         withMedia: postRes.type === 'post' && !postRes.mediaSrc,
@@ -53,7 +52,7 @@ const getPost: RequestHandler = async (req, res) => {
       media = [
         {
           _id: postRes._id,
-          src: getSrcUrl(postRes.mediaSrc),
+          src: getUserFileURL(postRes.mediaSrc),
         },
       ];
     } else {
@@ -66,7 +65,7 @@ const getPost: RequestHandler = async (req, res) => {
         })
       ).map((mediaItem) => ({
         _id: mediaItem._id,
-        src: getSrcUrl(mediaItem.mediaSrc),
+        src: getUserFileURL(mediaItem.mediaSrc),
       }));
     }
 

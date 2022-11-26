@@ -1,5 +1,6 @@
-import { AspectRatio, Box, Image, useColorModeValue } from '@chakra-ui/react';
+import { AspectRatio, Box, useColorModeValue } from '@chakra-ui/react';
 import ImageFallback from '../../../components/misc/ImageFallback';
+import ImageWithFallback from '../../../components/misc/ImageWithFallback';
 import { useGetPostQuery } from '../../../store/feed-api';
 
 interface Props {
@@ -21,8 +22,8 @@ const GalleryItem: React.FC<Props> = ({ mediaId, onOpen }) => {
       <Box as="button" borderRadius="lg" bgColor={bgColor} overflow="hidden">
         {isLoading && <ImageFallback fill />}
         {mediaPost && (
-          <Image
-            fallback={<ImageFallback fill />}
+          <ImageWithFallback
+            fillFallback
             src={mediaPost?.mediaSrc}
             borderRadius="md"
             boxSize="100%"

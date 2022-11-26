@@ -1,13 +1,15 @@
-import { Box, Center, Image } from '@chakra-ui/react';
+import ImageWithFallback from '../misc/ImageWithFallback';
 
 interface Props {
   src: string;
 }
 
 const PhotoContainer: React.FC<Props> = ({ src }) => (
-  <Image
+  <ImageWithFallback
     src={src}
     key={src}
+    fillFallback
+    padFallback
     minWidth={{ md: '360px' }}
     bgColor="gray.900"
     boxSize="100%"
