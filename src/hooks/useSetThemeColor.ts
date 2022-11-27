@@ -6,7 +6,6 @@ const setThemeHeader = (value: string) => {
   themeMetaEl?.setAttribute('content', value);
 };
 
-let globalColor: string;
 let currentId = 0;
 
 const getId = () => {
@@ -25,24 +24,10 @@ const removeColor = (id: number) => {
   colorStack = colorStack.filter(({ id: curId }) => curId !== id);
 };
 
-// const useSetThemeColor = (colorToken: string, shouldApply = true) => {
-//   const color = useToken('colors', colorToken);
-//   const defaultColor = useColorModeValue('#FFFFFF', '#000000');
-//   globalColor = color;
-
-//   useEffect(() => {
-//     if (shouldApply) setThemeHeader(globalColor);
-//     return () => setThemeHeader(defaultColor);
-//   }, [color, defaultColor, shouldApply]);
-// };
-
 const useSetThemeColor = (colorToken: string, shouldApply = true) => {
   const thisId = getId();
   const color = useToken('colors', colorToken);
   const defaultColor = useColorModeValue('#FFFFFF', '#000000');
-  globalColor = color;
-
-  console.log('running', color);
 
   useEffect(() => {
     if (!shouldApply) return () => {};

@@ -1,5 +1,5 @@
 import { Center, Flex, Spinner, Text } from '@chakra-ui/react';
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useLayoutEffect, useRef } from 'react';
 import { ServerToClientMessage } from '../../../server/chat-socket/socket-types';
 import { useAppSelector } from '../../store/hooks';
 import { AwaitingMessage } from '../../store/messages/messages';
@@ -13,6 +13,9 @@ interface Props {
   isComplete?: boolean;
   fetchMoreMessages: () => any;
 }
+
+let lastScroll: number;
+const scrollTreshold = 1;
 
 const getScrollDiff = (el: Element) =>
   el.scrollHeight - (el.clientHeight - el.scrollTop);
@@ -28,21 +31,24 @@ const MessagingContainer: React.FC<Props> = ({
   const fancyMessages = toFancyMessages(messages, awaitingMessages);
   const listRef = useRef<HTMLDivElement>(null);
 
-  const scrollHandler = (event: React.UIEvent) => {
-    const target = event.currentTarget;
-    const diff = getScrollDiff(target);
-    if (diff < 10) {
+  const scrollHandler = () => {
+    const diff = getScrollDiff(listRef.current!);
+    lastScroll = listRef.current!.scrollTop;
+    if (diff < scrollTreshold && !isComplete) {
       fetchMoreMessages();
     }
   };
 
   const checkForScroll = useCallback(() => {
-    if (getScrollDiff(listRef.current!) < 10) {
+    if (getScrollDiff(listRef.current!) < scrollTreshold) {
       fetchMoreMessages();
     }
   }, [fetchMoreMessages]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    const diff = getScrollDiff(listRef.current!);
+    if (diff < scrollTreshold) listRef.current!.scrollTo({ top: lastScroll });
+
     checkForScroll();
     window.addEventListener('resize', checkForScroll);
     return () => {
