@@ -16,6 +16,7 @@ const AppShell: React.FC = () => {
 
   const ref = useRef<HTMLDivElement>(null);
   const portalRef = useRef<HTMLDivElement>(null);
+  const rootPortalRef = useRef<HTMLDivElement>(null);
 
   const bg = useColorModeValue('white', 'black');
   const isMobile = useBreakpointValue({ base: true, md: false });
@@ -34,14 +35,17 @@ const AppShell: React.FC = () => {
     width: '100%',
     height: `${windowHeight}px`,
     overflow: 'hidden',
+    position: 'relative',
     gridTemplateAreas: isMobile ? `"content" "navbar"` : `"navbar" "content"`,
     gridTemplateRows: isMobile ? '1fr auto' : 'auto 1fr',
     gridTemplateColumns: '100%',
   };
 
   return (
-    <Grid sx={shellStyle}>
-      <NavBar ref={ref} />
+    <Grid sx={shellStyle} ref={rootPortalRef}>
+      <PortalRefContext.Provider value={rootPortalRef}>
+        <NavBar ref={ref} />
+      </PortalRefContext.Provider>
       <Box bgColor={bg} overflow="auto" gridArea="content">
         <PortalRefContext.Provider value={portalRef}>
           <OfflineAlert />

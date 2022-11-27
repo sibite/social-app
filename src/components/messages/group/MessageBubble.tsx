@@ -70,6 +70,7 @@ const MessageBubble: React.FC<Props> = ({
         placement={tooltipPlacement ?? 'auto'}
         label={dateString}
         aria-label={`A tooltip (${dateString})`}
+        modifiers={[{ name: 'eventListeners', enabled: false }]}
       >
         <Box sx={bubbleStyle}>{ContentJSX}</Box>
       </Tooltip>

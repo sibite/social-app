@@ -10,9 +10,11 @@ import {
   PopoverContent,
   PopoverHeader,
   PopoverTrigger,
+  Portal,
   useDisclosure,
 } from '@chakra-ui/react';
 import { CogIcon, LogoutIcon } from '@heroicons/react/outline';
+import { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { accountApi } from '../../store/account-api';
 import { authActions } from '../../store/auth';
@@ -21,6 +23,7 @@ import { feedApi } from '../../store/feed-api';
 import { useAppDispatch } from '../../store/hooks';
 import { messagesActions } from '../../store/messages/messages';
 import { profileApi } from '../../store/profile-api';
+import PortalRefContext from '../../store/ref-context';
 import HeroIcon from '../chakra-ui/HeroIcon';
 import AvatarConnectionStatus from './AvatarConnectionStatus';
 
@@ -33,7 +36,10 @@ const NavBarAccountPopover: React.FC<Props> = ({ user }) => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const portalRef = useContext(PortalRefContext);
   const { isOpen, onClose, onToggle } = useDisclosure();
+
+  console.log(portalRef);
 
   const logOutHandler = () => {
     dispatch(feedApi.util.resetApiState());

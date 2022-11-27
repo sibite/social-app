@@ -87,7 +87,7 @@ const PostMenu: React.FC<Props> = ({ onDelete, options }) => {
             </AlertDialogHeader>
 
             <AlertDialogBody>
-              Are you sure? This operation is inreversible
+              Are you sure? This operation is irreversible
               {options.withMedia && (
                 <Checkbox mt={2} defaultChecked onChange={setWithMedia.toggle}>
                   Delete attached media

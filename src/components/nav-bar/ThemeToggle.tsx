@@ -5,6 +5,8 @@ import {
   useColorMode,
 } from '@chakra-ui/react';
 import { MoonIcon, SunIcon } from '@heroicons/react/outline';
+import { useContext } from 'react';
+import PortalRefContext from '../../store/ref-context';
 import HeroIcon from '../chakra-ui/HeroIcon';
 
 const colorModes: ColorModeWithSystem[] = ['dark', 'light'];
@@ -12,6 +14,7 @@ const icons = [MoonIcon, SunIcon];
 
 const ThemeToggle: React.FC = () => {
   const { colorMode, setColorMode } = useColorMode();
+  const portalRef = useContext(PortalRefContext);
   const colorModeId = colorModes.indexOf(colorMode);
 
   const toggleColorMode = () => {
@@ -20,7 +23,11 @@ const ThemeToggle: React.FC = () => {
   };
 
   return (
-    <Tooltip label="Toggle color mode" aria-label="A tooltip">
+    <Tooltip
+      label="Toggle color mode"
+      aria-label="A tooltip"
+      portalProps={{ containerRef: portalRef }}
+    >
       <IconButton
         onClick={toggleColorMode}
         variant="ghost"

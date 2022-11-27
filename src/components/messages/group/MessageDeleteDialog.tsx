@@ -43,7 +43,7 @@ const MessageDeleteDialog: React.FC<Props> = ({
           </AlertDialogHeader>
 
           <AlertDialogBody>
-            Are you sure? This operation is inreversible
+            Are you sure? This operation is irreversible
           </AlertDialogBody>
 
           <AlertDialogFooter>
