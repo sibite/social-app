@@ -9,10 +9,14 @@ interface Props {
   profileId: string;
 }
 
+const savedInputs: { [key: string]: string } = {};
+
 const MessagesInput: React.FC<Props> = ({ profileId }) => {
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState(savedInputs[profileId] ?? '');
   const { sendMessage } = useMessagesSender(profileId);
   const textAreaRef = useRef<any>();
+
+  savedInputs[profileId] = message;
 
   const sendHandler = () => {
     sendMessage(message);
@@ -39,6 +43,7 @@ const MessagesInput: React.FC<Props> = ({ profileId }) => {
         ref={textAreaRef}
         placeholder="Type your message"
         flexGrow="1"
+        defaultValue={message}
         onChange={contentChangeHandler}
         onKeyPress={textAreaKeyPressHandler}
       />

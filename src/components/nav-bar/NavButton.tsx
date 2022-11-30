@@ -35,7 +35,7 @@ const NavButton: React.FC<Props> = ({ icon, activeIcon, route, children }) => {
       to={route}
       variant="ghost"
       sx={style}
-      color={isActive ? activeColor : 'initial'}
+      color={isActive ? activeColor : 'inherit'}
       transition="background 200ms"
       leftIcon={
         <HeroIcon as={isActive && activeIcon ? activeIcon : icon} inButton />

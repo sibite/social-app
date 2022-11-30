@@ -26,10 +26,11 @@ const Messages: React.FC<Props> = ({ profileId }) => {
   }, [dispatch, profileId]);
 
   return (
-    <Flex w="full" h="full" direction="column" alignContent="stretch">
+    <Flex w="full" h="full" direction="column" justifyContent="flex-end">
       <MessagesOfflineAlert />
-      <Box flexGrow="1" position="relative">
+      <Box overflow="hidden">
         <MessagingContainer
+          key={profileId}
           isLoading={status === 'loading'}
           isComplete={isComplete}
           messages={messagesList}
@@ -40,7 +41,7 @@ const Messages: React.FC<Props> = ({ profileId }) => {
       <Text fontSize="xs" pl="2" pt="1" opacity="0.4">
         Stored messages are not encrypted
       </Text>
-      <MessageInput profileId={profileId} />
+      <MessageInput key={profileId} profileId={profileId} />
     </Flex>
   );
 };
