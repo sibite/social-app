@@ -7,10 +7,10 @@ function useKeyPress(
 ) {
   useEffect(() => {
     const handler = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement;
       if (
-        ['TEXTAREA', 'INPUT', 'SELECT'].indexOf(
-          (event.target as HTMLElement).nodeName
-        ) !== -1 &&
+        (['TEXTAREA', 'INPUT', 'SELECT'].indexOf(target?.nodeName) !== -1 ||
+          target.isContentEditable) &&
         !fireInsideInput
       )
         return;

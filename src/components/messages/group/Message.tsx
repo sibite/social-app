@@ -1,4 +1,4 @@
-import { Box, Flex } from '@chakra-ui/react';
+import { Box, Flex, useDisclosure } from '@chakra-ui/react';
 import React from 'react';
 import InteractiveContent from '../../misc/InteractiveContent';
 import MessageBubble from './MessageBubble';
@@ -23,6 +23,8 @@ const Message: React.FC<Props> = ({
   content,
   dateString,
 }) => {
+  const { isOpen, onClose, onOpen } = useDisclosure();
+
   const containerStyle = {
     '&:hover .toolbar': {
       opacity: 1,
@@ -31,8 +33,13 @@ const Message: React.FC<Props> = ({
   };
 
   return (
-    <Flex sx={containerStyle} gap={2}>
-      {isDirectionTo && !isDeleted && messageId ? (
+    <Flex
+      sx={containerStyle}
+      gap={2}
+      onMouseEnter={onOpen}
+      onMouseLeave={onClose}
+    >
+      {isDirectionTo && !isDeleted && messageId && isOpen ? (
         <MessageMenu profileId={toId} messageId={messageId} />
       ) : (
         <Box width="32px" flexShrink="0" />

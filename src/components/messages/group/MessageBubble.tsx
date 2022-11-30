@@ -68,6 +68,7 @@ const MessageBubble: React.FC<Props> = ({
       <Tooltip
         portalProps={{ containerRef: portalRef }}
         placement={tooltipPlacement ?? 'auto'}
+        gutter={40}
         label={dateString}
         aria-label={`A tooltip (${dateString})`}
         modifiers={[{ name: 'eventListeners', enabled: false }]}

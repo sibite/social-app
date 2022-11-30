@@ -50,7 +50,13 @@ const MessagesInput: React.FC<Props> = ({ profileId }) => {
       <IconButton
         icon={<HeroIcon as={ChevronDoubleRightIcon} />}
         aria-label="Send message"
-        onClick={sendHandler}
+        onClick={() => {
+          sendHandler();
+        }}
+        onTouchEnd={(e) => {
+          e.preventDefault();
+          sendHandler();
+        }}
       />
     </HStack>
   );

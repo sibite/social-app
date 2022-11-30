@@ -1,4 +1,4 @@
-export const pageSize = 50;
+export const pageSize = 40;
 
 export const fetchingStatus = {
   isFetching: false,

@@ -61,6 +61,10 @@ const useMessagesScroll = ({
   }, [elRef, infiniteScrollCallback, treshold, id]);
 
   useLayoutEffect(() => {
+    lastScroll[id] = 0;
+  }, [id]);
+
+  useLayoutEffect(() => {
     const diff = getScrollDiff(elRef.current!);
     if (diff < treshold || lastScroll[id] === 0)
       restoreScroll(elRef.current!, lastScroll[id]);
@@ -72,10 +76,6 @@ const useMessagesScroll = ({
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [checkForScroll, elRef.current!, ...deps]);
-
-  useLayoutEffect(() => {
-    lastScroll[id] = 0;
-  }, [id]);
 
   return { scrollHandler, reset };
 };
