@@ -12,7 +12,7 @@ const OpenNewPostButton: React.FC<Props> = ({ onClick }) => {
     cursor: 'text',
     borderRadius: 'lg',
     padding: 4,
-    bgColor: useColorModeValue('white', 'gray.900'),
+    bgColor: useColorModeValue('white', 'gray.800'),
     '&:hover': {
       boxShadow: useColorModeValue('0px 5px 10px rgba(0,0,0,0.08)', 'none'),
     },

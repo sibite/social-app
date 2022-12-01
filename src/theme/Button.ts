@@ -51,7 +51,21 @@ const Button: StyleConfig = {
           },
         };
       }
-      return {};
+
+      const c = colorScheme;
+      const base = colorMode === 'light' ? 500 : 700;
+
+      return {
+        bg: `${c}.${base}`,
+        color: 'white',
+        _hover: {
+          bg: `${c}.${base + 100}`,
+          _disabled: {
+            bg: `${c}.${base}`,
+          },
+        },
+        _active: { bg: `${c}.${base + 200}` },
+      };
     },
     ghost: ({ colorScheme, colorMode }) => {
       if (colorScheme === 'translucent') {

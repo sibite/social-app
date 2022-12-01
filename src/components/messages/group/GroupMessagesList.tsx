@@ -43,7 +43,7 @@ const GroupMessagesList: React.FC<Props> = ({ messages, isDirectionTo }) => {
     );
   });
 
-  const smRadius = '0px';
+  const smRadius = '3px';
   const lgRadius = '16px';
 
   const style = {

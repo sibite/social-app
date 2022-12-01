@@ -9,7 +9,7 @@ export interface FancyMessagesGroup {
 }
 
 const bigTimeGap = 60e3 * 15;
-const moderateTimeGap = 60e3 * 3;
+const moderateTimeGap = 60e3 * 2;
 
 const toFancyMessages = (
   messages: ServerToClientMessage[],

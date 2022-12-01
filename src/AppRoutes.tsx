@@ -2,6 +2,9 @@ import { useColorModeValue } from '@chakra-ui/react';
 import { lazy, Suspense } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import AppShell from './components/layout/AppShell';
+import FixedContainer from './components/layout/FixedContainer';
+import ImageFallback from './components/misc/ImageFallback';
+import Overlay from './components/misc/Overlay';
 import useIsAuthenticated from './hooks/useIsAuthenticated';
 import useSetThemeColor from './hooks/useSetThemeColor';
 import ErrorPage from './pages/ErrorPage';
@@ -19,10 +22,19 @@ const SinglePostPage = lazy(() => import('./pages/single-post/SinglePostPage'));
 const AppRoutes = () => {
   const isAuthenticated = useIsAuthenticated();
   const myId = useAppSelector((state) => state.auth.userId)!;
-  useSetThemeColor(useColorModeValue('white', 'black'));
+  const bg = useColorModeValue('white', 'black');
+  useSetThemeColor(bg);
 
   return (
-    <Suspense>
+    <Suspense
+      fallback={
+        <FixedContainer>
+          <Overlay bgColor={bg}>
+            <ImageFallback fill />
+          </Overlay>
+        </FixedContainer>
+      }
+    >
       <Routes>
         <Route element={<AppShell />}>
           <Route path="/profile/:id/*" element={<ProfilePage />} />
