@@ -58,6 +58,13 @@ export const accountApi = createApi({
       }),
       invalidatesTags: ['Account'],
     }),
+    deleteAccount: builder.mutation<any, string>({
+      query: (password) => ({
+        url: '',
+        method: 'DELETE',
+        body: { password },
+      }),
+    }),
   }),
 });
 
@@ -66,4 +73,5 @@ export const {
   useUploadAvatarMutation,
   useUploadCoverMutation,
   useUpdateDetailsMutation,
+  useDeleteAccountMutation,
 } = accountApi;

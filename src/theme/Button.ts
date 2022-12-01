@@ -54,17 +54,18 @@ const Button: StyleConfig = {
 
       const c = colorScheme;
       const base = colorMode === 'light' ? 500 : 700;
+      const diff = colorMode === 'light' ? 100 : -100;
 
       return {
         bg: `${c}.${base}`,
         color: 'white',
         _hover: {
-          bg: `${c}.${base + 100}`,
+          bg: `${c}.${base + diff}`,
           _disabled: {
             bg: `${c}.${base}`,
           },
         },
-        _active: { bg: `${c}.${base + 200}` },
+        _active: { bg: `${c}.${base + diff * 2}` },
       };
     },
     ghost: ({ colorScheme, colorMode }) => {

@@ -5,5 +5,6 @@ export default function getFullName(profile: {
   name: string;
   lastName: string;
 }) {
+  if (!profile) return '';
   return `${profile.name} ${profile.lastName}`;
 }

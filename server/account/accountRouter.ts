@@ -4,6 +4,7 @@ import authenticate from '../auth/authenticate';
 import config from '../config/config';
 import putAvatar from './avatarPut';
 import putCover from './coverPut';
+import deleteAccount from './delete';
 import me from './me';
 import patch from './patch';
 
@@ -16,6 +17,7 @@ accountRouter.use(
 );
 
 accountRouter.patch('/', authenticate, patch);
+accountRouter.delete('/', authenticate, deleteAccount);
 accountRouter.get('/me', authenticate, me);
 accountRouter.put('/avatar', authenticate, putAvatar);
 accountRouter.put('/cover', authenticate, putCover);

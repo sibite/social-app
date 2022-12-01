@@ -9,6 +9,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import PageContainer from '../../components/layout/PageContainer';
+import AccountPanel from './AccountPanel';
 import ChangePasswordPanel from './ChangePasswordPanel';
 import YourDetailsPanel from './YourDetailsPanel';
 
@@ -23,6 +24,7 @@ const SettingsPage: React.FC = () => (
           <TabList>
             <Tab>Your details</Tab>
             <Tab>Password</Tab>
+            <Tab>Account</Tab>
           </TabList>
           <TabPanels>
             <TabPanel py={8} px={0}>
@@ -30,6 +32,9 @@ const SettingsPage: React.FC = () => (
             </TabPanel>
             <TabPanel py={8} px={0}>
               <ChangePasswordPanel />
+            </TabPanel>
+            <TabPanel py={8} px={0}>
+              <AccountPanel />
             </TabPanel>
           </TabPanels>
         </Tabs>

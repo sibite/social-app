@@ -36,7 +36,7 @@ const getComments: RequestHandler = async (req, res) => {
     usersRes.forEach((user) => {
       users[user._id] = {
         ...user,
-        fullName: getFullName({ name: user.name, lastName: user.lastName }),
+        fullName: getFullName(user),
         avatarSrc: getUserFileURL(user.avatarSrc),
       };
     });
@@ -44,8 +44,8 @@ const getComments: RequestHandler = async (req, res) => {
     commentsRes.forEach((commentRes) => {
       comments.push({
         ...commentRes,
-        fullName: users[commentRes.creatorId].fullName,
-        avatarSrc: users[commentRes.creatorId].avatarSrc,
+        fullName: users[commentRes.creatorId]?.fullName,
+        avatarSrc: users[commentRes.creatorId]?.avatarSrc,
       });
     });
 

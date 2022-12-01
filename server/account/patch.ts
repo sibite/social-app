@@ -57,7 +57,6 @@ const patch: RequestHandler = async (req, res) => {
 
     res.status(200).send();
   } catch (err) {
-    console.log(err);
     res.status(typeof err === 'number' ? err : 500).send();
   }
 };

@@ -13,14 +13,8 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { CogIcon, LogoutIcon } from '@heroicons/react/outline';
-import { Link, useNavigate } from 'react-router-dom';
-import { accountApi } from '../../store/account-api';
-import { authActions } from '../../store/auth';
-import { contactsActions } from '../../store/contacts';
-import { feedApi } from '../../store/feed-api';
-import { useAppDispatch } from '../../store/hooks';
-import { messagesActions } from '../../store/messages/messages';
-import { profileApi } from '../../store/profile-api';
+import { Link } from 'react-router-dom';
+import useLogout from '../../hooks/useLogout';
 import HeroIcon from '../chakra-ui/HeroIcon';
 import AvatarConnectionStatus from './AvatarConnectionStatus';
 
@@ -31,19 +25,8 @@ interface Props {
 const NavBarAccountPopover: React.FC<Props> = ({ user }) => {
   const { avatarSrc, fullName } = user;
 
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  const logOut = useLogout();
   const { isOpen, onClose, onToggle } = useDisclosure();
-
-  const logOutHandler = () => {
-    dispatch(feedApi.util.resetApiState());
-    dispatch(profileApi.util.resetApiState());
-    dispatch(accountApi.util.resetApiState());
-    dispatch(messagesActions.clearAll());
-    dispatch(contactsActions.clearAll());
-    dispatch(authActions.logOut());
-    navigate('/login');
-  };
 
   return (
     <Popover isOpen={isOpen} onClose={onClose}>
@@ -86,7 +69,7 @@ const NavBarAccountPopover: React.FC<Props> = ({ user }) => {
               leftIcon={<HeroIcon as={LogoutIcon} />}
               variant="ghost"
               justifyContent="flex-start"
-              onClick={logOutHandler}
+              onClick={logOut}
             >
               Log out
             </Button>
