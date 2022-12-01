@@ -1,13 +1,19 @@
-import { Link } from '@chakra-ui/react';
+import { As, ChakraComponent, Link, LinkProps } from '@chakra-ui/react';
 
 interface Props {
   textContent: string;
+  linkComponent?: React.FC<LinkProps>;
 }
 
 const URLRegEx = /(?:http|https):\/\/\S+[.:]\S+/gi;
 
-const InteractiveContent: React.FC<Props> = ({ textContent }) => {
+const InteractiveContent: React.FC<Props> = ({
+  textContent,
+  linkComponent,
+}) => {
   const matches = Array.from(textContent.matchAll(URLRegEx));
+
+  const CustomLink = linkComponent ?? Link;
 
   const elements: React.ReactNode[] = [];
 
@@ -23,9 +29,9 @@ const InteractiveContent: React.FC<Props> = ({ textContent }) => {
     const nextText = textContent.slice(index + url.length, nextMatch?.index);
 
     elements.push(
-      <Link href={url} target="_blank" key={`${i}link`}>
+      <CustomLink as={Link} href={url} target="_blank" key={`${i}link`}>
         {url}
-      </Link>
+      </CustomLink>
     );
     if (nextText.length)
       elements.push(<span key={`${i}text`}>{nextText}</span>);

@@ -15,9 +15,14 @@ import MessageDeleteDialog from './MessageDeleteDialog';
 interface Props {
   messageId: string;
   profileId: string;
+  isDisplayed?: boolean;
 }
 
-const MessageMenu: React.FC<Props> = ({ profileId, messageId }) => {
+const MessageMenu: React.FC<Props> = ({
+  profileId,
+  messageId,
+  isDisplayed = false,
+}) => {
   const { onClose, onOpen, isOpen } = useDisclosure();
   const {
     onClose: onCloseDialog,
@@ -35,6 +40,8 @@ const MessageMenu: React.FC<Props> = ({ profileId, messageId }) => {
     opacity: isOpen ? 1 : 0,
     transition: 'all 150ms',
   };
+
+  if (!isOpen && !isDisplayed) return <Box width="32px" flexShrink="0" />;
 
   return (
     <>

@@ -1,5 +1,5 @@
 import { useColorModeValue } from '@chakra-ui/react';
-import { lazy } from 'react';
+import { lazy, Suspense } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import AppShell from './components/layout/AppShell';
 import useIsAuthenticated from './hooks/useIsAuthenticated';
@@ -22,33 +22,35 @@ const AppRoutes = () => {
   useSetThemeColor(useColorModeValue('white', 'black'));
 
   return (
-    <Routes>
-      <Route element={<AppShell />}>
-        <Route path="/profile/:id/*" element={<ProfilePage />} />
-        <Route path="/post/:id" element={<SinglePostPage />} />
-        <Route path="/not-found" element={<ErrorPage status={404} />} />
-        <Route path="/feed/*" element={<FeedPage />} />
-        {isAuthenticated && (
+    <Suspense>
+      <Routes>
+        <Route element={<AppShell />}>
+          <Route path="/profile/:id/*" element={<ProfilePage />} />
+          <Route path="/post/:id" element={<SinglePostPage />} />
+          <Route path="/not-found" element={<ErrorPage status={404} />} />
+          <Route path="/feed/*" element={<FeedPage />} />
+          {isAuthenticated && (
+            <>
+              <Route path="*" element={<Navigate to="/feed" replace />} />
+              <Route path="/search/:searchQuery" element={<SearchPage />} />
+              <Route path="/messages/:id" element={<ChatPage />} />
+              <Route path="/messages" element={<ChatPage />} />
+              <Route path="/profile" element={<Navigate to={myId} />} />
+              <Route path="/settings" element={<SettingsPage />} />
+              <Route path="/signup" element={<Navigate to="/profile" />} />
+              <Route path="/login" element={<Navigate to="/profile" />} />
+            </>
+          )}
+        </Route>
+        {!isAuthenticated && (
           <>
-            <Route path="*" element={<Navigate to="/feed" replace />} />
-            <Route path="/search/:searchQuery" element={<SearchPage />} />
-            <Route path="/messages/:id" element={<ChatPage />} />
-            <Route path="/messages" element={<ChatPage />} />
-            <Route path="/profile" element={<Navigate to={myId} />} />
-            <Route path="/settings" element={<SettingsPage />} />
-            <Route path="/signup" element={<Navigate to="/profile" />} />
-            <Route path="/login" element={<Navigate to="/profile" />} />
+            <Route path="*" element={<Navigate to="/login" replace />} />
+            <Route path="/signup" element={<SignUpPage />} />
+            <Route path="/login" element={<LogInPage />} />
           </>
         )}
-      </Route>
-      {!isAuthenticated && (
-        <>
-          <Route path="*" element={<Navigate to="/login" replace />} />
-          <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/login" element={<LogInPage />} />
-        </>
-      )}
-    </Routes>
+      </Routes>
+    </Suspense>
   );
 };
 

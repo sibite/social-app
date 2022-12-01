@@ -2,6 +2,7 @@ import { Box, Flex, useDisclosure } from '@chakra-ui/react';
 import React from 'react';
 import InteractiveContent from '../../misc/InteractiveContent';
 import MessageBubble from './MessageBubble';
+import MessageLink from './MessageLink';
 import MessageMenu from './MessageMenu';
 
 interface Props {
@@ -35,23 +36,28 @@ const Message: React.FC<Props> = ({
   return (
     <Flex
       sx={containerStyle}
+      className="message"
       gap={2}
       onMouseEnter={onOpen}
       onMouseLeave={onClose}
     >
-      {isDirectionTo && !isDeleted && messageId && isOpen ? (
-        <MessageMenu profileId={toId} messageId={messageId} />
+      {isDirectionTo && !isDeleted && messageId ? (
+        <MessageMenu
+          profileId={toId}
+          messageId={messageId}
+          isDisplayed={isOpen}
+        />
       ) : (
         <Box width="32px" flexShrink="0" />
       )}
       <MessageBubble
-        colored={!isDirectionTo}
+        colored={isDirectionTo}
         isDeleted={isDeleted}
         isSending={isSending}
         dateString={dateString}
         isDirectionTo={isDirectionTo}
       >
-        <InteractiveContent textContent={content} />
+        <InteractiveContent textContent={content} linkComponent={MessageLink} />
       </MessageBubble>
     </Flex>
   );

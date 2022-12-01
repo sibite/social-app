@@ -43,9 +43,29 @@ const GroupMessagesList: React.FC<Props> = ({ messages, isDirectionTo }) => {
     );
   });
 
+  const smRadius = '0px';
+  const lgRadius = '16px';
+
+  const style = {
+    '& .bubble': {
+      borderRadius: isDirectionTo
+        ? `${lgRadius} ${smRadius} ${smRadius} ${lgRadius}`
+        : `${smRadius} ${lgRadius} ${lgRadius} ${smRadius}`,
+    },
+    '& .message:first-of-type .bubble': {
+      [isDirectionTo ? 'borderTopRightRadius' : 'borderTopLeftRadius']:
+        lgRadius,
+    },
+    '& .message:last-child .bubble': {
+      [isDirectionTo ? 'borderBottomRightRadius' : 'borderBottomLeftRadius']:
+        lgRadius,
+    },
+  };
+
   return (
     <VStack
       spacing="2px"
+      sx={style}
       alignItems={isDirectionTo ? 'flex-end' : 'flex-start'}
     >
       {MessagesJSX}

@@ -33,8 +33,8 @@ const MessageBubble: React.FC<Props> = ({
   const tooltipPlacement = isDirectionTo ? 'left' : 'right';
   const alignItems = isDirectionTo ? 'flex-end' : 'flex-start';
 
-  const darkBgColor = colored ? 'blue.700' : 'gray.700';
-  const lightBgColor = colored ? 'blue.100' : 'gray.200';
+  const darkBgColor = colored ? 'blue.600' : 'gray.700';
+  const lightBgColor = colored ? 'blue.400' : 'gray.200';
 
   const normalBgColor = useColorModeValue(lightBgColor, darkBgColor);
   const deletedBgColor = useColorModeValue('gray.100', 'gray.800');
@@ -43,10 +43,11 @@ const MessageBubble: React.FC<Props> = ({
   const bubbleStyle = {
     py: '6px',
     px: '11px',
-    borderRadius: 8,
+    borderRadius: '8px',
     marginInlineStart: 0,
     bgColor,
     maxWidth: '70ch',
+    color: colored && !isDeleted ? 'white' : 'inherit',
   };
 
   const textStyle = {
@@ -68,18 +69,20 @@ const MessageBubble: React.FC<Props> = ({
       <Tooltip
         portalProps={{ containerRef: portalRef }}
         placement={tooltipPlacement ?? 'auto'}
-        gutter={40}
+        gutter={isDirectionTo ? 40 : 10}
         label={dateString}
         aria-label={`A tooltip (${dateString})`}
         modifiers={[{ name: 'eventListeners', enabled: false }]}
       >
-        <Box sx={bubbleStyle}>{ContentJSX}</Box>
+        <Box sx={bubbleStyle} className="bubble">
+          {ContentJSX}
+        </Box>
       </Tooltip>
     );
 
   return (
     <VStack spacing="2px" alignItems={alignItems}>
-      <Box sx={bubbleStyle} onClick={setIsExpanded.toggle}>
+      <Box sx={bubbleStyle} className="bubble" onClick={setIsExpanded.toggle}>
         {ContentJSX}
       </Box>
       {isExpanded && (
