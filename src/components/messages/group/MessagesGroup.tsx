@@ -1,10 +1,12 @@
 import { Avatar, HStack, VStack } from '@chakra-ui/react';
-import dayjs from 'dayjs';
 import formatDateInformative from '../../../shared/formatDateInformative';
+import getDayjsInstance from '../../../shared/getDayjsInstance';
 import { useGetProfileQuery } from '../../../store/profile-api';
 import { FancyMessagesGroup } from '../toFancyMessages';
 import GroupMessagesList from './GroupMessagesList';
 import MessagesGroupDate from './MessagesGroupDate';
+
+const dayjs = getDayjsInstance();
 
 interface Props {
   group: FancyMessagesGroup;

@@ -1,18 +1,20 @@
 import { useColorModeValue } from '@chakra-ui/react';
+import { lazy } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import AppShell from './components/layout/AppShell';
 import useIsAuthenticated from './hooks/useIsAuthenticated';
 import useSetThemeColor from './hooks/useSetThemeColor';
-import ChatPage from './pages/chat/ChatPage';
 import ErrorPage from './pages/ErrorPage';
-import FeedPage from './pages/feed/FeedPage';
-import LogInPage from './pages/log-in/LogInPage';
-import ProfilePage from './pages/profile/ProfilePage';
-import SearchPage from './pages/search/SearchPage';
-import SettingsPage from './pages/settings/SettingsPage';
-import SignUpPage from './pages/sign-up/SignUpPage';
-import SinglePostPage from './pages/single-post/SinglePostPage';
 import { useAppSelector } from './store/hooks';
+
+const ChatPage = lazy(() => import('./pages/chat/ChatPage'));
+const FeedPage = lazy(() => import('./pages/feed/FeedPage'));
+const LogInPage = lazy(() => import('./pages/log-in/LogInPage'));
+const ProfilePage = lazy(() => import('./pages/profile/ProfilePage'));
+const SearchPage = lazy(() => import('./pages/search/SearchPage'));
+const SettingsPage = lazy(() => import('./pages/settings/SettingsPage'));
+const SignUpPage = lazy(() => import('./pages/sign-up/SignUpPage'));
+const SinglePostPage = lazy(() => import('./pages/single-post/SinglePostPage'));
 
 const AppRoutes = () => {
   const isAuthenticated = useIsAuthenticated();

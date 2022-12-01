@@ -7,13 +7,15 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react';
-import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { ServerToClientMessage } from '../../../server/chat-socket/socket-types';
 import formatDateRelativeShort from '../../shared/formatDateRelativeShort';
+import getDayjsInstance from '../../shared/getDayjsInstance';
 import { useAppSelector } from '../../store/hooks';
 import { useGetProfileQuery } from '../../store/profile-api';
+
+const dayjs = getDayjsInstance();
 
 interface Props {
   profileId: string;

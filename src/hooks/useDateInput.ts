@@ -1,8 +1,9 @@
-import dayjs, { Dayjs } from 'dayjs';
-import localeData from 'dayjs/plugin/localeData';
+import { Dayjs } from 'dayjs';
 import { useState } from 'react';
+import getDayjsInstance from '../shared/getDayjsInstance';
 
-dayjs.extend(localeData);
+const dayjs = getDayjsInstance();
+
 const enLocaleData = dayjs().locale('en').localeData();
 
 export interface DateInputOptions {

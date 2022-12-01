@@ -1,8 +1,10 @@
 import { VStack } from '@chakra-ui/react';
-import dayjs from 'dayjs';
 import formatDateInformative from '../../../shared/formatDateInformative';
 import Message from './Message';
 import { FancyMessagesGroup } from '../toFancyMessages';
+import getDayjsInstance from '../../../shared/getDayjsInstance';
+
+const dayjs = getDayjsInstance();
 
 interface Props {
   messages: FancyMessagesGroup['messages'];

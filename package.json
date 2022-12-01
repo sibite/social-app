@@ -50,6 +50,7 @@
     "workbox-streams": "^6.5.4"
   },
   "scripts": {
+    "analyze": "source-map-explorer 'build/public/static/js/*.js'",
     "start": "react-scripts start",
     "start-build": "node ./build/server",
     "dev": "npm run server | npm start",
@@ -142,6 +143,7 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "nodemon": "^2.0.20",
     "prettier": "^2.8.0",
-    "sass": "^1.54.7"
+    "sass": "^1.54.7",
+    "source-map-explorer": "^2.5.3"
   }
 }

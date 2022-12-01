@@ -1,5 +1,4 @@
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
-import dayjs from 'dayjs';
 import formatDateRelative from '../../../shared/formatDateRelative';
 import { useGetPostQuery } from '../../../store/feed-api';
 import PhotoContainer from '../PhotoContainer';
@@ -7,6 +6,9 @@ import PhotoSideContent from '../PhotoSideContent';
 import PhotoViewerContainerWrapper from './PhotoViewerContainerWrapper';
 import PhotoViewerLoading from '../PhotoViewerLoading';
 import usePhotoViewerFallback from '../usePhotoViewerFallback';
+import getDayjsInstance from '../../../shared/getDayjsInstance';
+
+const dayjs = getDayjsInstance();
 
 interface Props {
   mediaId: string;

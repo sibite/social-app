@@ -1,8 +1,5 @@
-import dayjs, { Dayjs } from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
+import { Dayjs } from 'dayjs';
 import dateFormatter, { DateFormatterFormats } from './formatDate';
-
-dayjs.extend(relativeTime);
 
 const formats: DateFormatterFormats = {
   today: (date) => date.fromNow(true),

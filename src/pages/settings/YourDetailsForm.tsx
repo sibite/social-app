@@ -7,14 +7,13 @@ import {
   SimpleGrid,
   useToast,
 } from '@chakra-ui/react';
-import dayjs from 'dayjs';
 import { useState } from 'react';
-import { isError } from 'util';
 import AppDateFormControl from '../../components/misc/AppDateFormControl';
 import AppFormControl from '../../components/misc/AppFormControl';
 import useDateInput from '../../hooks/useDateInput';
 import useInputControl from '../../hooks/useInputControl';
 import useMobileModeValue from '../../hooks/useMobileModeValue';
+import getDayjsInstance from '../../shared/getDayjsInstance';
 import passwordValidator from '../../shared/validators/password-validator';
 import {
   useGetAccountDataQuery,
@@ -26,6 +25,8 @@ import {
   lastNameOptions,
   passwordOptions,
 } from '../sign-up/form-controls';
+
+const dayjs = getDayjsInstance();
 
 interface Props {}
 

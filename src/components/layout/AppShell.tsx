@@ -4,10 +4,11 @@ import {
   useBreakpointValue,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { useRef } from 'react';
+import { Suspense, useRef } from 'react';
 import { Outlet } from 'react-router-dom';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
 import PortalRefContext from '../../store/ref-context';
+import ImageFallback from '../misc/ImageFallback';
 import NavBar from '../nav-bar/NavBar';
 import OfflineAlert from './OfflineAlert';
 
@@ -49,7 +50,9 @@ const AppShell: React.FC = () => {
       <Box bgColor={bg} overflow="auto" gridArea="content">
         <PortalRefContext.Provider value={portalRef}>
           <OfflineAlert />
-          <Outlet />
+          <Suspense fallback={<ImageFallback fill />}>
+            <Outlet />
+          </Suspense>
         </PortalRefContext.Provider>
       </Box>
       <Grid sx={portalBoxStyle} ref={portalRef} />

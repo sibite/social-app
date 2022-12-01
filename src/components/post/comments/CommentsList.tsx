@@ -1,11 +1,13 @@
 import { Center, Spinner } from '@chakra-ui/react';
-import dayjs from 'dayjs';
 import { CommentIncomingType } from '../../../../server/api-types/feed';
 import formatDateRelative from '../../../shared/formatDateRelative';
+import getDayjsInstance from '../../../shared/getDayjsInstance';
 import { useAppSelector } from '../../../store/hooks';
 import InteractiveContent from '../../misc/InteractiveContent';
 import Comment from './Comment';
 import CommentMenu from './CommentMenu';
+
+const dayjs = getDayjsInstance();
 
 interface Props {
   comments?: CommentIncomingType[];

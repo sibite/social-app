@@ -1,4 +1,7 @@
-import dayjs, { Dayjs } from 'dayjs';
+import { Dayjs } from 'dayjs';
+import getDayjsInstance from './getDayjsInstance';
+
+const dayjs = getDayjsInstance();
 
 type DateFormatterFunction = (date: Dayjs) => string;
 
