@@ -1,46 +1,88 @@
-# Getting Started with Create React App
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/sibite/social-app">
+    <img src="public/logo192.png" alt="Logo" width="80" height="80">
+  </a>
+<h2 align="center">Social App</h3>
+</div>
 
-## Available Scripts
+<!-- ABOUT THE PROJECT -->
 
-In the project directory, you can run:
+## About The Project
 
-### `npm start`
+Inspired by Facebook
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+[![App Screen Shot][product-screenshot]](https://social.davrostek.com)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+<!-- GETTING STARTED -->
 
-### `npm test`
+## Getting Started
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+This is an example of how you may give instructions on setting up your project locally.
+To get a local copy up and running follow these simple example steps.
 
-### `npm run build`
+### Prerequisites
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Node.js
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Preparation
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Clone the repo
+   ```sh
+   git clone https://github.com/sibite/social-app.git
+   ```
+2. Install NPM packages
+   ```sh
+   npm install
+   ```
 
-### `npm run eject`
+### Development
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+1. Start the React app
+   ```sh
+   npm start
+   ```
+2. Start the server in watch mode
+   ```sh
+   npm run server
+   ```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Production
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+1. Create your own ACCESS_TOKEN_SECRET in <a href="#configuration">configuration file</a>
+2. Build the app and server
+   ```sh
+   npm run build
+   ```
+3. Start the app
+   ```sh
+   npm run start-build
+   ```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+<a name="configuration"></a>
 
-## Learn More
+### Configuration
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1. Copy file `server/config/config.default.ts` and rename it to `config.dev.ts` or `config.prod.ts` depending on which config you want to create
+2. Edit variables to match your needs
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+
+[contributors-shield]: https://img.shields.io/github/contributors/sibite/social-app.svg?style=for-the-badge
+[contributors-url]: https://github.com/sibite/social-app/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/sibite/social-app.svg?style=for-the-badge
+[forks-url]: https://github.com/sibite/social-app/network/members
+[stars-shield]: https://img.shields.io/github/stars/sibite/social-app.svg?style=for-the-badge
+[stars-url]: https://github.com/sibite/social-app/stargazers
+[issues-shield]: https://img.shields.io/github/issues/sibite/social-app.svg?style=for-the-badge
+[issues-url]: https://github.com/sibite/social-app/issues
+[license-shield]: https://img.shields.io/github/license/sibite/social-app.svg?style=for-the-badge
+[license-url]: https://github.com/sibite/social-app/blob/master/LICENSE.txt
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://linkedin.com/in/linkedin_username
+[product-screenshot]: readme/screenshot.png
