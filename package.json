@@ -52,12 +52,12 @@
   "scripts": {
     "analyze": "source-map-explorer 'build/public/static/js/*.js'",
     "start": "react-scripts start",
-    "start-build": "node ./build/server",
+    "start-build": "set MODE=production&& node ./build/server",
     "dev": "npm run server | npm start",
     "server": "tsc -p ./server --watch | nodemon -w ./build/server ./build/server",
     "build": "react-scripts build",
     "postbuild": "npm run build-server",
-    "build-server": "tsc -p ./server",
+    "build-server": "set MODE=production&& tsc -p ./server",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

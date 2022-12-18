@@ -97,7 +97,6 @@ const YourDetailsForm: React.FC<Props> = () => {
           <AppFormControl
             inputControl={firstName}
             label="First name"
-            placeholder="Joseph"
             isRequired
           />
         </GridItem>
@@ -105,7 +104,6 @@ const YourDetailsForm: React.FC<Props> = () => {
           <AppFormControl
             inputControl={lastName}
             label="Last name"
-            placeholder="Murphy"
             isRequired
           />
         </GridItem>
@@ -119,7 +117,7 @@ const YourDetailsForm: React.FC<Props> = () => {
         <GridItem colSpan={4}>
           <AppFormControl
             inputControl={password}
-            label="Actual password"
+            label="Your password"
             type="password"
             isRequired
           />

@@ -36,19 +36,13 @@ const SignUpForm: React.FC<Props> = ({
     <AppFormControl
       inputControl={firstName}
       label="First name"
-      placeholder="Joseph"
       isRequired
       autoFocus
     />
   );
 
   const LastNameJSX = (
-    <AppFormControl
-      inputControl={lastName}
-      label="Last name"
-      placeholder="Murphy"
-      isRequired
-    />
+    <AppFormControl inputControl={lastName} label="Last name" isRequired />
   );
 
   const EmailJSX = (
@@ -56,7 +50,7 @@ const SignUpForm: React.FC<Props> = ({
       <FormLabel>Your e-mail address</FormLabel>
       <Input
         type="email"
-        placeholder="employee@company.org"
+        placeholder="example@domain.org"
         value={email.value}
         onChange={email.changeHandler}
         onBlur={email.touchHandler}

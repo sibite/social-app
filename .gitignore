@@ -3,6 +3,7 @@
 # env
 /server/env.ts
 /server/config/config.prod.ts
+/server/config/config.dev.ts
 
 # dependencies
 /node_modules

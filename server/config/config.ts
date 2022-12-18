@@ -1,10 +1,13 @@
 import defaultConfig from './config.default';
 import ConfigType from './config.type';
+import CONSTS, { ConstsType } from './consts';
 
-const productionConfig = (() => {
+const targetConfig = (() => {
+  const filePath =
+    process.env.MODE === 'production' ? './config.prod' : './config.dev';
   try {
-    // eslint-disable-next-line global-require
-    return require('./config.prod')?.default;
+    // eslint-disable-next-line global-require, import/no-dynamic-require
+    return require(filePath)?.default;
   } catch (error) {
     return {};
   }
@@ -12,7 +15,6 @@ const productionConfig = (() => {
 
 const keys: (keyof ConfigType)[] = [
   'ACCESS_TOKEN_SECRET',
-  'API_URL',
   'FILE_SIZE_LIMIT',
   'JPEG_QUALITY',
   'PORT',
@@ -28,9 +30,10 @@ const envConfig = (() => {
   return partialConfig;
 })();
 
-const config: ConfigType = {
+const config: ConfigType & ConstsType = {
+  ...CONSTS,
   ...defaultConfig,
-  ...productionConfig,
+  ...targetConfig,
   ...envConfig,
 };
 

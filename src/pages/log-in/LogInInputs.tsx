@@ -1,10 +1,4 @@
-import {
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Input,
-  VStack,
-} from '@chakra-ui/react';
+import { FormControl, FormErrorMessage, VStack } from '@chakra-ui/react';
 import AppFormControl from '../../components/misc/AppFormControl';
 import useInputControl from '../../hooks/useInputControl';
 
