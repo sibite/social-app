@@ -32,10 +32,13 @@ To get a local copy up and running follow these simple example steps.
 ### Preparation
 
 1. Clone the repo
+
    ```sh
    git clone https://github.com/sibite/social-app.git
    ```
+   
 2. Install NPM packages
+
    ```sh
    npm install
    ```
@@ -43,10 +46,13 @@ To get a local copy up and running follow these simple example steps.
 ### Development
 
 1. Start the React app
+
    ```sh
    npm start
    ```
+   
 2. Start the server in watch mode
+
    ```sh
    npm run server
    ```
@@ -54,11 +60,14 @@ To get a local copy up and running follow these simple example steps.
 ### Production
 
 1. Create your own ACCESS_TOKEN_SECRET in <a href="#configuration">configuration file</a>
+
 2. Build the app and server
+
    ```sh
    npm run build
    ```
 3. Start the app
+
    ```sh
    npm run start-build
    ```
@@ -68,6 +77,7 @@ To get a local copy up and running follow these simple example steps.
 ### Configuration
 
 1. Copy file `server/config/config.default.ts` and rename it to `config.dev.ts` or `config.prod.ts` depending on which config you want to create
+
 2. Edit variables to match your needs
 
 <!-- MARKDOWN LINKS & IMAGES -->
