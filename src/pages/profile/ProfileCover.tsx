@@ -4,12 +4,12 @@ import {
   IconButton,
   Image,
   LightMode,
-  useBreakpointValue,
   useColorModeValue,
 } from '@chakra-ui/react';
 import { PencilIcon } from '@heroicons/react/outline';
 import HeroIcon from '../../components/chakra-ui/HeroIcon';
 import CustomFilePicker from '../../components/misc/CustomFilePicker';
+import useBreakpointValue from '../../hooks/wrappers/useBreakpointValue';
 
 interface Props {
   coverSrc?: string;

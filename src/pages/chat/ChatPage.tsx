@@ -1,5 +1,6 @@
-import { useBreakpointValue, useColorModeValue } from '@chakra-ui/react';
+import { useColorModeValue } from '@chakra-ui/react';
 import useSetThemeColor from '../../hooks/useSetThemeColor';
+import useBreakpointValue from '../../hooks/wrappers/useBreakpointValue';
 import ChatPageMD from './ChatPageMD';
 import ChatPageXS from './ChatPageXS';
 

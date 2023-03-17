@@ -1,4 +1,5 @@
-import { useBreakpointValue, useColorModeValue } from '@chakra-ui/react';
+import { useColorModeValue } from '@chakra-ui/react';
+import useBreakpointValue from '../../hooks/wrappers/useBreakpointValue';
 import AppCard from '../chakra-ui/AppCard';
 import Post from '../post/Post';
 

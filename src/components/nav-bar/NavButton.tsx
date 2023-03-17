@@ -1,10 +1,6 @@
-import {
-  Button,
-  Text,
-  useBreakpointValue,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import { Button, Text, useColorModeValue } from '@chakra-ui/react';
 import { Link, useMatch } from 'react-router-dom';
+import useBreakpointValue from '../../hooks/wrappers/useBreakpointValue';
 import HeroIcon from '../chakra-ui/HeroIcon';
 
 interface Props {

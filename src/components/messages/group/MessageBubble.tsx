@@ -3,11 +3,11 @@ import {
   Text,
   Tooltip,
   useBoolean,
-  useBreakpointValue,
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react';
 import { useContext } from 'react';
+import useBreakpointValue from '../../../hooks/wrappers/useBreakpointValue';
 import PortalRefContext from '../../../store/ref-context';
 
 interface Props {

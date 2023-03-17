@@ -1,12 +1,8 @@
-import {
-  Box,
-  Grid,
-  useBreakpointValue,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import { Box, Grid, useColorModeValue } from '@chakra-ui/react';
 import { Suspense, useRef } from 'react';
 import { Outlet } from 'react-router-dom';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
+import useBreakpointValue from '../../hooks/wrappers/useBreakpointValue';
 import PortalRefContext from '../../store/ref-context';
 import ImageFallback from '../misc/ImageFallback';
 import NavBar from '../nav-bar/NavBar';

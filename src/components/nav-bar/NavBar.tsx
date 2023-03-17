@@ -1,10 +1,6 @@
-import {
-  Flex,
-  Grid,
-  useBreakpointValue,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import { Flex, Grid, useColorModeValue } from '@chakra-ui/react';
 import { forwardRef } from 'react';
+import useBreakpointValue from '../../hooks/wrappers/useBreakpointValue';
 import { NAVBAR_BORDER_HEIGHT, NAVBAR_HEIGHT } from '../../shared/navBarHeight';
 import NavBarAccount from './NavBarAccount';
 import NavBarButtons from './NavBarButtons';

@@ -5,10 +5,10 @@ import {
   Grid,
   Heading,
   Skeleton,
-  useBreakpointValue,
   VStack,
 } from '@chakra-ui/react';
 import { useSearchParams } from 'react-router-dom';
+import useBreakpointValue from '../../../hooks/wrappers/useBreakpointValue';
 import { useGetProfileMediaQuery } from '../../../store/feed-api';
 import { useGetProfileQuery } from '../../../store/profile-api';
 import GalleryItem from './GalleryItem';

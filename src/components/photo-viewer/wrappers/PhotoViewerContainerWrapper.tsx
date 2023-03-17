@@ -1,6 +1,7 @@
-import { Portal, useBreakpointValue } from '@chakra-ui/react';
+import { Portal } from '@chakra-ui/react';
 import { useContext } from 'react';
 import useKeyPress from '../../../hooks/useKeyPress';
+import useBreakpointValue from '../../../hooks/wrappers/useBreakpointValue';
 import PortalRefContext from '../../../store/ref-context';
 import PhotoViewerMDContainer from '../PhotoViewerMDContainer';
 import PhotoViewerXSContainer from '../PhotoViewerXSContainer';
